@@ -1,23 +1,21 @@
-document.getElementById('saveButton').addEventListener('click', function() {
-  const noteContent = document.getElementById('noteInput').value;
-  if (noteContent) {
-    localStorage.setItem('savedNote', noteContent);
-    alert('Note saved!');
-  } else {
-    alert('Please write something before saving.');
-  }
-});
+// Function to save the note to local storage
+function saveNote() {
+  const note = document.getElementById('notepad').value;
+  localStorage.setItem('savedNote', note);
+  alert('Note saved!');
+}
 
-document.getElementById('clearButton').addEventListener('click', function() {
-  document.getElementById('noteInput').value = '';
+// Function to clear the note area
+function clearNote() {
+  document.getElementById('notepad').value = '';
   localStorage.removeItem('savedNote');
   alert('Note cleared!');
-});
+}
 
-// Load saved note on page load
+// Load the saved note on page load
 window.onload = function() {
   const savedNote = localStorage.getItem('savedNote');
   if (savedNote) {
-    document.getElementById('noteInput').value = savedNote;
+    document.getElementById('notepad').value = savedNote;
   }
 };
