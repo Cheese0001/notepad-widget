@@ -22,17 +22,17 @@ body {
 }
 
 .timezone {
-    padding: 10px;
+    padding: 8px;
     border-radius: 8px;
     color: #FFF;
     font-size: 14px;
     text-align: center;
 }
 
-.timezone:nth-child(1) { background-color: #007ACC; }
-.timezone:nth-child(2) { background-color: #FF6F61; }
-.timezone:nth-child(3) { background-color: #FFD700; }
-.timezone:nth-child(4) { background-color: #4CAF50; }
+.timezone:nth-child(1) { background-color: #C6878F; }
+.timezone:nth-child(2) { background-color: #B79D94; }
+.timezone:nth-child(3) { background-color: #969696; }
+.timezone:nth-child(4) { background-color: #67697C; }
 
 .notepad-todo-container {
     margin-top: 20px;
@@ -63,7 +63,7 @@ textarea {
 
 /* Button Styles */
 button {
-    background-color: #FF6F61;
+    background-color: #253D5B;
     color: #FFF;
     border: none;
     border-radius: 8px;
@@ -76,7 +76,7 @@ button {
 }
 
 button:hover {
-    background-color: #D32F2F;
+    background-color: #253D5B;
 }
 
 button:focus {
@@ -100,7 +100,7 @@ ul {
 }
 
 #todo-list li .delete-task {
-    background-color: #D32F2F;
+    background-color: #C6878F;
     color: #FFF;
     border: none;
     cursor: pointer;
