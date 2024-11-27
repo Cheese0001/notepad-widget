@@ -1,13 +1,17 @@
+// Save notes to localStorage
 function saveNotes() {
     const notes = document.getElementById('notepad').value;
-    localStorage.setItem('notes', notes);
+    localStorage.setItem('notes', notes); // Save the notes
     alert('Notes saved!');
 }
 
+// Clear notes from the textarea
 function clearNotes() {
-    document.getElementById('notepad').value = '';
+    document.getElementById('notepad').value = ''; // Clear the textarea
+    localStorage.removeItem('notes'); // Remove notes from localStorage
 }
 
+// Add a task to the To-Do list
 function addTask() {
     const taskInput = document.getElementById('task-input');
     const taskText = taskInput.value.trim();
@@ -36,20 +40,85 @@ function addTask() {
     document.getElementById('todo-list').appendChild(li);
 
     taskInput.value = '';
+    saveTasks(); // Save the updated task list to localStorage
 }
 
+// Clear all tasks from the To-Do list
 function clearAll() {
     document.getElementById('todo-list').innerHTML = '';
+    localStorage.removeItem('tasks'); // Remove tasks from localStorage
 }
 
-// Update live timezone function
+// Save the tasks to localStorage
+function saveTasks() {
+    const tasks = [];
+    const taskItems = document.querySelectorAll('#todo-list li');
+    taskItems.forEach(item => {
+        tasks.push({
+            text: item.firstChild.textContent,
+            completed: item.classList.contains('completed')
+        });
+    });
+    localStorage.setItem('tasks', JSON.stringify(tasks)); // Save task data to localStorage
+}
+
+// Load notes from localStorage
+function loadNotes() {
+    const savedNotes = localStorage.getItem('notes');
+    if (savedNotes) {
+        document.getElementById('notepad').value = savedNotes;
+    }
+}
+
+// Load tasks from localStorage
+function loadTasks() {
+    const savedTasks = localStorage.getItem('tasks');
+    if (savedTasks) {
+        const tasks = JSON.parse(savedTasks);
+        tasks.forEach(task => {
+            const li = document.createElement('li');
+            li.textContent = task.text;
+            if (task.completed) {
+                li.classList.add('completed');
+            }
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.classList.add('delete-task');
+            deleteBtn.onclick = function () {
+                li.remove();
+                saveTasks(); // Update localStorage after task removal
+            };
+
+            const completeBtn = document.createElement('button');
+            completeBtn.textContent = 'Complete';
+            completeBtn.classList.add('complete-task');
+            completeBtn.onclick = function () {
+                li.classList.toggle('completed');
+                saveTasks(); // Update localStorage after task completion
+            };
+
+            li.appendChild(completeBtn);
+            li.appendChild(deleteBtn);
+            document.getElementById('todo-list').appendChild(li);
+        });
+    }
+}
+
+// Call the loadNotes and loadTasks functions when the page loads
+window.onload = function () {
+    loadNotes();
+    loadTasks();
+};
+
+// Update timezones function remains unchanged
 function updateTimezones() {
     const timezones = [
-        { id: 'pacific-time', offset: -8 },  // Pacific Time (UTC-8)
-        { id: 'mountain-time', offset: -7 }, // Mountain Time (UTC-7)
-        { id: 'central-time', offset: -6 }, // Central Time (UTC-6)
-        { id: 'eastern-time', offset: -5 }, // Eastern Time (UTC-5)
-        { id: 'philippines-time', offset: 8 }, // Philippines Time (UTC+8)
+        { id: 'pacific-time', offset: -8 }, 
+        { id: 'mountain-time', offset: -7 },
+        { id: 'central-time', offset: -6 },
+        { id: 'eastern-time', offset: -5 },
+        { id: 'philippines-time', offset: 8 },
     ];
 
     timezones.forEach(zone => {
@@ -60,11 +129,9 @@ function updateTimezones() {
         const minutes = localTime.getMinutes().toString().padStart(2, '0');
         const ampm = localTime.getHours() < 12 ? 'AM' : 'PM';
         const formattedTime = `${hours}:${minutes} ${ampm}`;
-      
-
+        
         element.innerHTML = `${zone.id.replace('-', ' ').toUpperCase()} <br> ${formattedTime} <br> ${date}`;
     });
 }
 
-// Call the updateTimezones function every second to keep it live
 setInterval(updateTimezones, 1000);
