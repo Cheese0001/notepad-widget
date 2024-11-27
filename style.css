@@ -3,7 +3,7 @@ body {
     padding: 0;
     background-color: #FEEEEB; /* Page background */
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 100vh; /* Full height of the viewport */
 }
@@ -24,15 +24,12 @@ h1 {
     color: #333;
 }
 
-/* Date & time styling */
 #date-time {
     margin-bottom: 15px;
     font-size: 14px;
     color: #6B6D76;
-    text-align: left; /* Aligns the time zone display to the left */
 }
 
-/* Notepad styles */
 .notepad-container {
     margin-bottom: 20px;
 }
@@ -48,7 +45,6 @@ h1 {
     font-family: 'Press Start 2P', cursive;
 }
 
-/* Button styles */
 .button-group button {
     background-color: #FEEEEB;
     color: #6B6D76;
@@ -65,7 +61,6 @@ h1 {
     color: white;
 }
 
-/* To-Do list styles */
 .todo-container {
     margin-top: 20px;
 }
@@ -102,31 +97,20 @@ h1 {
 .todo-item button:hover {
     color: green;
 }
+
 #timezones {
     display: flex;
     justify-content: space-around;
-    align-items: center;
     width: 100%;
-    margin-bottom: 20px;
     padding: 10px;
-    background-color: #FEEEEB;
+    margin-bottom: 20px;
 }
 
 .timezone {
-    font-size: 14px;
-    color: #6B6D76;
-    padding: 5px 10px;
+    background-color: #F4F4F4;
     border: 1px solid #6B6D76;
-    border-radius: 5px;
-    background-color: white;
-    text-align: center;
-}
-
-
-
-#date-time {
+    border-radius: 10px;
+    padding: 10px;
     font-size: 14px;
-    color: #6B6D76;
-    margin-bottom: 5px; /* Space between rows */
+    color: #333;
 }
-
