@@ -3,28 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notepad with To-Do List</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Notepad and To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #notepad {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+        }
+        #todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .todo-item span {
+            flex: 1;
+        }
+        button {
+            margin-left: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <!-- Cover GIF -->
-    <div class="cover-gif">
-        <img src="https://i.pinimg.com/originals/dd/c0/13/ddc013635f19439384eca06eb076e0e4.gif" alt="Cover GIF">
-    </div>
+    <h2>Notepad</h2>
+    <textarea id="notepad"></textarea>
+    <button onclick="saveNotes()">Save Notes</button>
 
-    <div class="notepad-container">
-        <h1>Notepad</h1>
-        <textarea id="notepad" placeholder="Write your notes here..."></textarea>
-        <div class="button-group">
-            <button onclick="saveNotes()">Save</button>
-            <button onclick="clearNotes()">Clear</button>
-        </div>
-        
-        <h2>To-Do List</h2>
-        <input type="text" id="new-todo" placeholder="Add a new task..." onkeydown="if(event.key === 'Enter'){addTodo()}">
-        <ul id="todo-list"></ul>
-    </div>
+    <h2>To-Do List</h2>
+    <input type="text" id="new-todo" placeholder="Add a new task...">
+    <button onclick="addTodo()">Add Task</button>
+    <ul id="todo-list"></ul>
 
-    <script src="script.js"></script>
+    <script>
+        // Function to save notes to localStorage
+        function saveNotes() {
+            const notes = document.getElementById('notepad').value;
+            localStorage.setItem('savedNotes', notes);
+        }
+
+        // Function to load notes from localStorage
+        function loadNotes() {
+            const savedNotes = localStorage.getItem('savedNotes');
+            if (savedNotes) {
+                document.getElementById('notepad').value = savedNotes;
+            }
+        }
+
+        // Function to add a new task to the to-do list
+        function addTodo() {
+            const newTodoInput = document.getElementById('new-todo');
+            const todoText = newTodoInput.value.trim();
+
+            if (todoText) {
+                const todoList = document.getElementById('todo-list');
+                const li = document.createElement('li');
+                li.classList.add('todo-item');
+
+                // Create a span to hold the task text
+                const taskSpan = document.createElement('span');
+                taskSpan.textContent = todoText;
+                li.appendChild(taskSpan);
+
+                // Create a checkmark button
+                const checkButton = document.createElement('button');
+                checkButton.textContent = '✔️';
+                checkButton.onclick = function() {
+                    taskSpan.style.textDecoration = taskSpan.style.textDecoration === 'line-through' ? 'none' : 'line-through';
+                    saveTasks(); // Save updated task status
+                };
+
+                // Append the button and the list item to the list
+                li.appendChild(checkButton);
+                todoList.appendChild(li);
+
+                // Clear the input field after adding
+                newTodoInput.value = '';
+                saveTasks(); // Save the task to localStorage
+            }
+        }
+
+        // Function to save tasks to localStorage
+        function saveTasks() {
+            const tasks = [];
+            const taskElements = document.querySelectorAll('.todo-item');
+            taskElements.forEach(task => {
+                tasks.push({
+                    text: task.querySelector('span').textContent,
+                    completed: task.querySelector('span').style.textDecoration === 'line-through'
+                });
+            });
+            localStorage.setItem('savedTasks', JSON.stringify(tasks));
+        }
+
+        // Function to load tasks from localStorage
+        function loadTasks() {
+            const savedTasks = JSON.parse(localStorage.getItem('savedTasks'));
+            if (savedTasks) {
+                savedTasks.forEach(task => {
+                    const todoList = document.getElementById('todo-list');
+                    const li = document.createElement('li');
+                    li.classList.add('todo-item');
+
+                    // Create a span to hold the task text
+                    const taskSpan = document.createElement('span');
+                    taskSpan.textContent = task.text;
+                    if (task.completed) {
+                        taskSpan.style.textDecoration = 'line-through'; // Mark completed tasks
+                    }
+                    li.appendChild(taskSpan);
+
+                    // Create a checkmark button
+                    const checkButton = document.createElement('button');
+                    checkButton.textContent = '✔️';
+                    checkButton.onclick = function() {
+                        taskSpan.style.textDecoration = taskSpan.style.textDecoration === 'line-through' ? 'none' : 'line-through';
+                        saveTasks(); // Save the updated task status
+                    };
+
+                    // Append the button and the list item to the list
+                    li.appendChild(checkButton);
+                    todoList.appendChild(li);
+                });
+            }
+        }
+
+        // Load notes and tasks when the page loads
+        window.onload = function() {
+            loadNotes();
+            loadTasks();
+        };
+    </script>
 </body>
 </html>
