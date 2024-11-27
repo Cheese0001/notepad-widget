@@ -1,83 +1,94 @@
 body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  text-align: center;
+    font-family: 'Press Start 2P', cursive; /* Pixel font */
+    margin: 0;
+    padding: 0;
+    background-color: #FEEEEB; /* Background color */
+    text-align: center;
 }
 
-/* Styling for the main container */
+/* Container styles */
+.container {
+    margin: 20px auto;
+    width: 80%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    background-color: white;
+    padding: 20px;
+}
+
+/* Date & time styling */
+#date-time {
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #6B6D76;
+}
+
+/* Notepad styles */
 .notepad-container {
-  margin: 20px auto;
-  width: 80%;
-  background-color: #f9f9f9;
-  border: 2px solid #6B6D76;
-  border-radius: 10px;
-  padding: 20px;
+    margin-bottom: 20px;
 }
 
-/* Styling for the text area */
 #notepad {
-  width: 100%;
-  height: 200px;
-  margin-bottom: 10px;
-  font-size: 16px;
-  border: 1px solid #6B6D76;
-  border-radius: 5px;
+    width: 100%;
+    height: 200px;
+    border: 1px solid #6B6D76;
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 10px;
+    color: #6B6D76;
 }
 
 /* Button styles */
 .button-group button {
-  margin: 5px;
-  padding: 10px 20px;
-  background-color: #6B6D76;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
+    background-color: #FEEEEB;
+    color: #6B6D76;
+    border: 1px solid #6B6D76;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 .button-group button:hover {
-  background-color: #4B4D57;
+    background-color: #6B6D76;
+    color: white;
 }
 
 /* To-Do list styles */
+.todo-container {
+    margin-top: 20px;
+}
+
 #new-todo {
-  width: 80%;
-  padding: 10px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  border: 1px solid #6B6D76;
-  border-radius: 5px;
+    width: 80%;
+    border: 1px solid #6B6D76;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
 }
 
 .todo-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #6B6D76;
-  padding: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #6B6D76;
+    padding: 5px 0;
 }
 
 .todo-item span {
-  flex-grow: 1;
-  font-size: 16px;
+    flex-grow: 1;
+    font-size: 16px;
 }
 
 .todo-item button {
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  color: #6B6D76;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: #6B6D76;
 }
 
 .todo-item button:hover {
-  color: green; /* Highlight color for checkmark */
-}
-
-/* Styling for footer */
-.footer-note {
-  margin-top: 20px;
-  font-size: 12px;
-  color: #6B6D76;
+    color: green;
 }
