@@ -5,174 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Notepad Widget</title>
   <link rel="stylesheet" href="styles.css">
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      font-family: 'PixelFont', sans-serif; /* Replace with your chosen font */
-      background-color: #f5f5f5;
-    }
-
-    .notepad {
-      position: relative;
-      width: 500px;
-      padding: 20px;
-      border: 2px solid #6B6D76;
-      background-color: #fff;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .notepad-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-
-    .button {
-      padding: 8px 16px;
-      background-color: #F4A6C9; /* Pastel pink */
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-family: 'PixelFont', sans-serif; /* Ensure the same font */
-    }
-
-    .button:hover {
-      background-color: #e68f9c; /* Slightly darker pink */
-    }
-
-    .task {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 5px;
-    }
-
-    .task button {
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-      color: #6B6D76;
-    }
-
-    .task button:hover {
-      color: #333;
-    }
-
-    .footer-note {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      font-size: 12px;
-      color: #6B6D76;
-    }
-
-    .clear-all-btn {
-      background-color: #f4a6c9;
-      color: #fff;
-      border-radius: 4px;
-      border: none;
-      padding: 8px 16px;
-      cursor: pointer;
-      font-family: 'PixelFont', sans-serif; /* Ensure the same font */
-      margin-top: 10px;
-      display: block;
-    }
-
-    .clear-all-btn:hover {
-      background-color: #e68f9c;
-    }
-  </style>
 </head>
 <body>
-  <div class="notepad">
+  <div class="notepad-container">
     <div class="notepad-header">
       <h2>Notepad</h2>
       <button class="button" onclick="saveNotes()">Save</button>
     </div>
     <textarea id="notepad" placeholder="Write your notes here..."></textarea>
-    <div>
-      <input type="text" id="taskInput" placeholder="Add a new task..." onkeypress="if(event.keyCode==13){addTask()}">
-      <button class="button" onclick="addTask()">Add Task</button>
-      <button class="clear-all-btn" onclick="clearAllTasks()">Clear All Tasks</button>
+    <div class="button-group">
+      <input type="text" id="new-todo" placeholder="Add a new task..." onkeypress="if(event.keyCode==13){addTodo()}">
+      <button class="button" onclick="addTodo()">Add Task</button>
+      <button class="button" onclick="clearAllTasks()">Clear All Tasks</button>
     </div>
     <ul id="todo-list"></ul>
   </div>
   <div class="footer-note">Made by Cheese000</div>
 
-  <script>
-    function addTask() {
-      let taskInput = document.getElementById('taskInput').value;
-      if (taskInput.trim() !== '') {
-        let taskElement = document.createElement('div');
-        taskElement.textContent = taskInput;
-        taskElement.classList.add('task');
-        let checkButton = document.createElement('button');
-        checkButton.textContent = '✓';
-        checkButton.onclick = function() {
-          taskElement.style.textDecoration = taskElement.style.textDecoration === 'line-through' ? 'none' : 'line-through';
-          saveTasks();
-        };
-        taskElement.appendChild(checkButton);
-        document.getElementById('todo-list').appendChild(taskElement);
-        document.getElementById('taskInput').value = '';
-        saveTasks();
-      }
-    }
-
-    function saveTasks() {
-      let tasks = [];
-      let taskElements = document.querySelectorAll('.task');
-      taskElements.forEach(task => {
-        tasks.push(task.textContent);
-      });
-      localStorage.setItem('savedTasks', JSON.stringify(tasks));
-    }
-
-    function loadTasks() {
-      let savedTasks = JSON.parse(localStorage.getItem('savedTasks'));
-      if (savedTasks) {
-        savedTasks.forEach(task => {
-          let taskElement = document.createElement('div');
-          taskElement.textContent = task;
-          taskElement.classList.add('task');
-          let checkButton = document.createElement('button');
-          checkButton.textContent = '✓';
-          checkButton.onclick = function() {
-            taskElement.style.textDecoration = taskElement.style.textDecoration === 'line-through' ? 'none' : 'line-through';
-            saveTasks();
-          };
-          taskElement.appendChild(checkButton);
-          document.getElementById('todo-list').appendChild(taskElement);
-        });
-      }
-    }
-
-    function clearAllTasks() {
-      document.getElementById('todo-list').innerHTML = ''; // Remove all task elements
-      localStorage.removeItem('savedTasks'); // Clear saved tasks from localStorage
-    }
-
-    function saveNotes() {
-      let notes = document.getElementById('notepad').value;
-      localStorage.setItem('savedNotes', notes);
-    }
-
-    function loadNotes() {
-      let savedNotes = localStorage.getItem('savedNotes');
-      if (savedNotes) {
-        document.getElementById('notepad').value = savedNotes;
-      }
-    }
-
-    window.onload = function() {
-      loadNotes();
-      loadTasks();
-    };
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
