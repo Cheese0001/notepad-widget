@@ -8,23 +8,23 @@
   </style>
 </head>
 body {
+    margin: 0;
+    padding: 0;
+    background-color: #FEEEEB; /* Page background */
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Full height to center vertically */
-    margin: 0;
-    background-color: #FEEEEB; /* Background color */
+    height: 100vh; /* Full height of the viewport */
 }
 
 .container {
-    width: 70%; /* Adjust size as needed */
-    max-width: 900px; /* Optional: limit max width */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Deeper shadow */
-    border-radius: 15px; /* Rounded corners */
-    background-color: white; /* Container color */
+    width: 70%; /* Adjust width as needed */
+    max-width: 900px; /* Optional: limit the maximum width */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    background-color: white;
     padding: 20px;
 }
-
 
 
 /* Date & time styling */
