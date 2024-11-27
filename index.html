@@ -11,9 +11,51 @@
             padding: 0;
             background-color: #FEEEEB; /* Page background */
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh; /* Full height of the viewport */
+            min-height: 100vh;
+        }
+
+        .timezone-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 20px;
+            padding: 10px 0;
+        }
+
+        .timezone {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 20px;
+            font-family: 'Press Start 2P', cursive;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #pacific-time {
+            background-color: #5D3F6A; /* Purple */
+        }
+
+        #mountain-time {
+            background-color: #D38582; /* Pink */
+        }
+
+        #central-time {
+            background-color: #D4B373; /* Yellow */
+        }
+
+        #eastern-time {
+            background-color: #82D4D2; /* Teal */
+        }
+
+        #philippines-time {
+            background-color: #6A83D4; /* Blue */
         }
 
         .container {
@@ -30,12 +72,6 @@
             margin-bottom: 20px;
             font-size: 24px;
             color: #333;
-        }
-
-        #date-time {
-            margin-bottom: 15px;
-            font-size: 14px;
-            color: #6B6D76;
         }
 
         .notepad-container {
@@ -108,11 +144,18 @@
     </style>
 </head>
 <body>
+    <!-- Timezones section outside the main container -->
+    <div class="timezone-container">
+        <div class="timezone" id="pacific-time">Pacific Time: Loading...</div>
+        <div class="timezone" id="mountain-time">Mountain Time: Loading...</div>
+        <div class="timezone" id="central-time">Central Time: Loading...</div>
+        <div class="timezone" id="eastern-time">Eastern Time: Loading...</div>
+        <div class="timezone" id="philippines-time">Philippine Time: Loading...</div>
+    </div>
+
+    <!-- Main container -->
     <div class="container">
         <h1>NOTEPAD</h1>
-        <div id="date-time"></div>
-
-        <!-- Notes Section -->
         <div class="notepad-container">
             <textarea id="notepad" placeholder="Write your notes here..."></textarea>
             <div class="button-group">
@@ -121,7 +164,6 @@
             </div>
         </div>
 
-        <!-- To-Do List Section -->
         <div class="todo-container">
             <input type="text" id="new-todo" placeholder="Add a new task...">
             <div class="button-group">
@@ -131,35 +173,7 @@
             <ul id="todo-list"></ul>
         </div>
     </div>
+
     <script src="script.js"></script>
-    <!-- Font size control buttons -->
-    <div class="button-group">
-        <button onclick="resizeText('increase')">+</button>
-        <button onclick="resizeText('decrease')">-</button>
-    </div>
-    <!-- Remove this from the .container -->
-<!-- Time zones section outside the main container -->
-<div id="timezones">
-    <div class="timezone" id="pacific-time">Pacific Time: Loading...</div>
-    <div class="timezone" id="mountain-time">Mountain Time: Loading...</div>
-    <div class="timezone" id="central-time">Central Time: Loading...</div>
-    <div class="timezone" id="eastern-time">Eastern Time: Loading...</div>
-    <div class="timezone" id="Philippines-time">Philippine Time: Loading...</div>
-</div>
-
-
-    </div>
-
-    <div class="todo-container">
-        <input type="text" id="new-todo" placeholder="Add a new task...">
-        <div class="button-group">
-            <button onclick="addTodo()">Add Task</button>
-            <button onclick="clearAllTasks()">Clear All Tasks</button>
-        </div>
-        <ul id="todo-list"></ul>
-    </div>
-</div>
-
-
 </body>
 </html>
