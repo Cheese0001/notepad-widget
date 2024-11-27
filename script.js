@@ -124,9 +124,7 @@ function resizeText(action) {
         notepad.style.fontSize = (newSize + 2) + 'px'; // Increase font size by 2px
         dateTime.style.fontSize = (newSize + 2) + 'px';
     } else if (action === 'decrease') {
-        notepad.styleIt seems like the code provided might have gotten lost in translation during our conversation, but I've combined everything to make sure your notepad and to-do app has a clean design and full functionality. Make sure that:
-
-1. Your CSS and HTML are intact as given above.
-2. Your JavaScript (saved in `script.js`) handles the logic for tasks, saving, and loading notes, as well as adjusting font sizes and displaying the time zones.
-
-If anything is still unclear or not working, please let me know so I can further adjust or troubleshoot. 😊
+        notepad.style.fontSize = (newSize - 2) + 'px'; // Decrease font size by 2px
+        dateTime.style.fontSize = (newSize - 2) + 'px';
+    }
+}
