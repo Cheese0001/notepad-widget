@@ -1,60 +1,103 @@
-// Update Timezones
-function updateTimeZones() {
-    const timeZones = {
-        'pacific-time': 'America/Los_Angeles',
-        'mountain-time': 'America/Denver',
-        'central-time': 'America/Chicago',
-        'eastern-time': 'America/New_York',
-        'philippines-time': 'Asia/Manila'
+// Function to save notes to localStorage
+function saveNotes() {
+  const notes = document.getElementById('notepad').value;
+  localStorage.setItem('savedNotes', notes);
+}
+
+// Function to load notes from localStorage
+function loadNotes() {
+  const savedNotes = localStorage.getItem('savedNotes');
+  if (savedNotes) {
+    document.getElementById('notepad').value = savedNotes;
+  }
+}
+
+// Function to add a new task to the to-do list
+function addTodo() {
+  const newTodoInput = document.getElementById('new-todo');
+  const todoText = newTodoInput.value.trim();
+
+  if (todoText) {
+    const todoList = document.getElementById('todo-list');
+    const li = document.createElement('li');
+    li.classList.add('todo-item');
+
+    // Create a span to hold the task text
+    const taskSpan = document.createElement('span');
+    taskSpan.textContent = todoText;
+    li.appendChild(taskSpan);
+
+    // Create a checkmark button
+    const checkButton = document.createElement('button');
+    checkButton.textContent = '✔️';
+    checkButton.onclick = function() {
+      taskSpan.style.textDecoration = taskSpan.style.textDecoration === 'line-through' ? 'none' : 'line-through';
+      saveTasks(); // Save updated task status
     };
 
-    for (const [id, timeZone] of Object.entries(timeZones)) {
-        const element = document.getElementById(id);
-        const options = { timeZone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-        element.textContent = `${id.replace('-', ' ').toUpperCase()}: ${new Intl.DateTimeFormat('en-US', options).format(new Date())}`;
-    }
+    // Append the button and the list item to the list
+    li.appendChild(checkButton);
+    todoList.appendChild(li);
+
+    // Clear the input field after adding
+    newTodoInput.value = '';
+    saveTasks(); // Save tasks to localStorage
+  }
 }
 
-setInterval(updateTimeZones, 1000);
-
-// Notes Functionality
-function saveNotes() {
-    const notes = document.getElementById('notepad').value;
-    localStorage.setItem('notes', notes);
+// Function to save tasks to localStorage
+function saveTasks() {
+  const tasks = [];
+  const taskElements = document.querySelectorAll('.todo-item');
+  taskElements.forEach(task => {
+    tasks.push({
+      text: task.querySelector('span').textContent,
+      completed: task.querySelector('span').style.textDecoration === 'line-through'
+    });
+  });
+  localStorage.setItem('savedTasks', JSON.stringify(tasks));
 }
 
-window.onload = function() {
-    const savedNotes = localStorage.getItem('notes');
-    if (savedNotes) {
-        document.getElementById('notepad').value = savedNotes;
-    }
-};
+// Function to load tasks from localStorage
+function loadTasks() {
+  const savedTasks = JSON.parse(localStorage.getItem('savedTasks'));
+  if (savedTasks) {
+    savedTasks.forEach(task => {
+      const todoList = document.getElementById('todo-list');
+      const li = document.createElement('li');
+      li.classList.add('todo-item');
 
-function clearNotes() {
-    document.getElementById('notepad').value = '';
-    localStorage.removeItem('notes');
+      // Create a span to hold the task text
+      const taskSpan = document.createElement('span');
+      taskSpan.textContent = task.text;
+      if (task.completed) {
+        taskSpan.style.textDecoration = 'line-through'; // Mark completed tasks
+      }
+      li.appendChild(taskSpan);
+
+      // Create a checkmark button
+      const checkButton = document.createElement('button');
+      checkButton.textContent = '✔️';
+      checkButton.onclick = function() {
+        taskSpan.style.textDecoration = taskSpan.style.textDecoration === 'line-through' ? 'none' : 'line-through';
+        saveTasks(); // Save updated task status
+      };
+
+      // Append the button and the list item to the list
+      li.appendChild(checkButton);
+      todoList.appendChild(li);
+    });
+  }
 }
 
-// To-Do List Functionality
-function addTodo() {
-    const todoInput = document.getElementById('new-todo');
-    if (todoInput.value.trim()) {
-        const todoList = document.getElementById('todo-list');
-        const listItem = document.createElement('li');
-        listItem.textContent = todoInput.value;
-
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = '✔';
-        deleteButton.onclick = function() {
-            listItem.remove();
-        };
-
-        listItem.appendChild(deleteButton);
-        todoList.appendChild(listItem);
-        todoInput.value = '';
-    }
-}
-
+// Function to clear all tasks from the list and localStorage
 function clearAllTasks() {
-    document.getElementById('todo-list').innerHTML = '';
+  document.getElementById('todo-list').innerHTML = ''; // Remove all task elements
+  localStorage.removeItem('savedTasks'); // Clear saved tasks from localStorage
 }
+
+// Load notes and tasks when the page loads
+window.onload = function() {
+  loadNotes();
+  loadTasks();
+};
