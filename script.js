@@ -117,15 +117,12 @@ function updateTime() {
 // Adjust the font size of the notepad and time zone display
 function resizeText(action) {
     const notepad = document.getElementById('notepad');
-    const dateTime = document.getElementById('date-time');
     const currentSize = parseInt(window.getComputedStyle(notepad).fontSize);
 
     if (action === 'increase') {
         notepad.style.fontSize = (currentSize + 2) + 'px';
-        dateTime.style.fontSize = (parseInt(window.getComputedStyle(dateTime).fontSize) + 2) + 'px';
     } else if (action === 'decrease') {
         notepad.style.fontSize = (currentSize - 2) + 'px';
-        dateTime.style.fontSize = (parseInt(window.getComputedStyle(dateTime).fontSize) - 2) + 'px';
     }
 }
 
