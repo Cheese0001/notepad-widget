@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notepad & To-Do List</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Time zones section above the main container -->
     <div id="timezones">
         <div class="timezone" id="pacific-time">Pacific Time: Loading...</div>
         <div class="timezone" id="mountain-time">Mountain Time: Loading...</div>
@@ -16,12 +16,8 @@
         <div class="timezone" id="philippines-time">Philippine Time: Loading...</div>
     </div>
 
-    <!-- Main container -->
     <div class="container">
         <h1>NOTEPAD</h1>
-        <div id="date-time"></div>
-
-        <!-- Notes Section -->
         <div class="notepad-container">
             <textarea id="notepad" placeholder="Write your notes here..."></textarea>
             <div class="button-group">
@@ -30,7 +26,6 @@
             </div>
         </div>
 
-        <!-- To-Do List Section -->
         <div class="todo-container">
             <input type="text" id="new-todo" placeholder="Add a new task...">
             <div class="button-group">
@@ -41,6 +36,7 @@
         </div>
     </div>
 
+    <div class="footer">Made by Cheese</div>
     <script src="script.js"></script>
 </body>
 </html>
