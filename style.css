@@ -14,28 +14,22 @@ body {
     justify-content: center;
     width: 100%;
     margin-bottom: 20px;
-    background-color: #E6F7FF; /* Light blue pastel for Pacific */
-    padding: 10px 0;
-    border-radius: 10px;
 }
 
 .timezone {
+    padding: 10px;
+    border-radius: 10px;
     color: #FFF;
-    margin: 0 10px;
     font-size: 16px;
     font-weight: bold;
+    margin: 0 5px;
 }
 
-.timezone:nth-child(2) {
-    background-color: #FFEBE6; /* Light red pastel for Mountain */
-}
 
-.timezone:nth-child(3) {
-    background-color: #E6F9E6; /* Light green pastel for Central */
-}
-
-.timezone:nth-child(4) {
-    background-color: #D6C6FF; /* Light purple pastel for Philippines */
+.timezone:nth-child(1) { background-color: #E6F7FF; } /* Pacific */
+.timezone:nth-child(2) { background-color: #FFEBE6; } /* Mountain */
+.timezone:nth-child(3) { background-color: #E6F9E6; } /* Central */
+.timezone:nth-child(4) { background-color: #D6C6FF; } /* Philippines */ground-color: #D6C6FF; /* Light purple pastel for Philippines */
 }
 
 .container {
