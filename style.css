@@ -1,32 +1,77 @@
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #FEEEEB;
-    margin: 0;
+  font-family: 'Press Start 2P', cursive;
+  background-color: #FEEEEB;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
 }
 
-.notepad-container {
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 600px;
-    font-family: 'PixelFont', sans-serif; /* Replace with your pixel font */
+.container {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
 }
 
-button {
-    background-color: #FEEEEB;
-    color: #6B6D76;
-    border: 1px solid #6B6D76;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin: 5px;
+#notepad {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border: 2px solid #6B6D76;
+  border-radius: 5px;
+  padding: 10px;
 }
 
-button:hover {
-    background-color: #6B6D76;
-    color: white;
+.button-group button {
+  margin: 5px;
+  padding: 10px 20px;
+  background-color: #FEEEEB;
+  color: #6B6D76;
+  border: 2px solid #6B6D76;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.button-group button:hover {
+  background-color: #6B6D76;
+  color: white;
+}
+
+#new-todo {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  border: 2px solid #6B6D76;
+  border-radius: 5px;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #6B6D76;
+  padding: 5px 0;
+}
+
+.todo-item span {
+  flex-grow: 1;
+  font-size: 16px;
+}
+
+.todo-item button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: #6B6D76;
+}
+
+.todo-item button:hover {
+  color: green;
 }
