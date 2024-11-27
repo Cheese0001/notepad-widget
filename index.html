@@ -3,45 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notepad and To-Do List</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-<script src="script.js"></script>-- Link to your CSS file -->
+    <title>Notepad & To-Do App</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Timezones Section -->
+    <div class="timezones-container">
+        <div class="timezone" id="pacific-time">Pacific Time</div>
+        <div class="timezone" id="mountain-time">Mountain Time</div>
+        <div class="timezone" id="central-time">Central Time</div>
+        <div class="timezone" id="eastern-time">Eastern Time</div>
+        <div class="timezone" id="philippines-time">Philippines Time</div>
+    </div>
 
-    <!-- Timezone container -->
-<div class="timezone-container">
-    <div class="timezone" id="pacific-time">Pacific Time</div>
-    <div class="timezone" id="mountain-time">Mountain Time</div>
-    <div class="timezone" id="central-time">Central Time</div>
-    <div class="timezone" id="eastern-time">Eastern Time</div>
-    <div class="timezone" id="philippines-time">Philippines Time</div>
-</div>
-
-
-    <!-- Main container for the app -->
+    <!-- Notepad and To-Do App -->
     <div class="container">
-        <div class="notepad-container">
-            <h2>Notepad</h2>
-            <textarea id="notepad" placeholder="Write your notes here..."></textarea><br>
-            <button onclick="saveNotes()">Save Notes</button>
-            <button onclick="clearNotes()">Clear Notes</button>
-        </div>
-
-        <div class="todo-container">
-            <h2>To-Do List</h2>
-            <input type="text" id="task-input" placeholder="Enter a task...">
-            <button onclick="addTask()">Add Task</button>
-            <ul id="todo-list"></ul>
-            <button onclick="clearAll()">Clear All</button>
-        </div>
-
-        <div class="footer">
-            <p>Notepad App - Made by Cheese000</p>
+        <h1>Notepad & To-Do App</h1>
+        <div class="notepad-todo-container">
+            <!-- Notepad Section -->
+            <div class="notepad-container">
+                <h2>Notepad</h2>
+                <textarea id="notepad" placeholder="Write your notes here..."></textarea>
+                <div class="button-group">
+                    <button onclick="saveNotes()">Save Notes</button>
+                    <button onclick="clearNotes()">Clear Notes</button>
+                </div>
+            </div>
+            
+            <!-- Task Section -->
+            <div class="todo-container">
+                <h2>Task</h2>
+                <input type="text" id="new-todo" placeholder="Add new task...">
+                <div class="button-group">
+                    <button onclick="addTodo()">Add Task</button>
+                    <button onclick="clearAllTasks()">Clear All</button>
+                </div>
+                <ul id="todo-list"></ul>
+            </div>
         </div>
     </div>
 
-    <script src="script.js"></script> <!-- Link to your JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>
