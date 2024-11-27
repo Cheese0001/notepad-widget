@@ -1,20 +1,32 @@
 // Function to display current time in each timezone
-function updateTimeZones() {
-    const timeZones = {
-        'pacific-time': 'America/Los_Angeles',
-        'mountain-time': 'America/Denver',
-        'central-time': 'America/Chicago',
-        'eastern-time': 'America/New_York',
-        'philippines-time': 'Asia/Manila'
-    };
+function updateTimezones() {
+        const timezones = {
+            pacific: "Pacific/Auckland",  // Adjust the timezone identifiers as necessary
+            mountain: "America/Denver",
+            central: "America/Chicago",
+            philippines: "Asia/Manila"
+        };
 
-    for (const [id, timeZone] of Object.entries(timeZones)) {
-        const element = document.getElementById(id);
-        const options = { timeZone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-        element.textContent = `${id.replace('-', ' ').replace('time', 'Time').toUpperCase()}: ${new Intl.DateTimeFormat('en-US', options).format(new Date())}`;
+        for (const [key, value] of Object.entries(timezones)) {
+            const timeElement = document.getElementById(key);
+            const date = new Date().toLocaleString("en-US", {
+                timeZone: value,
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+
+            // Update the time inside the timezone div
+            timeElement.textContent = `${key.charAt(0).toUpperCase() + key.slice(1)} Time: ${date}`;
+        }
     }
-}
 
+    // Call the update function every second
+    setInterval(updateTimezones, 1000);
+
+    // Initial call to update on page load
+    updateTimezones();
 setInterval(updateTimeZones, 1000); // Update every second
 
 // Save notes to local storage
