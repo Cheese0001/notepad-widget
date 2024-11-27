@@ -100,8 +100,18 @@ function loadTasks() {
                 markAsDone(newItem);
             };
 
-            newItem.appendChild(checkButton);
-            todoList.appendChild(newItem);
+             // Create a button to delete the task
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = '❌';
+        deleteButton.onclick = function() {
+            newItem.remove();
+        };
+
+        newItem.appendChild(checkButton);
+        newItem.appendChild(deleteButton);
+        todoList.appendChild(newItem);
+        document.getElementById('new-todo').value = '';
+    }
         });
     }
 }
