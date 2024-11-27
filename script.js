@@ -45,12 +45,11 @@ function addTodo() {
         const newItem = document.createElement('li');
         newItem.textContent = newTodo;
 
-        // Create a button to mark task as done
+        // Create a button to mark as done
         const checkButton = document.createElement('button');
         checkButton.textContent = '✔';
-        checkButton.style.marginLeft = '10px';
         checkButton.onclick = function() {
-            newItem.style.textDecoration = newItem.style.textDecoration === 'line-through' ? 'none' : 'line-through';
+            markAsDone(newItem);
         };
 
         newItem.appendChild(checkButton);
