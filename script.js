@@ -1,103 +1,96 @@
+// Function to save notes to localStorage
+function saveNotes() {
+  const notes = document.getElementById('notepad').value;
+  localStorage.setItem('savedNotes', notes);
+}
+
+// Function to load notes from localStorage
+function loadNotes() {
+  const savedNotes = localStorage.getItem('savedNotes');
+  if (savedNotes) {
+    document.getElementById('notepad').value = savedNotes;
+  }
+}
+
 // Function to add a new task to the to-do list
 function addTodo() {
-    const newTodoInput = document.getElementById('new-todo');
-    const todoText = newTodoInput.value.trim();
+  const newTodoInput = document.getElementById('new-todo');
+  const todoText = newTodoInput.value.trim();
 
-    if (todoText) {
-        const todoList = document.getElementById('todo-list');
-        const li = document.createElement('li');
-        li.classList.add('todo-item');
+  if (todoText) {
+    const todoList = document.getElementById('todo-list');
+    const li = document.createElement('li');
+    li.classList.add('todo-item');
 
-        // Create a span to hold the task text
-        const taskSpan = document.createElement('span');
-        taskSpan.textContent = todoText;
-        li.appendChild(taskSpan);
+    // Create a span to hold the task text
+    const taskSpan = document.createElement('span');
+    taskSpan.textContent = todoText;
+    li.appendChild(taskSpan);
 
-        // Create a checkmark button
-        const checkButton = document.createElement('button');
-        checkButton.textContent = '✔️';
-        checkButton.onclick = function() {
-            taskSpan.style.textDecoration = taskSpan.style.textDecoration === 'line-through' ? 'none' : 'line-through';
-        };
-
-        // Append the button and the list item to the list
-        li.appendChild(checkButton);
-        todoList.appendChild(li);
-
-        // Clear the input field after adding
-        newTodoInput.value = '';
-    }
-}
-
-// Function to save the notes (implementation depends on your storage method)
-function saveNotes() {
-    const notes = document.getElementById('notepad').value;
-    alert('Notes saved!');
-    // Add logic for actual saving if needed (e.g., localStorage or database)
-}
-
-// Function to clear the notes
-function clearNotes() {
-    document.getElementById('notepad').value = '';
-}
-function saveNotes() {
-  let notes = document.getElementById('notes').value; // Get the content of the note
-  localStorage.setItem('savedNotes', notes); // Save it to localStorage
-}
-function loadNotes() {
-  let savedNotes = localStorage.getItem('savedNotes'); // Get the content from localStorage
-  if (savedNotes) {
-    document.getElementById('notes').value = savedNotes; // Display the content in the notepad
-  }
-}
-function addTask() {
-  let taskInput = document.getElementById('taskInput').value; // Get the input value
-  if (taskInput.trim() !== '') {
-    // Create a new task element with a checkmark button
-    let taskElement = document.createElement('div');
-    taskElement.textContent = taskInput;
-    taskElement.classList.add('task');
-    let checkButton = document.createElement('button');
-    checkButton.textContent = '✓';
+    // Create a checkmark button
+    const checkButton = document.createElement('button');
+    checkButton.textContent = '✔️';
     checkButton.onclick = function() {
-      taskElement.style.textDecoration = 'line-through'; // Mark the task as completed
-      saveTasks(); // Save the updated task status
+      taskSpan.style.textDecoration = taskSpan.style.textDecoration === 'line-through' ? 'none' : 'line-through';
+      saveTasks(); // Save updated task status
     };
-    taskElement.appendChild(checkButton);
-    document.getElementById('taskList').appendChild(taskElement);
-    document.getElementById('taskInput').value = ''; // Clear the input
-    saveTasks(); // Save the task to localStorage
+
+    // Append the button and the list item to the list
+    li.appendChild(checkButton);
+    todoList.appendChild(li);
+
+    // Clear the input field after adding
+    newTodoInput.value = '';
+    saveTasks(); // Save tasks to localStorage
   }
 }
 
+// Function to save tasks to localStorage
 function saveTasks() {
-  let tasks = [];
-  let taskElements = document.querySelectorAll('.task');
+  const tasks = [];
+  const taskElements = document.querySelectorAll('.todo-item');
   taskElements.forEach(task => {
-    tasks.push(task.textContent);
+    tasks.push({
+      text: task.querySelector('span').textContent,
+      completed: task.querySelector('span').style.textDecoration === 'line-through'
+    });
   });
   localStorage.setItem('savedTasks', JSON.stringify(tasks));
 }
 
+// Function to load tasks from localStorage
 function loadTasks() {
-  let savedTasks = JSON.parse(localStorage.getItem('savedTasks'));
+  const savedTasks = JSON.parse(localStorage.getItem('savedTasks'));
   if (savedTasks) {
     savedTasks.forEach(task => {
-      let taskElement = document.createElement('div');
-      taskElement.textContent = task;
-      taskElement.classList.add('task');
-      let checkButton = document.createElement('button');
-      checkButton.textContent = '✓';
+      const todoList = document.getElementById('todo-list');
+      const li = document.createElement('li');
+      li.classList.add('todo-item');
+
+      // Create a span to hold the task text
+      const taskSpan = document.createElement('span');
+      taskSpan.textContent = task.text;
+      if (task.completed) {
+        taskSpan.style.textDecoration = 'line-through'; // Mark completed tasks
+      }
+      li.appendChild(taskSpan);
+
+      // Create a checkmark button
+      const checkButton = document.createElement('button');
+      checkButton.textContent = '✔️';
       checkButton.onclick = function() {
-        taskElement.style.textDecoration = 'line-through'; // Mark the task as completed
-        saveTasks(); // Save the updated task status
+        taskSpan.style.textDecoration = taskSpan.style.textDecoration === 'line-through' ? 'none' : 'line-through';
+        saveTasks(); // Save updated task status
       };
-      taskElement.appendChild(checkButton);
-      document.getElementById('taskList').appendChild(taskElement);
+
+      // Append the button and the list item to the list
+      li.appendChild(checkButton);
+      todoList.appendChild(li);
     });
   }
 }
 
+// Load notes and tasks when the page loads
 window.onload = function() {
   loadNotes();
   loadTasks();
