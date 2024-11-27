@@ -90,6 +90,12 @@ function loadTasks() {
   }
 }
 
+// Function to clear all tasks from the list and localStorage
+function clearAllTasks() {
+  document.getElementById('todo-list').innerHTML = ''; // Remove all task elements
+  localStorage.removeItem('savedTasks'); // Clear saved tasks from localStorage
+}
+
 // Load notes and tasks when the page loads
 window.onload = function() {
   loadNotes();
