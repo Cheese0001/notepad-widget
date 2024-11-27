@@ -26,7 +26,7 @@ function addTodo() {
         const todoList = document.getElementById('todo-list');
         const li = document.createElement('li');
         li.classList.add('todo-item');
-        
+
         const taskSpan = document.createElement('span');
         taskSpan.textContent = todoText;
         li.appendChild(taskSpan);
@@ -121,10 +121,32 @@ function resizeText(action) {
     const newSize = parseInt(window.getComputedStyle(notepad).fontSize);
 
     if (action === 'increase') {
-        notepad.style.fontSize = (newSize + 2) + 'px'; // Increase font size by 2px
-        dateTime.style.fontSize = (newSize + 2) + 'px';
+        notepad.style.fontSize = (newSize + 2) + 'px';
+        dateTime.style.fontSize = (parseInt(window.getComputedStyle(dateTime).fontSize) + 2) + 'px';
     } else if (action === 'decrease') {
-        notepad.style.fontSize = (newSize - 2) + 'px'; // Decrease font size by 2px
-        dateTime.style.fontSize = (newSize - 2) + 'px';
+        notepad.style.fontSize = (newSize - It looks like I was cut off. Let me finish the `resizeText()` function and give you complete guidance:
+
+### Continue JavaScript Code (`script.js`)
+```javascript
+// Adjust the font size of the notepad and time zone display
+function resizeText(action) {
+    const notepad = document.getElementById('notepad');
+    const dateTime = document.getElementById('date-time');
+    const currentSize = parseInt(window.getComputedStyle(notepad).fontSize);
+
+    if (action === 'increase') {
+        notepad.style.fontSize = (currentSize + 2) + 'px';
+        dateTime.style.fontSize = (parseInt(window.getComputedStyle(dateTime).fontSize) + 2) + 'px';
+    } else if (action === 'decrease') {
+        notepad.style.fontSize = (currentSize - 2) + 'px';
+        dateTime.style.fontSize = (parseInt(window.getComputedStyle(dateTime).fontSize) - 2) + 'px';
     }
 }
+
+// Initial load functions
+window.onload = function() {
+    loadNotes();
+    loadTasks();
+    updateTime();
+    setInterval(updateTime, 1000); // Update the time every second
+};
