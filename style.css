@@ -107,6 +107,9 @@ h1 {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin: 10px 0;
+    margin: 5px 0; /* Reduced margin */
+    padding: 5px; /* Adjust padding for better control */
+    line-height: 1.4; /* Adjust line height */
+}
 }
 
