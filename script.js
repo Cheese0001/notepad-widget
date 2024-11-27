@@ -63,3 +63,7 @@ function addTodo() {
 function clearAllTasks() {
     document.getElementById('todo-list').innerHTML = '';
 }
+function markAsDone(taskItem) {
+    taskItem.style.textDecoration = taskItem.style.textDecoration === 'line-through' ? 'none' : 'line-through';
+}
+
