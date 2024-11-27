@@ -2,25 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Notepad Widget</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
       padding: 20px;
-      width: 100%;
+      background-color: #f8f9fa;
     }
     textarea {
       width: 100%;
       height: 300px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
       padding: 10px;
       font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      display: block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
 <body>
-  <h3>Notepad Widget</h3>
-  <textarea placeholder="Start typing your notes here..."></textarea>
+  <h1>Notepad Widget</h1>
+  <textarea id="notepad" placeholder="Type your notes here..."></textarea>
+  <button onclick="saveNotes()">Save</button>
+
+  <script>
+    // Load saved notes from local storage (if any)
+    document.addEventListener("DOMContentLoaded", function() {
+      const savedNotes = localStorage.getItem("notepadContent");
+      if (savedNotes) {
+        document.getElementById("notepad").value = savedNotes;
+      }
+    });
+
+    function saveNotes() {
+      const notes = document.getElementById("notepad").value;
+      localStorage.setItem("notepadContent", notes);
+      alert("Notes saved successfully!");
+    }
+  </script>
 </body>
 </html>
