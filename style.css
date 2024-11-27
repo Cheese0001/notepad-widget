@@ -25,11 +25,14 @@
     }
 
     /* Date & time styling */
-    #date-time {
-      margin-bottom: 15px;
-      font-size: 10px;
-      color: #6B6D76;
-    }
+#date-time {
+    font-family: 'Press Start 2P', cursive; /* Change the font style */
+    text-align: left; /* Align the text to the left */
+    color: #6B6D76;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
 
     /* Notepad styles */
     .notepad-container {
