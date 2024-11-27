@@ -37,8 +37,7 @@ function clearNotes() {
     localStorage.removeItem('notes');
 }
 
-// Add a new task
-// Add a new task
+// Function to add a new task
 function addTodo() {
     const newTodo = document.getElementById('new-todo').value;
     if (newTodo) {
@@ -56,13 +55,62 @@ function addTodo() {
         newItem.appendChild(checkButton);
         todoList.appendChild(newItem);
         document.getElementById('new-todo').value = '';
+
+        // Save the current tasks to local storage
+        saveTasks();
     }
 }
 
-// Clear all tasks
-function clearAllTasks() {
-    document.getElementById('todo-list').innerHTML = '';
-}
+// Function to mark a task as done
 function markAsDone(taskItem) {
     taskItem.style.textDecoration = taskItem.style.textDecoration === 'line-through' ? 'none' : 'line-through';
+    saveTasks(); // Save updated tasks to local storage
 }
+
+// Function to save tasks to local storage
+function saveTasks() {
+    const todoList = document.getElementById('todo-list');
+    const tasks = [];
+    for (const taskItem of todoList.children) {
+        tasks.push({
+            text: taskItem.textContent.replace('✔', '').trim(),
+            completed: taskItem.style.textDecoration === 'line-through'
+        });
+    }
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+// Function to load tasks from local storage
+function loadTasks() {
+    const savedTasks = localStorage.getItem('tasks');
+    if (savedTasks) {
+        const tasks = JSON.parse(savedTasks);
+        const todoList = document.getElementById('todo-list');
+        tasks.forEach(task => {
+            const newItem = document.createElement('li');
+            newItem.textContent = task.text;
+
+            if (task.completed) {
+                newItem.style.textDecoration = 'line-through';
+            }
+
+            const checkButton = document.createElement('button');
+            checkButton.textContent = '✔';
+            checkButton.onclick = function() {
+                markAsDone(newItem);
+            };
+
+            newItem.appendChild(checkButton);
+            todoList.appendChild(newItem);
+        });
+    }
+}
+
+// Function to clear all tasks
+function clearAllTasks() {
+    document.getElementById('todo-list').innerHTML = '';
+    localStorage.removeItem('tasks');
+}
+
+// Load tasks when the page loads
+window.onload = loadTasks;
