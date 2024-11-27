@@ -118,20 +118,6 @@ function updateTime() {
 function resizeText(action) {
     const notepad = document.getElementById('notepad');
     const dateTime = document.getElementById('date-time');
-    const newSize = parseInt(window.getComputedStyle(notepad).fontSize);
-
-    if (action === 'increase') {
-        notepad.style.fontSize = (newSize + 2) + 'px';
-        dateTime.style.fontSize = (parseInt(window.getComputedStyle(dateTime).fontSize) + 2) + 'px';
-    } else if (action === 'decrease') {
-        notepad.style.fontSize = (newSize - It looks like I was cut off. Let me finish the `resizeText()` function and give you complete guidance:
-
-### Continue JavaScript Code (`script.js`)
-```javascript
-// Adjust the font size of the notepad and time zone display
-function resizeText(action) {
-    const notepad = document.getElementById('notepad');
-    const dateTime = document.getElementById('date-time');
     const currentSize = parseInt(window.getComputedStyle(notepad).fontSize);
 
     if (action === 'increase') {
