@@ -4,19 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Notepad Widget</title>
+  <!-- Link to Google Font or add your font here -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="notepad-container">
+  <div class="notepad">
     <div class="notepad-header">
       <h2>Notepad</h2>
       <button class="button" onclick="saveNotes()">Save</button>
     </div>
     <textarea id="notepad" placeholder="Write your notes here..."></textarea>
-    <div class="button-group">
-      <input type="text" id="new-todo" placeholder="Add a new task..." onkeypress="if(event.keyCode==13){addTodo()}">
-      <button class="button" onclick="addTodo()">Add Task</button>
-      <button class="button" onclick="clearAllTasks()">Clear All Tasks</button>
+    <div>
+      <input type="text" id="taskInput" placeholder="Add a new task..." onkeypress="if(event.keyCode==13){addTask()}">
+      <button class="button" onclick="addTask()">Add Task</button>
+      <button class="clear-all-btn" onclick="clearAllTasks()">Clear All Tasks</button>
     </div>
     <ul id="todo-list"></ul>
   </div>
