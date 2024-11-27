@@ -1,33 +1,41 @@
-// Function to save notes to local storage
-function saveNotes() {
-    const notes = document.getElementById('notepad').value;
-    localStorage.setItem('notes', notes);
-    alert('Notes saved!');
-}
-
-// Function to clear notes and reset the textarea
-function clearNotes() {
-    document.getElementById('notepad').value = '';
-}
-
 // Function to add a new task to the to-do list
 function addTodo() {
-    const newTodo = document.getElementById('new-todo').value.trim();
-    if (newTodo) {
+    const newTodoInput = document.getElementById('new-todo');
+    const todoText = newTodoInput.value.trim();
+
+    if (todoText) {
         const todoList = document.getElementById('todo-list');
         const li = document.createElement('li');
-        li.innerHTML = `<span onclick="toggleCompleted(this)">${newTodo}</span> <button onclick="removeTodo(this)">❌</button>`;
+        li.classList.add('todo-item');
+
+        // Create a span to hold the task text
+        const taskSpan = document.createElement('span');
+        taskSpan.textContent = todoText;
+        li.appendChild(taskSpan);
+
+        // Create a checkmark button
+        const checkButton = document.createElement('button');
+        checkButton.textContent = '✔';
+        checkButton.classList.add('check-btn');
+        checkButton.onclick = () => {
+            li.classList.toggle('completed');
+        };
+        li.appendChild(checkButton);
+
+        // Add the new task to the list
         todoList.appendChild(li);
-        document.getElementById('new-todo').value = '';
+        newTodoInput.value = ''; // Clear the input field
     }
 }
 
-// Function to toggle the completion of a task
-function toggleCompleted(span) {
-    span.parentElement.classList.toggle('completed');
+// Function to save the notes (example logic)
+function saveNotes() {
+    const notes = document.getElementById('notepad').value;
+    localStorage.setItem('savedNotes', notes);
+    alert('Notes saved!');
 }
 
-// Function to remove a task from the to-do list
-function removeTodo(button) {
-    button.parentElement.remove();
+// Function to clear the notes
+function clearNotes() {
+    document.getElementById('notepad').value = '';
 }
