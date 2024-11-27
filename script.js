@@ -39,15 +39,27 @@ function clearNotes() {
 
 // Add a new task
 function addTodo() {
-    const newTodo = document.getElementById('new-todo').value;
-    if (newTodo) {
+    const newTodoText = document.getElementById('new-todo').value;
+    if (newTodoText) {
         const todoList = document.getElementById('todo-list');
         const newItem = document.createElement('li');
-        newItem.textContent = newTodo;
+
+        // Create a checkbox
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.onclick = function() {
+            newItem.style.textDecoration = checkbox.checked ? 'line-through' : 'none';
+        };
+
+        newItem.appendChild(checkbox);
+        newItem.appendChild(document.createTextNode(newTodoText));
+        
+        // Add the new item to the list
         todoList.appendChild(newItem);
-        document.getElementById('new-todo').value = '';
+        document.getElementById('new-todo').value = ''; // Clear input
     }
 }
+
 
 // Clear all tasks
 function clearAllTasks() {
