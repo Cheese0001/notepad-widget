@@ -1,138 +1,74 @@
-// Save notes to local storage
+// Save and load notes from localStorage
 function saveNotes() {
     const notes = document.getElementById('notepad').value;
-    localStorage.setItem('savedNotes', notes);
+    localStorage.setItem('notes', notes);
 }
 
-// Load notes from local storage
-function loadNotes() {
-    const savedNotes = localStorage.getItem('savedNotes');
+window.onload = function() {
+    const savedNotes = localStorage.getItem('notes');
     if (savedNotes) {
         document.getElementById('notepad').value = savedNotes;
     }
-}
+    displayTodos();
+};
 
-// Clear notes
 function clearNotes() {
     document.getElementById('notepad').value = '';
-    localStorage.removeItem('savedNotes');
+    localStorage.removeItem('notes');
 }
 
-// Add a new task
+// Manage tasks with localStorage
 function addTodo() {
-    const newTodoInput = document.getElementById('new-todo');
-    const todoText = newTodoInput.value.trim();
-    if (todoText) {
-        const todoList = document.getElementById('todo-list');
-        const li = document.createElement('li');
-        li.classList.add('todo-item');
-
-        const taskSpan = document.createElement('span');
-        taskSpan.textContent = todoText;
-        li.appendChild(taskSpan);
-
-        const checkButton = document.createElement('button');
-        checkButton.textContent = '✔️';
-        checkButton.onclick = function() {
-            taskSpan.style.textDecoration = taskSpan.style.textDecoration === 'line-through' ? 'none' : 'line-through';
-            saveTasks();
-        };
-
-        li.appendChild(checkButton);
-        todoList.appendChild(li);
-
-        newTodoInput.value = '';
-        saveTasks();
+    const newTodo = document.getElementById('new-todo').value;
+    if (newTodo) {
+        const todoList = JSON.parse(localStorage.getItem('todos')) || [];
+        todoList.push(newTodo);
+        localStorage.setItem('todos', JSON.stringify(todoList));
+        displayTodos();
+        document.getElementById('new-todo').value = ''; // Clear the input field
     }
 }
 
-// Save tasks to local storage
-function saveTasks() {
-    const tasks = [];
-    const taskElements = document.querySelectorAll('.todo-item');
-    taskElements.forEach(task => {
-        tasks.push({
-            text: task.querySelector('span').textContent,
-            completed: task.querySelector('span').style.textDecoration === 'line-through'
-        });
+function displayTodos() {
+    const todoList = JSON.parse(localStorage.getItem('todos')) || [];
+    const todoContainer = document.getElementById('todo-list');
+    todoContainer.innerHTML = '';
+    todoList.forEach((todo, index) => {
+        const todoItem = document.createElement('li');
+        todoItem.className = 'todo-item';
+        todoItem.innerHTML = `${todo} <button onclick="removeTodo(${index})">Remove</button>`;
+        todoContainer.appendChild(todoItem);
     });
-    localStorage.setItem('savedTasks', JSON.stringify(tasks));
 }
 
-// Load tasks from local storage
-function loadTasks() {
-    const savedTasks = JSON.parse(localStorage.getItem('savedTasks'));
-    if (savedTasks) {
-        savedTasks.forEach(task => {
-            const todoList = document.getElementById('todo-list');
-            const li = document.createElement('li');
-            li.classList.add('todo-item');
-
-            const taskSpan = document.createElement('span');
-            taskSpan.textContent = task.text;
-            if (task.completed) {
-                taskSpan.style.textDecoration = 'line-through';
-            }
-            li.appendChild(taskSpan);
-
-            const checkButton = document.createElement('button');
-            checkButton.textContent = '✔️';
-            checkButton.onclick = function() {
-                taskSpan.style.textDecoration = taskSpan.style.textDecoration === 'line-through' ? 'none' : 'line-through';
-                saveTasks();
-            };
-
-            li.appendChild(checkButton);
-            todoList.appendChild(li);
-        });
-    }
+function removeTodo(index) {
+    const todoList = JSON.parse(localStorage.getItem('todos')) || [];
+    todoList.splice(index, 1);
+    localStorage.setItem('todos', JSON.stringify(todoList));
+    displayTodos();
 }
 
-// Clear all tasks
 function clearAllTasks() {
-    document.getElementById('todo-list').innerHTML = '';
-    localStorage.removeItem('savedTasks');
+    localStorage.removeItem('todos');
+    displayTodos();
 }
 
-// Display date and time
-function updateTime() {
-    const timeZones = {
-        'Pacific Time': 'America/Los_Angeles',
-        'Mountain Time': 'America/Denver',
-        'Central Time': 'America/Chicago',
-        'Eastern Time': 'America/New_York',
-        'Philippine Time': 'Asia/Manila'
+// Display live time for each time zone
+function updateTimeZones() {
+    const timeZoneOffsets = {
+        'pacific-time': -8,
+        'mountain-time': -7,
+        'central-time': -6,
+        'eastern-time': -5,
+        'philippines-time': 8
     };
 
-    for (let [zone, timeZone] of Object.entries(timeZones)) {
-        const options = { timeZone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-        const time = new Intl.DateTimeFormat('en-US', options).format(new Date());
-        document.getElementById(`${zone.toLowerCase().replace(/ /g, '-')}-time`).textContent = `${zone}: ${time}`;
+    for (let [id, offset] of Object.entries(timeZoneOffsets)) {
+        const date = new Date();
+        const adjustedDate = new Date(date.getTime() + offset * 3600 * 1000);
+        document.getElementById(id).innerText = `${adjustedDate.toLocaleTimeString()} ${adjustedDate.toDateString()}`;
     }
 }
 
-// Adjust the font size of the notepad and time zone display
-function resizeText(action) {
-    const notepad = document.getElementById('notepad');
-    const currentSize = parseInt(window.getComputedStyle(notepad).fontSize);
-
-    if (action === 'increase') {
-        notepad.style.fontSize = (currentSize + 2) + 'px';
-    } else if (action === 'decrease') {
-        notepad.style.fontSize = (currentSize - 2) + 'px';
-    }
-}
-
-// Initial load functions
-window.onload = function() {
-    loadNotes();
-    loadTasks();
-    updateTime();
-    setInterval(updateTime, 1000); // Update the time every second
-}; 
-
-// Call updateTime once on load and then periodically
-window.onload = function() {
-    updateTime();
-    setInterval(updateTime, 1000); // Update the time every second
-};
+setInterval(updateTimeZones, 1000);
+window.onload = updateTimeZones;
