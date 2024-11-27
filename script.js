@@ -1,24 +1,32 @@
 // Live Timezone Functionality
 function updateTimezones() {
     const timezones = {
-        pacific: "Pacific/Auckland",
-        mountain: "America/Denver",
-        central: "America/Chicago",
-        philippines: "Asia/Manila"
+        Pacific: "Pacific/Auckland",
+        Mountain: "America/Denver",
+        Central: "America/Chicago",
+        Philippines: "Asia/Manila"
     };
 
-    for (const [key, value] of Object.entries(timezones)) {
-        const timeElement = document.getElementById(key);
+    // Loop over each timezone and update the corresponding div
+    const timezoneElements = document.querySelectorAll('.timezone');
+    const timezoneNames = Object.keys(timezones);
+
+    timezoneElements.forEach((element, index) => {
+        const timezoneName = timezoneNames[index];
+        const timeZoneValue = timezones[timezoneName];
+        
+        // Get the current time in that timezone
         const date = new Date().toLocaleString("en-US", {
-            timeZone: value,
+            timeZone: timeZoneValue,
             hour12: false,
             hour: '2-digit',
             minute: '2-digit',
             second: '2-digit'
         });
 
-        timeElement.textContent = `${key.charAt(0).toUpperCase() + key.slice(1)} Time: ${date}`;
-    }
+        // Update the element with the corresponding timezone and time
+        element.textContent = `${timezoneName} Time: ${date}`;
+    });
 }
 
 // Call the update function every second
