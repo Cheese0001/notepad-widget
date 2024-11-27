@@ -1,106 +1,83 @@
-/* General Page Styling */
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #FEEEEB;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: 'Press Start 2P', cursive;
-    height: 100vh;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
 }
 
-.timezones-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin: 20px 0;
+/* Styling for the main container */
+.notepad-container {
+  margin: 20px auto;
+  width: 80%;
+  background-color: #f9f9f9;
+  border: 2px solid #6B6D76;
+  border-radius: 10px;
+  padding: 20px;
 }
 
-.timezone {
-    padding: 10px;
-    border-radius: 10px;
-    color: #FFF;
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0 5px;
-    text-align: center;
+/* Styling for the text area */
+#notepad {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  border: 1px solid #6B6D76;
+  border-radius: 5px;
 }
 
-.timezone:nth-child(1) { background-color: #E6F7FF; } /* Pacific */
-.timezone:nth-child(2) { background-color: #FFEBE6; } /* Mountain */
-.timezone:nth-child(3) { background-color: #E6F9E6; } /* Central */
-.timezone:nth-child(4) { background-color: #D6C6FF; } /* Eastern */
-.timezone:nth-child(5) { background-color: #FFD6E6; } /* Philippines */
-
-.container {
-    width: 70%;
-    max-width: 900px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 15px;
-    background-color: #FFF;
-    padding: 20px;
-    text-align: center;
+/* Button styles */
+.button-group button {
+  margin: 5px;
+  padding: 10px 20px;
+  background-color: #6B6D76;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
-h1 {
-    margin-bottom: 20px;
-    color: #333;
+.button-group button:hover {
+  background-color: #4B4D57;
 }
 
-.notepad-todo-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+/* To-Do list styles */
+#new-todo {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  border: 1px solid #6B6D76;
+  border-radius: 5px;
 }
 
-.notepad-container, .todo-container {
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    background-color: #FFF;
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #6B6D76;
+  padding: 5px 0;
 }
 
-textarea, input[type="text"] {
-    width: 100%;
-    border: 1px solid #6B6D76;
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 16px;
-    outline: none;
+.todo-item span {
+  flex-grow: 1;
+  font-size: 16px;
 }
 
-textarea {
-    height: 200px;
+.todo-item button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: #6B6D76;
 }
 
-button {
-    background-color: #6B6D76;
-    color: #FFF;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin: 5px;
-    cursor: pointer;
+.todo-item button:hover {
+  color: green; /* Highlight color for checkmark */
 }
 
-button:hover {
-    background-color: #333;
-}
-
-#todo-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #DDD;
-}
-
-#todo-list li button {
-    background-color: #6B6D76;
-    color: white;
-    border: none;
-    padding: 3px 5px;
-    border-radius: 5px;
-    cursor: pointer;
+/* Styling for footer */
+.footer-note {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #6B6D76;
 }
