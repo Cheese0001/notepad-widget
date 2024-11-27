@@ -1,80 +1,69 @@
-// Function to display current time in each timezone
+// Live Timezone Functionality
 function updateTimezones() {
-        const timezones = {
-            pacific: "Pacific/Auckland",  // Adjust the timezone identifiers as necessary
-            mountain: "America/Denver",
-            central: "America/Chicago",
-            philippines: "Asia/Manila"
-        };
+    const timezones = {
+        pacific: "Pacific/Auckland",
+        mountain: "America/Denver",
+        central: "America/Chicago",
+        philippines: "Asia/Manila"
+    };
 
-        for (const [key, value] of Object.entries(timezones)) {
-            const timeElement = document.getElementById(key);
-            const date = new Date().toLocaleString("en-US", {
-                timeZone: value,
-                hour12: false,
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
+    for (const [key, value] of Object.entries(timezones)) {
+        const timeElement = document.getElementById(key);
+        const date = new Date().toLocaleString("en-US", {
+            timeZone: value,
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
 
-            // Update the time inside the timezone div
-            timeElement.textContent = `${key.charAt(0).toUpperCase() + key.slice(1)} Time: ${date}`;
-        }
+        timeElement.textContent = `${key.charAt(0).toUpperCase() + key.slice(1)} Time: ${date}`;
     }
+}
 
-    // Call the update function every second
-    setInterval(updateTimezones, 1000);
+// Call the update function every second
+setInterval(updateTimezones, 1000);
 
-    // Initial call to update on page load
-    updateTimezones();
-setInterval(updateTimeZones, 1000); // Update every second
+// Initial call to update on page load
+updateTimezones();
 
-// Save notes to local storage
-function saveNotes() {
+// To-Do List Functionality
+document.getElementById('add-task').addEventListener('click', function() {
+    const newTask = document.getElementById('new-todo').value;
+    if (newTask) {
+        const li = document.createElement('li');
+        li.innerHTML = `${newTask} <button onclick="this.parentElement.remove()">Remove</button>`;
+        document.getElementById('todo-list').appendChild(li);
+        document.getElementById('new-todo').value = ''; // Clear the input field
+    }
+});
+
+document.getElementById('clear-all').addEventListener('click', function() {
+    const todoList = document.getElementById('todo-list');
+    todoList.innerHTML = ''; // Clear all tasks
+});
+
+// Save Notes Functionality
+document.getElementById('save-notes').addEventListener('click', function() {
     const notes = document.getElementById('notepad').value;
-    localStorage.setItem('notes', notes);
-}
+    if (notes) {
+        localStorage.setItem('savedNotes', notes); // Save notes to localStorage
+        alert('Notes saved successfully!');
+    } else {
+        alert('Please write something in the notepad!');
+    }
+});
 
-// Load notes from local storage
-window.onload = function() {
-    const savedNotes = localStorage.getItem('notes');
+// Clear Notes Functionality
+document.getElementById('clear-notes').addEventListener('click', function() {
+    document.getElementById('notepad').value = ''; // Clear the notes field
+    localStorage.removeItem('savedNotes'); // Remove notes from localStorage
+});
+
+// Load saved notes from localStorage on page load
+window.addEventListener('load', function() {
+    const savedNotes = localStorage.getItem('savedNotes');
     if (savedNotes) {
-        document.getElementById('notepad').value = savedNotes;
+        document.getElementById('notepad').value = savedNotes; // Load notes into notepad
     }
-};
-
-// Clear notes
-function clearNotes() {
-    document.getElementById('notepad').value = '';
-    localStorage.removeItem('notes');
-}
-
-// Add a new task
-function addTodo() {
-    const newTodo = document.getElementById('new-todo').value;
-    if (newTodo) {
-        const todoList = document.getElementById('todo-list');
-        const newItem = document.createElement('li');
-        newItem.textContent = newTodo;
-
-        // Create a button to mark as done
-        const checkButton = document.createElement('button');
-        checkButton.textContent = '✔';
-        checkButton.onclick = function() {
-            markAsDone(newItem);
-        };
-
-        newItem.appendChild(checkButton);
-        todoList.appendChild(newItem);
-        document.getElementById('new-todo').value = '';
-    }
-}
-
-// Clear all tasks
-function clearAllTasks() {
-    document.getElementById('todo-list').innerHTML = '';
-}
-function markAsDone(taskItem) {
-    taskItem.style.textDecoration = taskItem.style.textDecoration === 'line-through' ? 'none' : 'line-through';
-}
-
+});
