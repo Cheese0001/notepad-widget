@@ -95,16 +95,23 @@ function clearAllTasks() {
 }
 
 // Date and time function for displaying current time
-function updateDateTime() {
-  const dateTimeElement = document.getElementById('date-time');
-  const now = new Date();
-  const options = {
-    timeZone: 'America/New_York',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: true
-  };
-  dateTimeElement.textContent = `Eastern Time: ${now.toLocaleTimeString('en-US', options)}`;
-  // Add other time zones here as needed...
+function updateTime() {
+    const timezones = {
+        'Eastern': 'America/New_York',
+        'Central': 'America/Chicago',
+        'Pacific': 'America/Los_Angeles',
+        'Mountain': 'America/Denver',
+        'Philippines': 'Asia/Manila'
+    };
+    
+    let currentTime = '';
+    for (let [label, timezone] of Object.entries(timezones)) {
+        const date = new Date().toLocaleString('en-US', { timeZone: timezone, hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        currentTime += `${label} Time: ${date}\n`;
+    }
+    
+    document.getElementById('time-display').textContent = currentTime;
 }
+
+// Call updateTime every second to refresh the time
+setInterval(updateTime, 1000);
