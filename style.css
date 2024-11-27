@@ -1,66 +1,59 @@
-<head>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <style>
-    body, .notepad-container, .todo-item,  .container {
-      font-family: 'Press Start 2P', cursive;
-    }
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FEEEEB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #FEEEEB; /* Page background */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh; /* Full height of the viewport */
-    }
+.container {
+    width: 70%;
+    max-width: 900px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+}
 
-    .container {
-      width: 70%; /* Adjust width as needed */
-      max-width: 900px; /* Optional: limit the maximum width */
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      border-radius: 15px;
-      background-color: white;
-      padding: 20px;
-    }
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
 
-    /* Date & time styling */
 #date-time {
-    font-family: 'Press Start 2P', cursive; /* Change the font style */
-    text-align: left; /* Align the text to the left */
-    color: #6B6D76;
     margin-bottom: 15px;
     font-size: 14px;
+    color: #6B6D76;
 }
 
-
-    /* Notepad styles */
-    .notepad-container {
-      margin-bottom: 20px;
-    }
-
-  #notepad {
-  width: 100%;
-  height: 200px;
-  border: 1px solid #6B6D76;
-  border-radius: 10px;
-  font-size: 8px; /* Font size updated to 10px */
-  padding: 10px;
-  color: #6B6D76;
+.notepad-container {
+    margin-bottom: 20px;
 }
 
-    /* Button styles */
-   .button-group button {
+#notepad {
+    width: 100%;
+    height: 200px;
+    border: 1px solid #6B6D76;
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 10px;
+    color: #6B6D76;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.button-group button {
     background-color: #FEEEEB;
     color: #6B6D76;
     border: 1px solid #6B6D76;
     border-radius: 5px;
     margin: 5px;
-    padding: 5px 10px; /* Reduced padding */
+    padding: 10px 20px;
     cursor: pointer;
-    font-size: 16px; /* Adjust font size for buttons */
-    width: 30px; /* Set a smaller width */
-    height: 30px; /* Set a smaller height */
+    font-size: 14px;
 }
 
 .button-group button:hover {
@@ -68,43 +61,39 @@
     color: white;
 }
 
-
-    /* To-Do list styles */
-    .todo-container {
-      margin-top: 20px;
-    }
-
-#new-todo {
-  width: 80%;
-  border: 1px solid #6B6D76;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
-  font-size: 8px; /* Font size updated to 10px */
+.todo-container {
+    margin-top: 20px;
 }
 
-    .todo-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #6B6D76;
-      padding: 5px 0;
-    }
+#new-todo {
+    width: 80%;
+    border: 1px solid #6B6D76;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
 
-    .todo-item span {
-      flex-grow: 1;
-      font-size: 16px;
-    }
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #6B6D76;
+    padding: 5px 0;
+}
 
-    .todo-item button {
-      border: none;
-      background-color: transparent;
-      cursor: pointer;
-      color: #6B6D76;
-    }
+.todo-item span {
+    flex-grow: 1;
+    font-size: 16px;
+}
 
-    .todo-item button:hover {
-      color: green;
-    }
-  </style>
-</head>
+.todo-item button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: #6B6D76;
+}
+
+.todo-item button:hover {
+    color: green;
+}
