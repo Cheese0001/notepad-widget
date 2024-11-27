@@ -1,135 +1,103 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #FEEEEB;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
+    background-color: #F1F1F1;
     font-family: 'Press Start 2P', cursive;
 }
 
 .timezones-container {
     display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 20px;
+    justify-content: space-around;
+    margin: 20px 0;
 }
 
 .timezone {
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     color: #FFF;
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0 5px;
-}
-
-.timezone:nth-child(1) { background-color: #E6F7FF; } /* Pacific */
-.timezone:nth-child(2) { background-color: #FFEBE6; } /* Mountain */
-.timezone:nth-child(3) { background-color: #E6F9E6; } /* Central */
-.timezone:nth-child(4) { background-color: #D6C6FF; } /* Philippines */
-
-.container {
-    width: 70%;
-    max-width: 900px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 15px;
-    background-color: white;
-    padding: 20px;
+    font-size: 14px;
     text-align: center;
 }
 
-h1 {
-    margin-bottom: 20px;
-    color: #333;
-    font-size: 28px;
-}
+.timezone:nth-child(1) { background-color: #007ACC; }
+.timezone:nth-child(2) { background-color: #FF6F61; }
+.timezone:nth-child(3) { background-color: #FFD700; }
+.timezone:nth-child(4) { background-color: #4CAF50; }
 
-.notepad-todo-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #FFF;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
 }
 
 .notepad-container, .todo-container {
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    background-color: #FFF;
     margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    background-color: #F9F9F9;
 }
 
-.notepad-container {
-    background-color: white;
-}
-
-#notepad {
+textarea {
     width: 100%;
-    height: 200px;
-    border: 1px solid #6B6D76;
-    border-radius: 10px;
-    font-size: 16px;
+    height: 150px;
     padding: 10px;
-    color: #6B6D76;
-    outline: none;
-}
-
-#new-todo {
-    width: 70%;
-    border: 1px solid #6B6D76;
+    border: 1px solid #CCC;
     border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
     font-size: 14px;
+    resize: none;
 }
 
-.todo-container button {
-    background-color: #FEEEEB;
-    color: #6B6D76;
-    border: 1px solid #6B6D76;
+button {
+    background-color: #007ACC;
+    color: #FFF;
+    border: none;
+    padding: 10px 15px;
     border-radius: 5px;
-    margin: 5px;
-    padding: 10px 20px;
     cursor: pointer;
+    margin: 5px;
     font-size: 14px;
 }
 
-.todo-container button:hover {
-    background-color: #6B6D76;
-    color: white;
+button:hover {
+    background-color: #005BB5;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
 }
 
 #todo-list li {
-    list-style: none;
-    margin: 10px 0;
-    padding: 5px;
+    background: #E0E0E0;
+    margin-bottom: 5px;
+    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #DDD;
-}
-
-#todo-list li button {
-    background-color: #6B6D76;
-    color: white;
-    border: none;
-    cursor: pointer;
-    padding: 3px 5px;
     border-radius: 5px;
 }
 
-#todo-list li button:hover {
-    background-color: #4A4A4A;
+#todo-list li .delete-task {
+    background-color: #D32F2F;
+    color: #FFF;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#todo-list li .delete-task:hover {
+    background-color: #C2185B;
 }
 
 .footer {
     margin-top: 20px;
-    color: #333;
-    font-size: 12px;
     text-align: center;
-}
-
-.footer strong {
-    color: #6B6D76;
+    font-size: 12px;
+    color: #777;
 }
