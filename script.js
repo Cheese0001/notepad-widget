@@ -15,24 +15,25 @@ function addTodo() {
 
         // Create a checkmark button
         const checkButton = document.createElement('button');
-        checkButton.textContent = '✔';
-        checkButton.classList.add('check-btn');
-        checkButton.onclick = () => {
-            li.classList.toggle('completed');
+        checkButton.textContent = '✔️';
+        checkButton.onclick = function() {
+            taskSpan.style.textDecoration = taskSpan.style.textDecoration === 'line-through' ? 'none' : 'line-through';
         };
-        li.appendChild(checkButton);
 
-        // Add the new task to the list
+        // Append the button and the list item to the list
+        li.appendChild(checkButton);
         todoList.appendChild(li);
-        newTodoInput.value = ''; // Clear the input field
+
+        // Clear the input field after adding
+        newTodoInput.value = '';
     }
 }
 
-// Function to save the notes (example logic)
+// Function to save the notes (implementation depends on your storage method)
 function saveNotes() {
     const notes = document.getElementById('notepad').value;
-    localStorage.setItem('savedNotes', notes);
     alert('Notes saved!');
+    // Add logic for actual saving if needed (e.g., localStorage or database)
 }
 
 // Function to clear the notes
