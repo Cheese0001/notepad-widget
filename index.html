@@ -15,16 +15,12 @@
         <div class="timezone" id="philippines-time"></div>
     </div>
 
-    <div class="container">
-        <h1>Notepad & To-Do App</h1>
-        
+  <div class="container">
+    <h1>Notepad & To-Do App</h1>
+
+    <div class="notepad-todo-container">
         <div class="notepad-container">
             <textarea id="notepad" placeholder="Write your notes here..."></textarea>
-        </div>
-
-        <div class="button-group">
-            <button onclick="saveNotes()">Save Notes</button>
-            <button onclick="clearNotes()">Clear Notes</button>
         </div>
 
         <div class="todo-container">
@@ -33,11 +29,17 @@
             <button onclick="clearAllTasks()">Clear All</button>
             <ul id="todo-list"></ul>
         </div>
-
-        <div class="footer">
-            Made by <strong>Cheese</strong>
-        </div>
     </div>
+
+    <div class="button-group">
+        <button onclick="saveNotes()">Save Notes</button>
+        <button onclick="clearNotes()">Clear Notes</button>
+    </div>
+
+    <div class="footer">
+        Made by <strong>Cheese</strong>
+    </div>
+</div>
 
     <script src="script.js"></script>
 </body>
