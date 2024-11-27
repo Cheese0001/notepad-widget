@@ -112,7 +112,17 @@ function updateTime() {
     }
 
     document.getElementById('date-time').innerHTML = timeDisplay;
+}function resizeText(action) {
+    const notepad = document.getElementById('notepad');
+    const newSize = parseInt(window.getComputedStyle(notepad).fontSize);
+
+    if (action === 'increase') {
+        notepad.style.fontSize = (newSize + 2) + 'px'; // Increase font size by 2px
+    } else if (action === 'decrease') {
+        notepad.style.fontSize = (newSize - 2) + 'px'; // Decrease font size by 2px
+    }
 }
+
 
 // Load everything on page load
 window.onload = function() {
