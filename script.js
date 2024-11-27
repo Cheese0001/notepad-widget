@@ -1,66 +1,55 @@
-// Time zone display
+// Function to display current time in each timezone
 function updateTimeZones() {
-    const pacificTime = document.getElementById('pacific-time');
-    const mountainTime = document.getElementById('mountain-time');
-    const centralTime = document.getElementById('central-time');
-    const easternTime = document.getElementById('eastern-time');
-    const philippinesTime = document.getElementById('philippines-time');
+    const timeZones = {
+        'pacific-time': 'America/Los_Angeles',
+        'mountain-time': 'America/Denver',
+        'central-time': 'America/Chicago',
+        'eastern-time': 'America/New_York',
+        'philippines-time': 'Asia/Manila'
+    };
 
-    const options = { timeStyle: 'short', dateStyle: 'short', hour12: true };
-
-    pacificTime.textContent = `Pacific Time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles', ...options })}`;
-    mountainTime.textContent = `Mountain Time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Denver', ...options })}`;
-    centralTime.textContent = `Central Time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Chicago', ...options })}`;
-    easternTime.textContent = `Eastern Time: ${new Date().toLocaleString('en-US', { timeZone: 'America/New_York', ...options })}`;
-    philippinesTime.textContent = `Philippine Time: ${new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila', ...options })}`;
-}
-
-// Run the time zone function every second
-setInterval(updateTimeZones, 1000);
-
-// Notes functionality
-function saveNotes() {
-    const notes = document.getElementById('notepad').value;
-    localStorage.setItem('savedNotes', notes);
-    alert('Notes saved successfully!');
-}
-
-function loadNotes() {
-    const savedNotes = localStorage.getItem('savedNotes');
-    if (savedNotes) {
-        document.getElementById('notepad').value = savedNotes;
+    for (const [id, timeZone] of Object.entries(timeZones)) {
+        const element = document.getElementById(id);
+        const options = { timeZone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+        element.textContent = `${id.replace('-', ' ').replace('time', 'Time').toUpperCase()}: ${new Intl.DateTimeFormat('en-US', options).format(new Date())}`;
     }
 }
 
-function clearNotes() {
-    document.getElementById('notepad').value = '';
-    localStorage.removeItem('savedNotes');
-    alert('Notes cleared successfully!');
+setInterval(updateTimeZones, 1000); // Update every second
+
+// Save notes to local storage
+function saveNotes() {
+    const notes = document.getElementById('notepad').value;
+    localStorage.setItem('notes', notes);
 }
 
-// To-do list functionality
+// Load notes from local storage
+window.onload = function() {
+    const savedNotes = localStorage.getItem('notes');
+    if (savedNotes) {
+        document.getElementById('notepad').value = savedNotes;
+    }
+};
+
+// Clear notes
+function clearNotes() {
+    document.getElementById('notepad').value = '';
+    localStorage.removeItem('notes');
+}
+
+// Add a new task
 function addTodo() {
     const newTodo = document.getElementById('new-todo').value;
     if (newTodo) {
-        const ul = document.getElementById('todo-list');
-        const li = document.createElement('li');
-        li.classList.add('todo-item');
-        li.innerHTML = `
-            <span>${newTodo}</span>
-            <button onclick="removeTodo(this)">❌</button>
-        `;
-        ul.appendChild(li);
+        const todoList = document.getElementById('todo-list');
+        const newItem = document.createElement('li');
+        newItem.textContent = newTodo;
+        todoList.appendChild(newItem);
         document.getElementById('new-todo').value = '';
     }
 }
 
-function removeTodo(button) {
-    button.parentElement.remove();
-}
-
+// Clear all tasks
 function clearAllTasks() {
     document.getElementById('todo-list').innerHTML = '';
 }
-
-// Load notes on page load
-document.addEventListener('DOMContentLoaded', loadNotes);
