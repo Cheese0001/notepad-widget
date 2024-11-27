@@ -60,7 +60,7 @@ function updateTimezones() {
         const minutes = localTime.getMinutes().toString().padStart(2, '0');
         const ampm = localTime.getHours() < 12 ? 'AM' : 'PM';
         const formattedTime = `${hours}:${minutes} ${ampm}`;
-        const date = localTime.toDateString().slice(4);  // Format: 'Nov 27, 2024'
+      
 
         element.innerHTML = `${zone.id.replace('-', ' ').toUpperCase()} <br> ${formattedTime} <br> ${date}`;
     });
