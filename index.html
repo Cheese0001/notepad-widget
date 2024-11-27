@@ -1,72 +1,146 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notepad and To-Do</title>
+    <title>Notepad and To-Do List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #F1F1F1;
+            font-family: 'Press Start 2P', cursive;
+        }
 
-    <!-- Link to External CSS File -->
-   <link rel="stylesheet" href="styles.css">
+        .timezone-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
 
-    <!-- Or if your CSS is in a 'css' folder -->
-    <!-- <link rel="stylesheet" href="css/style.css"> -->
+        .timezone {
+            padding: 15px;
+            border-radius: 8px;
+            color: #FFF;
+            font-size: 16px;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        #pacific-time { background-color: #007ACC; }
+        #mountain-time { background-color: #FF6F61; }
+        #central-time { background-color: #FFD700; }
+        #eastern-time { background-color: #4CAF50; }
+        #philippines-time { background-color: #FF5733; }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #FFF;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .notepad-container, .todo-container {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            background-color: #F9F9F9;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #CCC;
+            border-radius: 5px;
+            font-size: 14px;
+            resize: none;
+        }
+
+        button {
+            background-color: #FEEEEB;
+            color: #6B6D76;
+            border: 1px solid #6B6D76;
+            border-radius: 5px;
+            margin: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        button:hover {
+            background-color: #6B6D76;
+            color: white;
+        }
+
+        #todo-list li {
+            background: #E0E0E0;
+            margin-bottom: 5px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 5px;
+        }
+
+        #todo-list li .delete-task {
+            background-color: #D32F2F;
+            color: #FFF;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        #todo-list li .delete-task:hover {
+            background-color: #C2185B;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+        }
+
+        button:focus {
+            outline: none;
+        }
+    </style>
 </head>
-
 <body>
 
-    <!-- Timezones Container -->
-<div class="timezones-container">
-    <div class="timezone" id="pacific">
-        Pacific Time: <span id="pacific-time">Loading...</span>
-    </div>
-    <div class="timezone" id="mountain">
-        Mountain Time: <span id="mountain-time">Loading...</span>
-    </div>
-    <div class="timezone" id="central">
-        Central Time: <span id="central-time">Loading...</span>
-    </div>
-    <div class="timezone" id="eastern">
-        Eastern Time: <span id="eastern-time">Loading...</span>
-    </div>
+<div class="timezone-container">
+    <div class="timezone" id="pacific-time">Pacific Time</div>
+    <div class="timezone" id="mountain-time">Mountain Time</div>
+    <div class="timezone" id="central-time">Central Time</div>
+    <div class="timezone" id="eastern-time">Eastern Time</div>
+    <div class="timezone" id="philippines-time">Philippines Time</div>
 </div>
 
-
-    <!-- Main Container -->
 <div class="container">
-       
-        <!-- Notepad and To-Do Container -->
-<div class="notepad-todo-container">
-<!-- Notepad Container -->
-<div class="notepad-container">
-                <h2>Notepad</h2>
-<textarea id="notepad" placeholder="Write your notes here..."></textarea>
-<div class="buttons">
-<button id="save-notes">Save Notes</button>
-<button id="clear-notes">Clear Notes</button>
-</div>
-</div>
-
-            <!-- Todo Container -->
-            <!-- To-Do Container -->
-<div class="todo-container">
-                <h2>To-Do List</h2>
-<input id="new-todo" type="text" placeholder="Add new task" />
-<button id="add-task">Add Task</button>
-                <ul id="todo-list">
-                    <li>
-                        <span>Sample Task</span>
-                        <button class="delete-task">Delete</button>
-                    </li>
-                </ul>
-                <ul id="todo-list"></ul>
-<button id="clear-all">Clear All</button>
-</div>
-</div>
+    <div class="notepad-container">
+        <h2>Notepad</h2>
+        <textarea id="notepad" placeholder="Write your notes here..."></textarea><br>
+        <button onclick="saveNotes()">Save Notes</button>
+        <button onclick="clearNotes()">Clear Notes</button>
     </div>
 
-         <!-- Footer -->
-        <div class="footer">
-            <strong>Notepad App - Made by Cheese000</strong>
-        </div>
-</div>
+    <div class="todo-container">
+        <h2>To-Do List</h2>
+        <input type="text" id="task-input" placeholder="Enter a task...">
+        <button onclick="addTask()">Add Task</button>
+        <ul id="todo-list"></ul>
+        <button onclick="clearAll()">Clear All</button>
+    </div>
 
-<script src="script.js"></script> <!-- Link to the external JavaScript file -->
+    <div class="footer">
+        <p>Notepad App - Made by Cheese000</p>
+    </div>
+</div>
