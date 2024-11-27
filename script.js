@@ -26,7 +26,7 @@ function addTodo() {
         const todoList = document.getElementById('todo-list');
         const li = document.createElement('li');
         li.classList.add('todo-item');
-        
+
         const taskSpan = document.createElement('span');
         taskSpan.textContent = todoText;
         li.appendChild(taskSpan);
@@ -43,6 +43,8 @@ function addTodo() {
 
         newTodoInput.value = '';
         saveTasks();
+    } else {
+        alert('Please enter a task!');
     }
 }
 
@@ -94,7 +96,7 @@ function clearAllTasks() {
     localStorage.removeItem('savedTasks');
 }
 
-// Display date and time
+// Display date and time for multiple time zones
 function updateTime() {
     const timeZones = {
         'Eastern': 'America/New_York',
@@ -108,35 +110,28 @@ function updateTime() {
     for (let [zone, timeZone] of Object.entries(timeZones)) {
         const options = { timeZone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
         const time = new Intl.DateTimeFormat('en-US', options).format(new Date());
-        timeDisplay += `${zone} Time: ${time} <br>`;
+        timeDisplay += `<div style="text-align: left; font-size: 14px; font-family: 'Press Start 2P', cursive;">${zone} Time: ${time}</div>`;
     }
 
     document.getElementById('date-time').innerHTML = timeDisplay;
-function resizeText(action) {
-    const notepad = document.getElementById('notepad');
-    const dateTime = document.getElementById('date-time');
-    const currentSize = parseInt(window.getComputedStyle(notepad).fontSize, 10);
-    
-    // Set minimum and maximum font size limits
-    const minSize = 8; // Minimum font size in pixels
-    const maxSize = 36; // Maximum font size in pixels
-
-    if (action === 'increase' && currentSize < maxSize) {
-        notepad.style.fontSize = (currentSize + 2) + 'px'; // Increase font size by 2px
-        dateTime.style.fontSize = (currentSize + 2) + 'px'; // Increase date-time font size by 2px
-    } else if (action === 'decrease' && currentSize > minSize) {
-        notepad.style.fontSize = (currentSize - 2) + 'px'; // Decrease font size by 2px
-        dateTime.style.fontSize = (currentSize - 2) + 'px'; // Decrease date-time font size by 2px
-    }
 }
 
+// Adjust font size for the notepad
+function resizeText(action) {
+    const notepad = document.getElementById('notepad');
+    const newSize = parseInt(window.getComputedStyle(notepad).fontSize);
 
-
+    if (action === 'increase') {
+        notepad.style.fontSize = (newSize + 2) + 'px';
+    } else if (action === 'decrease') {
+        notepad.style.fontSize = (newSize - 2) + 'px';
+    }
+}
 
 // Load everything on page load
 window.onload = function() {
     loadNotes();
     loadTasks();
     updateTime();
-    setInterval(updateTime, 1000); // Update time every second
+    setInterval(updateTime, 1000);
 };
