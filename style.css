@@ -14,7 +14,7 @@ body {
     justify-content: center;
     width: 100%;
     margin-bottom: 20px;
-    background-color: #6B6D76;
+    background-color: #E6F7FF; /* Light blue pastel for Pacific */
     padding: 10px 0;
     border-radius: 10px;
 }
@@ -24,6 +24,18 @@ body {
     margin: 0 10px;
     font-size: 16px;
     font-weight: bold;
+}
+
+.timezone:nth-child(2) {
+    background-color: #FFEBE6; /* Light red pastel for Mountain */
+}
+
+.timezone:nth-child(3) {
+    background-color: #E6F9E6; /* Light green pastel for Central */
+}
+
+.timezone:nth-child(4) {
+    background-color: #D6C6FF; /* Light purple pastel for Philippines */
 }
 
 .container {
@@ -42,8 +54,18 @@ h1 {
     font-size: 28px;
 }
 
-.notepad-container {
-    margin-bottom: 20px;
+.notepad-todo-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.notepad-container,
+.todo-container {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    background-color: #FFF;
 }
 
 #notepad {
@@ -57,7 +79,16 @@ h1 {
     outline: none;
 }
 
-.button-group button {
+#new-todo {
+    width: 70%;
+    border: 1px solid #6B6D76;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.todo-container button {
     background-color: #FEEEEB;
     color: #6B6D76;
     border: 1px solid #6B6D76;
@@ -68,24 +99,32 @@ h1 {
     font-size: 14px;
 }
 
-.button-group button:hover {
+.todo-container button:hover {
     background-color: #6B6D76;
     color: white;
 }
 
-.notepad-todo-container {
+#todo-list li {
+    list-style: none;
+    margin: 10px 0;
+    padding: 5px;
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #DDD;
 }
 
-#new-todo {
-    width: 80%;
-    border: 1px solid #6B6D76;
+#todo-list li button {
+    background-color: #6B6D76;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 3px 5px;
     border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-    font-size: 14px;
+}
+
+#todo-list li button:hover {
+    background-color: #4A4A4A;
 }
 
 .footer {
