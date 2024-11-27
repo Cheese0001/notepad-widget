@@ -1,12 +1,22 @@
 body {
-  font-family: 'PixelFont', sans-serif; /* Use pixel font */
-  margin: 0;
-  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #FEEEEB;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #FEEEEB; /* Page background */
+  font-family: 'Press Start 2P', cursive; /* Pixel font */
 }
+
+.notepad-container {
+  width: 500px; /* Adjust size as needed */
+  padding: 20px;
+  border: 2px solid #6B6D76;
+  border-radius: 12px; /* Rounded square */
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for 3D effect */
+}
+
 
 .container {
   width: 500px;
