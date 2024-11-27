@@ -44,6 +44,16 @@ function addTodo() {
         const todoList = document.getElementById('todo-list');
         const newItem = document.createElement('li');
         newItem.textContent = newTodo;
+
+        // Create a button to mark task as done
+        const checkButton = document.createElement('button');
+        checkButton.textContent = '✔';
+        checkButton.style.marginLeft = '10px';
+        checkButton.onclick = function() {
+            newItem.style.textDecoration = newItem.style.textDecoration === 'line-through' ? 'none' : 'line-through';
+        };
+
+        newItem.appendChild(checkButton);
         todoList.appendChild(newItem);
         document.getElementById('new-todo').value = '';
     }
