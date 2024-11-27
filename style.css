@@ -100,16 +100,19 @@ h1 {
 #todo-list {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-start; /* Align items to the left */
 }
 
 #todo-list li {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start; /* Align content to the left */
     width: 100%;
-    margin: 5px 0; /* Reduced margin */
-    padding: 5px; /* Adjust padding for better control */
-    line-height: 1.4; /* Adjust line height */
+    margin: 10px 0;
+    align-items: center;
+}
+
+#todo-list li button {
+    margin-left: 5px; /* Add spacing between buttons */
 }
 }
 
