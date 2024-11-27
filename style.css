@@ -58,7 +58,6 @@ h1 {
     padding: 15px;
     background-color: #FFF;
     margin-bottom: 20px;
-    font-family: 'Press Start 2P', cursive;
 }
 
 .notepad-container {
@@ -85,7 +84,7 @@ h1 {
     font-size: 14px;
 }
 
-.todo-container button, .notepad-container button {
+.todo-container button {
     background-color: #FEEEEB;
     color: #6B6D76;
     border: 1px solid #6B6D76;
@@ -94,10 +93,9 @@ h1 {
     padding: 10px 20px;
     cursor: pointer;
     font-size: 14px;
-    font-family: 'Press Start 2P', cursive;
 }
 
-.todo-container button:hover, .notepad-container button:hover {
+.todo-container button:hover {
     background-color: #6B6D76;
     color: white;
 }
@@ -110,9 +108,28 @@ h1 {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #DDD;
-    font-family: 'Press Start 2P', cursive;
 }
 
 #todo-list li button {
     background-color: #6B6D76;
-    col
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 3px 5px;
+    border-radius: 5px;
+}
+
+#todo-list li button:hover {
+    background-color: #4A4A4A;
+}
+
+.footer {
+    margin-top: 20px;
+    color: #333;
+    font-size: 12px;
+    text-align: center;
+}
+
+.footer strong {
+    color: #6B6D76;
+}
