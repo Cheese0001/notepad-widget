@@ -1,74 +1,66 @@
-// Save and load notes from localStorage
-function saveNotes() {
-    const notes = document.getElementById('notepad').value;
-    localStorage.setItem('notes', notes);
+// Time zone display
+function updateTimeZones() {
+    const pacificTime = document.getElementById('pacific-time');
+    const mountainTime = document.getElementById('mountain-time');
+    const centralTime = document.getElementById('central-time');
+    const easternTime = document.getElementById('eastern-time');
+    const philippinesTime = document.getElementById('philippines-time');
+
+    const options = { timeStyle: 'short', dateStyle: 'short', hour12: true };
+
+    pacificTime.textContent = `Pacific Time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles', ...options })}`;
+    mountainTime.textContent = `Mountain Time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Denver', ...options })}`;
+    centralTime.textContent = `Central Time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Chicago', ...options })}`;
+    easternTime.textContent = `Eastern Time: ${new Date().toLocaleString('en-US', { timeZone: 'America/New_York', ...options })}`;
+    philippinesTime.textContent = `Philippine Time: ${new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila', ...options })}`;
 }
 
-window.onload = function() {
-    const savedNotes = localStorage.getItem('notes');
+// Run the time zone function every second
+setInterval(updateTimeZones, 1000);
+
+// Notes functionality
+function saveNotes() {
+    const notes = document.getElementById('notepad').value;
+    localStorage.setItem('savedNotes', notes);
+    alert('Notes saved successfully!');
+}
+
+function loadNotes() {
+    const savedNotes = localStorage.getItem('savedNotes');
     if (savedNotes) {
         document.getElementById('notepad').value = savedNotes;
     }
-    displayTodos();
-};
+}
 
 function clearNotes() {
     document.getElementById('notepad').value = '';
-    localStorage.removeItem('notes');
+    localStorage.removeItem('savedNotes');
+    alert('Notes cleared successfully!');
 }
 
-// Manage tasks with localStorage
+// To-do list functionality
 function addTodo() {
     const newTodo = document.getElementById('new-todo').value;
     if (newTodo) {
-        const todoList = JSON.parse(localStorage.getItem('todos')) || [];
-        todoList.push(newTodo);
-        localStorage.setItem('todos', JSON.stringify(todoList));
-        displayTodos();
-        document.getElementById('new-todo').value = ''; // Clear the input field
+        const ul = document.getElementById('todo-list');
+        const li = document.createElement('li');
+        li.classList.add('todo-item');
+        li.innerHTML = `
+            <span>${newTodo}</span>
+            <button onclick="removeTodo(this)">❌</button>
+        `;
+        ul.appendChild(li);
+        document.getElementById('new-todo').value = '';
     }
 }
 
-function displayTodos() {
-    const todoList = JSON.parse(localStorage.getItem('todos')) || [];
-    const todoContainer = document.getElementById('todo-list');
-    todoContainer.innerHTML = '';
-    todoList.forEach((todo, index) => {
-        const todoItem = document.createElement('li');
-        todoItem.className = 'todo-item';
-        todoItem.innerHTML = `${todo} <button onclick="removeTodo(${index})">Remove</button>`;
-        todoContainer.appendChild(todoItem);
-    });
-}
-
-function removeTodo(index) {
-    const todoList = JSON.parse(localStorage.getItem('todos')) || [];
-    todoList.splice(index, 1);
-    localStorage.setItem('todos', JSON.stringify(todoList));
-    displayTodos();
+function removeTodo(button) {
+    button.parentElement.remove();
 }
 
 function clearAllTasks() {
-    localStorage.removeItem('todos');
-    displayTodos();
+    document.getElementById('todo-list').innerHTML = '';
 }
 
-// Display live time for each time zone
-function updateTimeZones() {
-    const timeZoneOffsets = {
-        'pacific-time': -8,
-        'mountain-time': -7,
-        'central-time': -6,
-        'eastern-time': -5,
-        'philippines-time': 8
-    };
-
-    for (let [id, offset] of Object.entries(timeZoneOffsets)) {
-        const date = new Date();
-        const adjustedDate = new Date(date.getTime() + offset * 3600 * 1000);
-        document.getElementById(id).innerText = `${adjustedDate.toLocaleTimeString()} ${adjustedDate.toDateString()}`;
-    }
-}
-
-setInterval(updateTimeZones, 1000);
-window.onload = updateTimeZones;
+// Load notes on page load
+document.addEventListener('DOMContentLoaded', loadNotes);
