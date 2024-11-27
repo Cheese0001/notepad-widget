@@ -1,6 +1,5 @@
 // Live Timezone Functionality
 function updateTimezones() {
-function updateTimezones() {
     const timezones = [
         { id: 'pacific-time', offset: -8 },  // Pacific Time (UTC-8)
         { id: 'mountain-time', offset: -7 }, // Mountain Time (UTC-7)
