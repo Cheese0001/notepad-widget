@@ -1,4 +1,5 @@
 // Live Timezone Functionality
+// Live Timezone Functionality
 function updateTimezones() {
     const timezones = {
         pacific: "Pacific/Auckland",
@@ -11,7 +12,7 @@ function updateTimezones() {
         const timeElement = document.getElementById(key);
         const date = new Date().toLocaleString("en-US", {
             timeZone: value,
-            hour12: true,
+            hour12: true,  // Set to true to use 12-hour format
             hour: '2-digit',
             minute: '2-digit',
             second: '2-digit'
