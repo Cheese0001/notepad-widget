@@ -11,7 +11,7 @@ function updateTimezones() {
         const timeElement = document.getElementById(key);
         const date = new Date().toLocaleString("en-US", {
             timeZone: value,
-            hour12: false,
+            hour12: true,
             hour: '2-digit',
             minute: '2-digit',
             second: '2-digit'
