@@ -1,50 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notepad & To-Do App</title>
-    <link rel="stylesheet" href="styles.css">
-<script src="script.js"></script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notepad Widget</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Timezones Section -->
-    <div class="timezones-container">
-        <div class="timezone" id="pacific-time">Pacific Time</div>
-        <div class="timezone" id="mountain-time">Mountain Time</div>
-        <div class="timezone" id="central-time">Central Time</div>
-        <div class="timezone" id="eastern-time">Eastern Time</div>
-        <div class="timezone" id="philippines-time">Philippines Time</div>
+  <div class="notepad-container">
+    <div class="notepad-header">
+      <h2>Notepad</h2>
+      <button class="button" onclick="saveNotes()">Save</button>
     </div>
-
-    <!-- Notepad and To-Do App -->
-    <div class="container">
-        <h1>Notepad & To-Do App</h1>
-        <div class="notepad-todo-container">
-            <!-- Notepad Section -->
-            <div class="notepad-container">
-                <h2>Notepad</h2>
-                <textarea id="notepad" placeholder="Write your notes here..."></textarea>
-                <div class="button-group">
-                    <button onclick="saveNotes()">Save Notes</button>
-                    <button onclick="clearNotes()">Clear Notes</button>
-                </div>
-            </div>
-            
-            <!-- Task Section -->
-            <div class="todo-container">
-                <h2>Task</h2>
-                <input type="text" id="new-todo" placeholder="Add new task...">
-                <div class="button-group">
-                    <button onclick="addTodo()">Add Task</button>
-                    <button onclick="clearAllTasks()">Clear All</button>
-                </div>
-                <ul id="todo-list"></ul>
-            </div>
-        </div>
+    <textarea id="notepad" placeholder="Write your notes here..."></textarea>
+    <div class="button-group">
+      <input type="text" id="new-todo" placeholder="Add a new task..." onkeypress="if(event.keyCode==13){addTodo()}">
+      <button class="button" onclick="addTodo()">Add Task</button>
+      <button class="button" onclick="clearAllTasks()">Clear All Tasks</button>
     </div>
+    <ul id="todo-list"></ul>
+  </div>
+  <div class="footer-note">Made by Cheese000</div>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
