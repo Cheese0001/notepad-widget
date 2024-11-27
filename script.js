@@ -1,4 +1,39 @@
-// Live Timezone Functionality
+function saveNotes() {
+    const notes = document.getElementById('notepad').value;
+    localStorage.setItem('notes', notes);
+    alert('Notes saved!');
+}
+
+function clearNotes() {
+    document.getElementById('notepad').value = '';
+}
+
+function addTask() {
+    const taskInput = document.getElementById('task-input');
+    const taskText = taskInput.value.trim();
+
+    if (taskText === '') return;
+
+    const li = document.createElement('li');
+    li.textContent = taskText;
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.classList.add('delete-task');
+    deleteBtn.onclick = function () {
+        li.remove();
+    };
+
+    li.appendChild(deleteBtn);
+    document.getElementById('todo-list').appendChild(li);
+
+    taskInput.value = '';
+}
+
+function clearAll() {
+    document.getElementById('todo-list').innerHTML = '';
+}
+
 function updateTimezones() {
     const timezones = [
         { id: 'pacific-time', offset: -8 },  // Pacific Time (UTC-8)
@@ -22,61 +57,4 @@ function updateTimezones() {
     });
 }
 
-setInterval(updateTimezones, 1000); // Update time every second
-
-// To-Do List Functionality
-document.getElementById('add-task').addEventListener('click', function() {
-    const newTask = document.getElementById('new-todo').value;
-    if (newTask) {
-        const li = document.createElement('li');
-        li.innerHTML = `${newTask} <button onclick="deleteTask(this)">Delete</button>`;
-        const checkBox = document.createElement('input');
-        checkBox.type = 'checkbox';
-        checkBox.onclick = function() {
-            if (checkBox.checked) {
-                li.style.textDecoration = 'line-through';
-            } else {
-                li.style.textDecoration = 'none';
-            }
-        };
-        li.prepend(checkBox);
-        document.getElementById('todo-list').appendChild(li);
-        document.getElementById('new-todo').value = ''; // Clear the input field
-    }
-});
-
-// Delete individual task
-function deleteTask(button) {
-    button.parentElement.remove(); // Removes the task item
-}
-
-// Clear All Tasks Functionality
-document.getElementById('clear-all').addEventListener('click', function() {
-    const todoList = document.getElementById('todo-list');
-    todoList.innerHTML = ''; // Clear all tasks
-});
-
-// Save Notes Functionality
-document.getElementById('save-notes').addEventListener('click', function() {
-    const notes = document.getElementById('notepad').value;
-    if (notes) {
-        localStorage.setItem('savedNotes', notes); // Save notes to localStorage
-        alert('Notes saved successfully!');
-    } else {
-        alert('Please write something in the notepad!');
-    }
-});
-
-// Clear Notes Functionality
-document.getElementById('clear-notes').addEventListener('click', function() {
-    document.getElementById('notepad').value = ''; // Clear the notes field
-    localStorage.removeItem('savedNotes'); // Remove notes from localStorage
-});
-
-// Load saved notes from localStorage on page load
-window.addEventListener('load', function() {
-    const savedNotes = localStorage.getItem('savedNotes');
-    if (savedNotes) {
-        document.getElementById('notepad').value = savedNotes; // Load notes into notepad
-    }
-});
+setInterval(updateTimezones, 1000); 
