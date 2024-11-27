@@ -7,23 +7,24 @@
     /* Your other CSS styles here */
   </style>
 </head>
-ody {
+body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Ensures vertical centering */
+    min-height: 100vh; /* Full height to center vertically */
     margin: 0;
-    padding: 0;
-    background-color: #FEEEEB; /* Page background color */
+    background-color: #FEEEEB; /* Background color */
 }
 
 .container {
-    width: 80%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    background-color: white; /* Container background color */
+    width: 70%; /* Adjust size as needed */
+    max-width: 900px; /* Optional: limit max width */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Deeper shadow */
+    border-radius: 15px; /* Rounded corners */
+    background-color: white; /* Container color */
     padding: 20px;
 }
+
 
 
 /* Date & time styling */
