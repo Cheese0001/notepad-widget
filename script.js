@@ -1,52 +1,53 @@
-// Save notes to local storage
+// Function to save notes to localStorage
 function saveNotes() {
   const notes = document.getElementById('notepad').value;
   localStorage.setItem('savedNotes', notes);
 }
 
-// Clear notes
+// Function to load notes from localStorage
+function loadNotes() {
+  const savedNotes = localStorage.getItem('savedNotes');
+  if (savedNotes) {
+    document.getElementById('notepad').value = savedNotes;
+  }
+}
+
+// Function to clear notes
 function clearNotes() {
   document.getElementById('notepad').value = '';
   localStorage.removeItem('savedNotes');
 }
 
-// Load notes on page load
-window.onload = function() {
-  const savedNotes = localStorage.getItem('savedNotes');
-  if (savedNotes) {
-    document.getElementById('notepad').value = savedNotes;
-  }
-  updateDateTime();
-};
+// Function to add a new task
+function addTodo() {
+  const newTodoInput = document.getElementById('new-todo');
+  const todoText = newTodoInput.value.trim();
 
-// Add task function
-function addTask() {
-  const taskInput = document.getElementById('taskInput');
-  const taskText = taskInput.value.trim();
-  if (taskText) {
+  if (todoText) {
     const todoList = document.getElementById('todo-list');
     const li = document.createElement('li');
     li.classList.add('todo-item');
 
     const taskSpan = document.createElement('span');
-    taskSpan.textContent = taskText;
+    taskSpan.textContent = todoText;
     li.appendChild(taskSpan);
 
     const checkButton = document.createElement('button');
     checkButton.textContent = '✔️';
     checkButton.onclick = function() {
       taskSpan.style.textDecoration = taskSpan.style.textDecoration === 'line-through' ? 'none' : 'line-through';
-      saveTasks();
+      saveTasks(); // Save task status
     };
 
     li.appendChild(checkButton);
     todoList.appendChild(li);
-    taskInput.value = '';
+
+    newTodoInput.value = '';
     saveTasks();
   }
 }
 
-// Save tasks to local storage
+// Function to save tasks to localStorage
 function saveTasks() {
   const tasks = [];
   const taskElements = document.querySelectorAll('.todo-item');
@@ -59,12 +60,12 @@ function saveTasks() {
   localStorage.setItem('savedTasks', JSON.stringify(tasks));
 }
 
-// Load tasks from local storage
+// Function to load tasks from localStorage
 function loadTasks() {
   const savedTasks = JSON.parse(localStorage.getItem('savedTasks'));
   if (savedTasks) {
-    const todoList = document.getElementById('todo-list');
     savedTasks.forEach(task => {
+      const todoList = document.getElementById('todo-list');
       const li = document.createElement('li');
       li.classList.add('todo-item');
 
@@ -88,30 +89,14 @@ function loadTasks() {
   }
 }
 
-// Clear all tasks
+// Function to clear all tasks
 function clearAllTasks() {
   document.getElementById('todo-list').innerHTML = '';
   localStorage.removeItem('savedTasks');
 }
 
-// Date and time function for displaying current time
-function updateTime() {
-    const timezones = {
-        'Eastern': 'America/New_York',
-        'Central': 'America/Chicago',
-        'Pacific': 'America/Los_Angeles',
-        'Mountain': 'America/Denver',
-        'Philippines': 'Asia/Manila'
-    };
-    
-    let currentTime = '';
-    for (let [label, timezone] of Object.entries(timezones)) {
-        const date = new Date().toLocaleString('en-US', { timeZone: timezone, hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        currentTime += `${label} Time: ${date}\n`;
-    }
-    
-    document.getElementById('time-display').textContent = currentTime;
-}
-
-// Call updateTime every second to refresh the time
-setInterval(updateTime, 1000);
+// Load notes and tasks on page load
+window.onload = function() {
+  loadNotes();
+  loadTasks();
+};
