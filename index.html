@@ -3,30 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Notepad & To-Do App</title>
+  <title>Notepad Widget</title>
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <h1>NOTEPAD</h1>
-    <p id="date-time"></p>
-    <textarea id="notepad" placeholder="Type your notes here..."></textarea>
-    <div class="button-group">
-      <button onclick="saveNotes()">Save Notes</button>
-      <button onclick="clearNotes()">Clear Notes</button>
-      <button onclick="undoNotes()">Undo</button>
-      <button onclick="redoNotes()">Redo</button>
+  <div class="notepad-container">
+    <div class="notepad-header">
+      <h2>Notepad</h2>
+      <button class="button" onclick="saveNotes()">Save</button>
     </div>
-
-    <h2>TO-DO LIST</h2>
-    <input type="text" id="new-todo" placeholder="Add new task...">
+    <textarea id="notepad" placeholder="Write your notes here..."></textarea>
     <div class="button-group">
-      <button onclick="addTodo()">Add Task</button>
-      <button onclick="clearAllTasks()">Clear All Tasks</button>
+      <input type="text" id="new-todo" placeholder="Add a new task..." onkeypress="if(event.keyCode==13){addTodo()}">
+      <button class="button" onclick="addTodo()">Add Task</button>
+      <button class="button" onclick="clearAllTasks()">Clear All Tasks</button>
     </div>
     <ul id="todo-list"></ul>
   </div>
+  <div class="footer-note">Made by Cheese000</div>
 
   <script src="script.js"></script>
 </body>
