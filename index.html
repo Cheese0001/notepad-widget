@@ -4,26 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Notepad Widget</title>
-  <!-- Link to Google Font or add your font here -->
- <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="notepad">
-    <div class="notepad-header">
+  <div class="container">
+    <header>
       <h2>Notepad</h2>
-      <button class="button" onclick="saveNotes()">Save</button>
-    </div>
+      <div id="date-time"></div>
+    </header>
     <textarea id="notepad" placeholder="Write your notes here..."></textarea>
-    <div>
-      <input type="text" id="taskInput" placeholder="Add a new task..." onkeypress="if(event.keyCode==13){addTask()}">
-      <button class="button" onclick="addTask()">Add Task</button>
-      <button class="clear-all-btn" onclick="clearAllTasks()">Clear All Tasks</button>
+    <div class="buttons">
+      <button class="action-btn" onclick="saveNotes()">Save</button>
+      <button class="action-btn" onclick="clearNotes()">Clear Notes</button>
+      <button class="action-btn" onclick="undoNotes()">Undo</button>
+      <button class="action-btn" onclick="redoNotes()">Redo</button>
     </div>
-    <ul id="todo-list"></ul>
+    <section class="tasks">
+      <input type="text" id="taskInput" placeholder="Add a new task..." onkeypress="if(event.keyCode==13){addTask()}">
+      <button class="action-btn" onclick="addTask()">Add Task</button>
+      <button class="action-btn" onclick="clearAllTasks()">Clear All Tasks</button>
+      <ul id="todo-list"></ul>
+    </section>
   </div>
-  <div class="footer-note">Made by Cheese000</div>
-
   <script src="script.js"></script>
 </body>
 </html>
