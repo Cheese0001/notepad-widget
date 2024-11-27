@@ -1,7 +1,7 @@
 <head>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
-    body, .notepad-container, .todo-item {
+    body, .notepad-container, .todo-item,  .container {
       font-family: 'Press Start 2P', cursive;
     }
 
@@ -27,7 +27,7 @@
     /* Date & time styling */
     #date-time {
       margin-bottom: 15px;
-      font-size: 14px;
+      font-size: 10px;
       color: #6B6D76;
     }
 
@@ -41,7 +41,7 @@
   height: 200px;
   border: 1px solid #6B6D76;
   border-radius: 10px;
-  font-size: 10px; /* Font size updated to 10px */
+  font-size: 8px; /* Font size updated to 10px */
   padding: 10px;
   color: #6B6D76;
 }
@@ -74,7 +74,7 @@
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
-  font-size: 10px; /* Font size updated to 10px */
+  font-size: 8px; /* Font size updated to 10px */
 }
 
     .todo-item {
