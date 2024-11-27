@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notepad App</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- Timezones Display -->
     <div class="timezones-container">
-        <div class="timezone">Pacific Time</div>
-        <div class="timezone">Mountain Time</div>
-        <div class="timezone">Central Time</div>
-        <div class="timezone">Philippines Time</div>
+        <div id="pacific" class="timezone">Pacific Time</div>
+        <div id="mountain" class="timezone">Mountain Time</div>
+        <div id="central" class="timezone">Central Time</div>
+        <div id="philippines" class="timezone">Philippines Time</div>
     </div>
 
     <div class="container">
@@ -32,12 +33,7 @@
             <div class="todo-container">
                 <input id="new-todo" type="text" placeholder="Add new task" />
                 <button id="add-task">Add Task</button>
-                <ul id="todo-list">
-                    <li>
-                        <span>Sample Task</span>
-                        <button class="delete-task">Delete</button>
-                    </li>
-                </ul>
+                <ul id="todo-list"></ul>
                 <button id="clear-all">Clear All</button>
             </div>
         </div>
@@ -47,6 +43,6 @@
         <strong>Notepad App by Cheese000</strong>
     </div>
 
-    <script src="script.js"></script> <!-- Link to the external JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>
