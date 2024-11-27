@@ -18,23 +18,50 @@ body {
 .timezones-container {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 20px;
+    margin: 20px 0;
+    padding: 10px;
 }
 
 .timezone {
-    padding: 8px;
-    border-radius: 8px;
-    color: #FFF;
-    font-size: 14px;
+    background-color: #fff;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
     text-align: center;
+    width: 200px;
+    margin: 0 10px;
+    font-weight: bold;
+    color: #333;
 }
 
-.timezone:nth-child(1) { background-color: #C6878F; }
-.timezone:nth-child(2) { background-color: #B79D94; }
-.timezone:nth-child(3) { background-color: #969696; }
-.timezone:nth-child(4) { background-color: #67697C; }
-
+.timezone span {
+    font-size: 24px;
+    font-weight: bold;
+    display: block;
+    margin-top: 5px;
 }
+
+#pacific {
+    background-color: #1D4ED8;
+    color: white;
+}
+
+#mountain {
+    background-color: #F87171;
+    color: white;
+}
+
+#central {
+    background-color: #FBBF24;
+    color: white;
+}
+
+#eastern {
+    background-color: #34D399;
+    color: white;
+}
+
 .notepad-todo-container {
     margin-top: 20px;
     padding: 20px;
