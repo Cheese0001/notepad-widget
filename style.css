@@ -1,16 +1,16 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #FEEEEB;
+    background-color: #FEEEEB; /* Page background */
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100vh; /* Full height of the viewport */
 }
 
 .container {
-    width: 70%;
-    max-width: 900px;
+    width: 70%; /* Adjust width as needed */
+    max-width: 900px; /* Optional: limit the maximum width */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     border-radius: 15px;
     background-color: white;
@@ -30,6 +30,7 @@ h1 {
     color: #6B6D76;
 }
 
+/* Notepad styles */
 .notepad-container {
     margin-bottom: 20px;
 }
@@ -45,6 +46,7 @@ h1 {
     font-family: 'Press Start 2P', cursive;
 }
 
+/* Button styles */
 .button-group button {
     background-color: #FEEEEB;
     color: #6B6D76;
@@ -61,6 +63,7 @@ h1 {
     color: white;
 }
 
+/* To-Do list styles */
 .todo-container {
     margin-top: 20px;
 }
