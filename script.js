@@ -1,31 +1,29 @@
 // Live Timezone Functionality
 function updateTimezones() {
-    const timezones = {
-        pacific: "Pacific/Auckland",
-        mountain: "America/Denver",
-        central: "America/Chicago",
-        philippines: "Asia/Manila"
-    };
+function updateTimezones() {
+    const timezones = [
+        { id: 'pacific-time', offset: -8 },  // Pacific Time (UTC-8)
+        { id: 'mountain-time', offset: -7 }, // Mountain Time (UTC-7)
+        { id: 'central-time', offset: -6 }, // Central Time (UTC-6)
+        { id: 'eastern-time', offset: -5 }, // Eastern Time (UTC-5)
+        { id: 'philippines-time', offset: 8 }, // Philippines Time (UTC+8)
+    ];
 
-    for (const [key, value] of Object.entries(timezones)) {
-        const timeElement = document.getElementById(key);
-        const date = new Date().toLocaleString("en-US", {
-            timeZone: value,
-            hour12: true,
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
-        });
+    timezones.forEach(zone => {
+        const element = document.getElementById(zone.id);
+        const currentTime = new Date();
+        const localTime = new Date(currentTime.getTime() + zone.offset * 60 * 60 * 1000);
+        const hours = localTime.getHours() % 12 || 12;
+        const minutes = localTime.getMinutes().toString().padStart(2, '0');
+        const ampm = localTime.getHours() < 12 ? 'AM' : 'PM';
+        const formattedTime = `${hours}:${minutes} ${ampm}`;
+        const date = localTime.toDateString().slice(4);  // Format: 'Nov 27, 2024'
 
-        timeElement.textContent = `${key.charAt(0).toUpperCase() + key.slice(1)} Time: ${date}`;
-    }
+        element.innerHTML = `${zone.id.replace('-', ' ').toUpperCase()} <br> ${formattedTime} <br> ${date}`;
+    });
 }
 
-// Call the update function every second
-setInterval(updateTimezones, 1000);
-
-// Initial call to update on page load
-updateTimezones();
+setInterval(updateTimezones, 1000); // Update time every second
 
 // To-Do List Functionality
 document.getElementById('add-task').addEventListener('click', function() {
