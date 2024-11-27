@@ -139,13 +139,36 @@
     </div>
     <!-- Remove this from the .container -->
 <!-- Time zones section outside the main container -->
+<!-- Time zones section outside the main container -->
 <div id="timezones">
-    <div class="timezone" id="pacific-time">Pacific Time</div>
-    <div class="timezone" id="mountain-time">Mountain Time</div>
-    <div class="timezone" id="central-time">Central Time</div>
-    <div class="timezone" id="eastern-time">Eastern Time</div>
-    <div class="timezone" id="philippines-time">Philippine Time</div>
+    <div class="timezone" id="pacific-time">Pacific Time: Loading...</div>
+    <div class="timezone" id="mountain-time">Mountain Time: Loading...</div>
+    <div class="timezone" id="central-time">Central Time: Loading...</div>
+    <div class="timezone" id="eastern-time">Eastern Time: Loading...</div>
+    <div class="timezone" id="philippines-time">Philippine Time: Loading...</div>
 </div>
+
+<!-- Main container -->
+<div class="container">
+    <h1>NOTEPAD</h1>
+    <div class="notepad-container">
+        <textarea id="notepad" placeholder="Write your notes here..."></textarea>
+        <div class="button-group">
+            <button onclick="saveNotes()">Save Notes</button>
+            <button onclick="clearNotes()">Clear Notes</button>
+        </div>
+    </div>
+
+    <div class="todo-container">
+        <input type="text" id="new-todo" placeholder="Add a new task...">
+        <div class="button-group">
+            <button onclick="addTodo()">Add Task</button>
+            <button onclick="clearAllTasks()">Clear All Tasks</button>
+        </div>
+        <ul id="todo-list"></ul>
+    </div>
+</div>
+
 
 </body>
 </html>
