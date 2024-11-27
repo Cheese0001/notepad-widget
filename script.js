@@ -24,12 +24,12 @@ function saveNotes() {
 }
 
 // Load notes from local storage
-window.onload = function() {
+function loadNotes() {
     const savedNotes = localStorage.getItem('notes');
     if (savedNotes) {
         document.getElementById('notepad').value = savedNotes;
     }
-};
+}
 
 // Clear notes
 function clearNotes() {
@@ -52,7 +52,16 @@ function addTodo() {
             markAsDone(newItem);
         };
 
+        // Create a button to delete the task
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = '❌';
+        deleteButton.onclick = function() {
+            newItem.remove();
+            saveTasks(); // Save tasks after deletion
+        };
+
         newItem.appendChild(checkButton);
+        newItem.appendChild(deleteButton);
         todoList.appendChild(newItem);
         document.getElementById('new-todo').value = '';
 
@@ -73,7 +82,7 @@ function saveTasks() {
     const tasks = [];
     for (const taskItem of todoList.children) {
         tasks.push({
-            text: taskItem.textContent.replace('✔', '').trim(),
+            text: taskItem.textContent.replace('✔', '').replace('❌', '').trim(),
             completed: taskItem.style.textDecoration === 'line-through'
         });
     }
@@ -100,18 +109,17 @@ function loadTasks() {
                 markAsDone(newItem);
             };
 
-             // Create a button to delete the task
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = '❌';
-        deleteButton.onclick = function() {
-            newItem.remove();
-        };
+            // Create a button to delete the task
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = '❌';
+            deleteButton.onclick = function() {
+                newItem.remove();
+                saveTasks(); // Save tasks after deletion
+            };
 
-        newItem.appendChild(checkButton);
-        newItem.appendChild(deleteButton);
-        todoList.appendChild(newItem);
-        document.getElementById('new-todo').value = '';
-    }
+            newItem.appendChild(checkButton);
+            newItem.appendChild(deleteButton);
+            todoList.appendChild(newItem);
         });
     }
 }
@@ -122,5 +130,8 @@ function clearAllTasks() {
     localStorage.removeItem('tasks');
 }
 
-// Load tasks when the page loads
-window.onload = loadTasks;
+// Load tasks and notes when the page loads
+window.onload = function() {
+    loadTasks();
+    loadNotes();
+};
