@@ -114,19 +114,22 @@ function updateTime() {
     document.getElementById('date-time').innerHTML = timeDisplay;
 function resizeText(action) {
     const notepad = document.getElementById('notepad');
-    const currentSize = window.getComputedStyle(notepad).fontSize;
-    let newSize = parseInt(currentSize, 10);
-
+    const dateTime = document.getElementById('date-time');
+    const currentSize = parseInt(window.getComputedStyle(notepad).fontSize, 10);
+    
     // Set minimum and maximum font size limits
     const minSize = 8; // Minimum font size in pixels
     const maxSize = 36; // Maximum font size in pixels
 
-    if (action === 'increase' && newSize < maxSize) {
-        notepad.style.fontSize = (newSize + 2) + 'px'; // Increase font size by 2px
-    } else if (action === 'decrease' && newSize > minSize) {
-        notepad.style.fontSize = (newSize - 2) + 'px'; // Decrease font size by 2px
+    if (action === 'increase' && currentSize < maxSize) {
+        notepad.style.fontSize = (currentSize + 2) + 'px'; // Increase font size by 2px
+        dateTime.style.fontSize = (currentSize + 2) + 'px'; // Increase date-time font size by 2px
+    } else if (action === 'decrease' && currentSize > minSize) {
+        notepad.style.fontSize = (currentSize - 2) + 'px'; // Decrease font size by 2px
+        dateTime.style.fontSize = (currentSize - 2) + 'px'; // Decrease date-time font size by 2px
     }
 }
+
 
 
 
