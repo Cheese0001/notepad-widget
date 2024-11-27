@@ -52,21 +52,24 @@ textarea {
     resize: none;
 }
 
+/* Existing styles for consistency */
 button {
-    background-color: #007ACC;
-    color: #FFF;
-    border: none;
-    padding: 10px 15px;
+    background-color: #FEEEEB;
+    color: #6B6D76;
+    border: 1px solid #6B6D76;
     border-radius: 5px;
-    cursor: pointer;
     margin: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
     font-size: 14px;
+    font-family: 'Press Start 2P', cursive;
 }
 
+/* Hover effect for buttons */
 button:hover {
-    background-color: #005BB5;
+    background-color: #6B6D76;
+    color: white;
 }
-
 ul {
     list-style: none;
     padding: 0;
@@ -100,4 +103,7 @@ ul {
     text-align: center;
     font-size: 12px;
     color: #777;
+}/* Additional styling to maintain uniform design for other buttons */
+button:focus {
+    outline: none;
 }
