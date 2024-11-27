@@ -70,6 +70,22 @@
       font-size: 12px;
       color: #6B6D76;
     }
+
+    .clear-all-btn {
+      background-color: #f4a6c9;
+      color: #fff;
+      border-radius: 4px;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-family: 'PixelFont', sans-serif; /* Ensure the same font */
+      margin-top: 10px;
+      display: block;
+    }
+
+    .clear-all-btn:hover {
+      background-color: #e68f9c;
+    }
   </style>
 </head>
 <body>
@@ -82,6 +98,7 @@
     <div>
       <input type="text" id="taskInput" placeholder="Add a new task..." onkeypress="if(event.keyCode==13){addTask()}">
       <button class="button" onclick="addTask()">Add Task</button>
+      <button class="clear-all-btn" onclick="clearAllTasks()">Clear All Tasks</button>
     </div>
     <ul id="todo-list"></ul>
   </div>
@@ -133,6 +150,11 @@
           document.getElementById('todo-list').appendChild(taskElement);
         });
       }
+    }
+
+    function clearAllTasks() {
+      document.getElementById('todo-list').innerHTML = ''; // Remove all task elements
+      localStorage.removeItem('savedTasks'); // Clear saved tasks from localStorage
     }
 
     function saveNotes() {
