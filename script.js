@@ -24,6 +24,14 @@ function addTask() {
         li.remove();
     };
 
+    const completeBtn = document.createElement('button');
+    completeBtn.textContent = 'Complete';
+    completeBtn.classList.add('complete-task');
+    completeBtn.onclick = function () {
+        li.classList.toggle('completed');
+    };
+
+    li.appendChild(completeBtn);
     li.appendChild(deleteBtn);
     document.getElementById('todo-list').appendChild(li);
 
@@ -59,4 +67,4 @@ function updateTimezones() {
 }
 
 // Call the updateTimezones function every second to keep it live
-setInterval(updateTimezones, 1000); 
+setInterval(updateTimezones, 1000);
