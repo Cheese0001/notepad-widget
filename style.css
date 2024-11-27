@@ -5,28 +5,23 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100vh;
     font-family: 'Press Start 2P', cursive;
-    color: #6B6D76;
 }
 
-#timezones {
+.timezones-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     width: 100%;
-    max-width: 1200px;
-    background-color: #D6C5C5;
-    padding: 10px;
-    border-radius: 10px;
     margin-bottom: 20px;
+    background-color: #6B6D76;
+    padding: 10px 0;
 }
 
 .timezone {
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #F3F4F6;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    flex-grow: 1;
+    color: #FFF;
+    margin: 0 10px;
+    font-size: 16px;
 }
 
 .container {
@@ -41,7 +36,6 @@ body {
 
 h1 {
     margin-bottom: 20px;
-    font-size: 24px;
     color: #333;
 }
 
@@ -57,7 +51,6 @@ h1 {
     font-size: 16px;
     padding: 10px;
     color: #6B6D76;
-    resize: vertical;
 }
 
 .button-group button {
@@ -89,33 +82,8 @@ h1 {
     font-size: 14px;
 }
 
-.todo-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #6B6D76;
-    padding: 5px 0;
-}
-
-.todo-item span {
-    flex-grow: 1;
-    font-size: 16px;
-}
-
-.todo-item button {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    color: #6B6D76;
-}
-
-.todo-item button:hover {
-    color: green;
-}
-
 .footer {
     margin-top: 20px;
-    font-size: 14px;
-    text-align: center;
     color: #333;
+    font-size: 12px;
 }
