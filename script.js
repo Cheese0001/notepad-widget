@@ -38,30 +38,31 @@ function clearNotes() {
 }
 
 // Add a new task
+// Add a new task
 function addTodo() {
-    const newTodoText = document.getElementById('new-todo').value;
-    if (newTodoText) {
+    const newTodo = document.getElementById('new-todo').value;
+    if (newTodo) {
         const todoList = document.getElementById('todo-list');
         const newItem = document.createElement('li');
+        newItem.textContent = newTodo;
 
-        // Create a checkbox
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.onclick = function() {
-            newItem.style.textDecoration = checkbox.checked ? 'line-through' : 'none';
+        // Create a button to mark as done
+        const checkButton = document.createElement('button');
+        checkButton.textContent = '✔';
+        checkButton.onclick = function() {
+            markAsDone(newItem);
         };
 
-        newItem.appendChild(checkbox);
-        newItem.appendChild(document.createTextNode(newTodoText));
-        
-        // Add the new item to the list
+        newItem.appendChild(checkButton);
         todoList.appendChild(newItem);
-        document.getElementById('new-todo').value = ''; // Clear input
+        document.getElementById('new-todo').value = '';
     }
 }
-
 
 // Clear all tasks
 function clearAllTasks() {
     document.getElementById('todo-list').innerHTML = '';
+}
+function markAsDone(taskItem) {
+    taskItem.style.textDecoration = taskItem.style.textDecoration === 'line-through' ? 'none' : 'line-through';
 }
