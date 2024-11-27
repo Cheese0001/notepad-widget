@@ -9,18 +9,23 @@
 </head>
 <body>
 
+    <!-- Timezones Container -->
     <div class="timezones-container">
-        <div class="timezone" id="pacific">Pacific Time</div>
-        <div class="timezone" id="mountain">Mountain Time</div>
-        <div class="timezone" id="central">Central Time</div>
-        <div class="timezone" id="philippines">Philippines Time</div>
+        <div id="pacific" class="timezone">Pacific Time</div>
+        <div id="mountain" class="timezone">Mountain Time</div>
+        <div id="central" class="timezone">Central Time</div>
+        <div id="philippines" class="timezone">Philippines Time</div>
     </div>
 
+    <!-- Main Container -->
     <div class="container">
         <h1>Notepad and To-Do</h1>
+        
+        <!-- Notepad and To-Do Container -->
         <div class="notepad-todo-container">
             <!-- Notepad Container -->
             <div class="notepad-container">
+                <h2>Notepad</h2>
                 <textarea id="notepad" placeholder="Write your notes here..."></textarea>
                 <div class="buttons">
                     <button id="save-notes">Save Notes</button>
@@ -28,23 +33,20 @@
                 </div>
             </div>
 
-            <!-- Todo Container -->
+            <!-- To-Do Container -->
             <div class="todo-container">
+                <h2>To-Do List</h2>
                 <input id="new-todo" type="text" placeholder="Add new task" />
                 <button id="add-task">Add Task</button>
-                <ul id="todo-list">
-                    <li>
-                        <span>Sample Task</span>
-                        <button class="delete-task">Delete</button>
-                    </li>
-                </ul>
+                <ul id="todo-list"></ul>
                 <button id="clear-all">Clear All</button>
             </div>
         </div>
-    </div>
 
-    <div class="footer">
-        <strong>Notepad App</strong> - Made by Cheese000
+        <!-- Footer -->
+        <div class="footer">
+            <strong>Notepad App - Made by Cheese000</strong>
+        </div>
     </div>
 
     <script src="script.js"></script> <!-- Link to the external JavaScript file -->
