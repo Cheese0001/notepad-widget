@@ -1,110 +1,85 @@
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #F1F1F1;
-    font-family: 'Press Start 2P', cursive;
+// Live Timezone Functionality
+function updateTimezones() {
+    const timezones = {
+        pacific: "Pacific/Auckland",
+        mountain: "America/Denver",
+        central: "America/Chicago",
+        philippines: "Asia/Manila"
+    };
+
+    for (const [key, value] of Object.entries(timezones)) {
+        const timeElement = document.getElementById(key);
+        const date = new Date().toLocaleString("en-US", {
+            timeZone: value,
+            hour12: true,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+
+        timeElement.textContent = `${key.charAt(0).toUpperCase() + key.slice(1)} Time: ${date}`;
+    }
 }
 
-.timezones-container {
-    display: flex;
-    justify-content: space-around;
-    margin: 20px 0;
+// Call the update function every second
+setInterval(updateTimezones, 1000);
+
+// Initial call to update on page load
+updateTimezones();
+
+// To-Do List Functionality
+document.getElementById('add-task').addEventListener('click', function() {
+    const newTask = document.getElementById('new-todo').value;
+    if (newTask) {
+        const li = document.createElement('li');
+        li.innerHTML = `${newTask} <button onclick="deleteTask(this)">Delete</button>`;
+        const checkBox = document.createElement('input');
+        checkBox.type = 'checkbox';
+        checkBox.onclick = function() {
+            if (checkBox.checked) {
+                li.style.textDecoration = 'line-through';
+            } else {
+                li.style.textDecoration = 'none';
+            }
+        };
+        li.prepend(checkBox);
+        document.getElementById('todo-list').appendChild(li);
+        document.getElementById('new-todo').value = ''; // Clear the input field
+    }
+});
+
+// Delete individual task
+function deleteTask(button) {
+    button.parentElement.remove(); // Removes the task item
 }
 
-.timezone {
-    padding: 10px;
-    border-radius: 5px;
-    color: #FFF;
-    font-size: 14px;
-    text-align: center;
-}
+// Clear All Tasks Functionality
+document.getElementById('clear-all').addEventListener('click', function() {
+    const todoList = document.getElementById('todo-list');
+    todoList.innerHTML = ''; // Clear all tasks
+});
 
-.timezone:nth-child(1) { background-color: #007ACC; }
-.timezone:nth-child(2) { background-color: #FF6F61; }
-.timezone:nth-child(3) { background-color: #FFD700; }
-.timezone:nth-child(4) { background-color: #4CAF50; }
+// Save Notes Functionality
+document.getElementById('save-notes').addEventListener('click', function() {
+    const notes = document.getElementById('notepad').value;
+    if (notes) {
+        localStorage.setItem('savedNotes', notes); // Save notes to localStorage
+        alert('Notes saved successfully!');
+    } else {
+        alert('Please write something in the notepad!');
+    }
+});
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #FFF;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    text-align: center;
-}
+// Clear Notes Functionality
+document.getElementById('clear-notes').addEventListener('click', function() {
+    document.getElementById('notepad').value = ''; // Clear the notes field
+    localStorage.removeItem('savedNotes'); // Remove notes from localStorage
+});
 
-.notepad-todo-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.notepad-container, .todo-container {
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    background-color: #F9F9F9;
-    text-align: left;
-}
-
-textarea {
-    width: 100%;
-    height: 150px;
-    padding: 10px;
-    border: 1px solid #CCC;
-    border-radius: 5px;
-    font-size: 14px;
-    resize: none;
-}
-
-button {
-    background-color: #FEEEEB;
-    color: #6B6D76;
-    border: 1px solid #6B6D76;
-    border-radius: 5px;
-    margin: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 14px;
-    font-family: 'Press Start 2P', cursive;
-}
-
-button:hover {
-    background-color: #6B6D76;
-    color: white;
-}
-
-#todo-list li {
-    background: #E0E0E0;
-    margin-bottom: 5px;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 5px;
-}
-
-#todo-list li .delete-task {
-    background-color: #D32F2F;
-    color: #FFF;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-#todo-list li .delete-task:hover {
-    background-color: #C2185B;
-}
-
-.footer {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 12px;
-    color: #777;
-}
-
-button:focus {
-    outline: none;
-}
+// Load saved notes from localStorage on page load
+window.addEventListener('load', function() {
+    const savedNotes = localStorage.getItem('savedNotes');
+    if (savedNotes) {
+        document.getElementById('notepad').value = savedNotes; // Load notes into notepad
+    }
+});
