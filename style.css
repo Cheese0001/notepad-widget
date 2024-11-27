@@ -50,21 +50,24 @@
 }
 
     /* Button styles */
-    .button-group button {
-      background-color: #FEEEEB;
-      color: #6B6D76;
-      border: 1px solid #6B6D76;
-      border-radius: 5px;
-      margin: 5px;
-      padding: 10px 20px;
-      cursor: pointer;
-      font-size: 14px;
-    }
+   .button-group button {
+    background-color: #FEEEEB;
+    color: #6B6D76;
+    border: 1px solid #6B6D76;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px 10px; /* Reduced padding */
+    cursor: pointer;
+    font-size: 16px; /* Adjust font size for buttons */
+    width: 30px; /* Set a smaller width */
+    height: 30px; /* Set a smaller height */
+}
 
-    .button-group button:hover {
-      background-color: #6B6D76;
-      color: white;
-    }
+.button-group button:hover {
+    background-color: #6B6D76;
+    color: white;
+}
+
 
     /* To-Do list styles */
     .todo-container {
