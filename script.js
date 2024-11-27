@@ -90,10 +90,17 @@ function loadTasks() {
   }
 }
 
-// Function to clear all tasks from the list and localStorage
+// Function to clear all tasks from the list and local storage
 function clearAllTasks() {
-  document.getElementById('todo-list').innerHTML = ''; // Remove all task elements
-  localStorage.removeItem('savedTasks'); // Clear saved tasks from localStorage
+  document.getElementById('todo-list').innerHTML = ''; // Removes all task elements from the page
+  localStorage.removeItem('savedTasks'); // Clears saved tasks from local storage
+}
+
+// Add a button to trigger the clearAllTasks function
+const clearButton = document.createElement('button');
+clearButton.textContent = 'Clear All Tasks';
+clearButton.onclick = clearAllTasks;
+document.body.appendChild(clearButton); // Or add it to a specific container as needed
 }
 
 // Load notes and tasks when the page loads
