@@ -73,8 +73,10 @@ h1 {
     color: white;
 }
 
-.todo-container {
-    margin-top: 20px;
+.notepad-todo-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 #new-todo {
