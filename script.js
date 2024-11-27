@@ -13,35 +13,29 @@ function loadNotes() {
 }
 
 // Function to add a new task to the to-do list
-function addTodo() {
-  const newTodoInput = document.getElementById('new-todo');
-  const todoText = newTodoInput.value.trim();
-
-  if (todoText) {
+function addTask() {
+  const taskInput = document.getElementById('taskInput').value.trim();
+  if (taskInput) {
     const todoList = document.getElementById('todo-list');
     const li = document.createElement('li');
     li.classList.add('todo-item');
 
-    // Create a span to hold the task text
     const taskSpan = document.createElement('span');
-    taskSpan.textContent = todoText;
+    taskSpan.textContent = taskInput;
     li.appendChild(taskSpan);
 
-    // Create a checkmark button
     const checkButton = document.createElement('button');
     checkButton.textContent = '✔️';
     checkButton.onclick = function() {
       taskSpan.style.textDecoration = taskSpan.style.textDecoration === 'line-through' ? 'none' : 'line-through';
-      saveTasks(); // Save updated task status
+      saveTasks();
     };
 
-    // Append the button and the list item to the list
     li.appendChild(checkButton);
     todoList.appendChild(li);
 
-    // Clear the input field after adding
-    newTodoInput.value = '';
-    saveTasks(); // Save tasks to localStorage
+    document.getElementById('taskInput').value = '';
+    saveTasks();
   }
 }
 
@@ -67,23 +61,20 @@ function loadTasks() {
       const li = document.createElement('li');
       li.classList.add('todo-item');
 
-      // Create a span to hold the task text
       const taskSpan = document.createElement('span');
       taskSpan.textContent = task.text;
       if (task.completed) {
-        taskSpan.style.textDecoration = 'line-through'; // Mark completed tasks
+        taskSpan.style.textDecoration = 'line-through';
       }
       li.appendChild(taskSpan);
 
-      // Create a checkmark button
       const checkButton = document.createElement('button');
       checkButton.textContent = '✔️';
       checkButton.onclick = function() {
         taskSpan.style.textDecoration = taskSpan.style.textDecoration === 'line-through' ? 'none' : 'line-through';
-        saveTasks(); // Save updated task status
+        saveTasks();
       };
 
-      // Append the button and the list item to the list
       li.appendChild(checkButton);
       todoList.appendChild(li);
     });
@@ -92,8 +83,8 @@ function loadTasks() {
 
 // Function to clear all tasks from the list and localStorage
 function clearAllTasks() {
-  document.getElementById('todo-list').innerHTML = ''; // Remove all task elements
-  localStorage.removeItem('savedTasks'); // Clear saved tasks from localStorage
+  document.getElementById('todo-list').innerHTML = '';
+  localStorage.removeItem('savedTasks');
 }
 
 // Load notes and tasks when the page loads
