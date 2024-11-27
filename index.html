@@ -136,28 +136,7 @@
                 document.getElementById('taskInput').value = ''; // Clear the input
                 saveTasks(); // Save the task to localStorage
             }
-        }
-
-        // Function to save tasks to local storage
-        function saveTasks() {
-            let tasks = [];
-            let taskElements = document.querySelectorAll('.task');
-            taskElements.forEach(task => {
-                tasks.push(task.textContent);
-            });
-            localStorage.setItem('savedTasks', JSON.stringify(tasks));
-        } // Function to clear all tasks from the list and local storage
-function clearAllTasks() {
-  document.getElementById('todo-list').innerHTML = ''; // Removes all task elements from the page
-  localStorage.removeItem('savedTasks'); // Clears saved tasks from local storage
-}
-
-// Add a button to trigger the clearAllTasks function
-const clearButton = document.createElement('button');
-clearButton.textContent = 'Clear All Tasks';
-clearButton.onclick = clearAllTasks;
-document.body.appendChild(clearButton); // Or add it to a specific container as needed
-
+   
 
 
         // Function to load tasks from local storage
