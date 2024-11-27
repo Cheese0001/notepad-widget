@@ -23,29 +23,30 @@
             <div class="notepad-container">
                 <textarea id="notepad" placeholder="Write your notes here..."></textarea>
                 <div class="buttons">
-                    <button>Save Notes</button>
-                    <button>Clear Notes</button>
+                    <button id="save-notes">Save Notes</button>
+                    <button id="clear-notes">Clear Notes</button>
                 </div>
             </div>
 
             <!-- Todo Container -->
             <div class="todo-container">
                 <input id="new-todo" type="text" placeholder="Add new task" />
-                <button>Add Task</button>
+                <button id="add-task">Add Task</button>
                 <ul id="todo-list">
                     <li>
                         <span>Sample Task</span>
-                        <button>Delete</button>
+                        <button class="delete-task">Delete</button>
                     </li>
                 </ul>
-                <button>Clear All</button>
+                <button id="clear-all">Clear All</button>
             </div>
         </div>
     </div>
 
     <div class="footer">
-        <strong>Notepad App</strong>
+        <strong>Notepad App by Cheese000</strong>
     </div>
 
+    <script src="script.js"></script> <!-- Link to the external JavaScript file -->
 </body>
 </html>
