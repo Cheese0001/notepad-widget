@@ -34,6 +34,7 @@ function clearAll() {
     document.getElementById('todo-list').innerHTML = '';
 }
 
+// Update live timezone function
 function updateTimezones() {
     const timezones = [
         { id: 'pacific-time', offset: -8 },  // Pacific Time (UTC-8)
@@ -57,4 +58,5 @@ function updateTimezones() {
     });
 }
 
+// Call the updateTimezones function every second to keep it live
 setInterval(updateTimezones, 1000); 
