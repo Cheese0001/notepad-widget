@@ -1,5 +1,4 @@
 // Live Timezone Functionality
-// Live Timezone Functionality
 function updateTimezones() {
     const timezones = {
         pacific: "Pacific/Auckland",
@@ -12,7 +11,7 @@ function updateTimezones() {
         const timeElement = document.getElementById(key);
         const date = new Date().toLocaleString("en-US", {
             timeZone: value,
-            hour12: true,  // Set to true to use 12-hour format
+            hour12: true,  // Ensuring 12-hour format
             hour: '2-digit',
             minute: '2-digit',
             second: '2-digit'
@@ -33,7 +32,7 @@ document.getElementById('add-task').addEventListener('click', function() {
     const newTask = document.getElementById('new-todo').value;
     if (newTask) {
         const li = document.createElement('li');
-        li.innerHTML = `${newTask} <button onclick="deleteTask(this)">Delete</button>`;
+        li.innerHTML = `${newTask} <button class="delete-task" onclick="deleteTask(this)">Delete</button>`;
         document.getElementById('todo-list').appendChild(li);
         document.getElementById('new-todo').value = ''; // Clear the input field
     }
