@@ -1,54 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notepad App</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> <!-- Link to the external CSS file -->
-</head>
-<body>
-
-    <!-- Timezones Container -->
+<div class="container">
+    <!-- Timezones Section -->
     <div class="timezones-container">
-        <div id="pacific" class="timezone">Pacific Time</div>
-        <div id="mountain" class="timezone">Mountain Time</div>
-        <div id="central" class="timezone">Central Time</div>
-        <div id="philippines" class="timezone">Philippines Time</div>
+        <div class="timezone" id="pacific">Pacific Time</div>
+        <div class="timezone" id="mountain">Mountain Time</div>
+        <div class="timezone" id="central">Central Time</div>
+        <div class="timezone" id="philippines">Philippines Time</div>
     </div>
 
-    <!-- Main Container -->
-    <div class="container">
-        <h1>Notepad and To-Do</h1>
-        
-        <!-- Notepad and To-Do Container -->
-        <div class="notepad-todo-container">
-            <!-- Notepad Container -->
-            <div class="notepad-container">
-                <h2>Notepad</h2>
-                <textarea id="notepad" placeholder="Write your notes here..."></textarea>
-                <div class="buttons">
-                    <button id="save-notes">Save Notes</button>
-                    <button id="clear-notes">Clear Notes</button>
-                </div>
-            </div>
-
-            <!-- To-Do Container -->
-            <div class="todo-container">
-                <h2>To-Do List</h2>
-                <input id="new-todo" type="text" placeholder="Add new task" />
-                <button id="add-task">Add Task</button>
-                <ul id="todo-list"></ul>
-                <button id="clear-all">Clear All</button>
-            </div>
+    <!-- Notepad and To-Do Section -->
+    <div class="notepad-todo-container">
+        <div class="notepad-container">
+            <h2>Notepad</h2>
+            <textarea id="notepad" placeholder="Write your notes here..."></textarea>
+            <button id="save-notes">Save Notes</button>
+            <button id="clear-notes">Clear Notes</button>
         </div>
 
-        <!-- Footer -->
-        <div class="footer">
-            <strong>Notepad App - Made by Cheese000</strong>
+        <div class="todo-container">
+            <h2>To-Do List</h2>
+            <input id="new-todo" type="text" placeholder="Add new task" />
+            <button id="add-task">Add Task</button>
+            <ul id="todo-list">
+                <!-- Tasks will be dynamically added here -->
+            </ul>
+            <button id="clear-all">Clear All</button>
         </div>
     </div>
 
-    <script src="script.js"></script> <!-- Link to the external JavaScript file -->
-</body>
-</html>
+    <!-- Footer Section -->
+    <div class="footer">
+        <p class="name">Made by Cheese000</p>
+    </div>
+</div>
