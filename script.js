@@ -97,21 +97,18 @@ function clearAllTasks() {
 // Display date and time
 function updateTime() {
     const timeZones = {
-        'Eastern': 'America/New_York',
-        'Central': 'America/Chicago',
-        'Mountain': 'America/Denver',
-        'Pacific': 'America/Los_Angeles',
-        'Philippines': 'Asia/Manila'
+        'Pacific Time': 'America/Los_Angeles',
+        'Mountain Time': 'America/Denver',
+        'Central Time': 'America/Chicago',
+        'Eastern Time': 'America/New_York',
+        'Philippine Time': 'Asia/Manila'
     };
 
-    let timeDisplay = '';
     for (let [zone, timeZone] of Object.entries(timeZones)) {
         const options = { timeZone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
         const time = new Intl.DateTimeFormat('en-US', options).format(new Date());
-        timeDisplay += `${zone} Time: ${time} <br>`;
+        document.getElementById(`${zone.toLowerCase().replace(/ /g, '-')}-time`).textContent = `${zone}: ${time}`;
     }
-
-    document.getElementById('date-time').innerHTML = timeDisplay;
 }
 
 // Adjust the font size of the notepad and time zone display
@@ -130,6 +127,12 @@ function resizeText(action) {
 window.onload = function() {
     loadNotes();
     loadTasks();
+    updateTime();
+    setInterval(updateTime, 1000); // Update the time every second
+}; 
+
+// Call updateTime once on load and then periodically
+window.onload = function() {
     updateTime();
     setInterval(updateTime, 1000); // Update the time every second
 };
