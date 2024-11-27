@@ -54,12 +54,12 @@ h1 {
     gap: 20px;
 }
 
-.notepad-container,
-.todo-container {
+.notepad-container, .todo-container {
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 15px;
     background-color: #FFF;
+    margin-bottom: 20px;
 }
 
 #notepad {
