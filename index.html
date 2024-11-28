@@ -94,6 +94,10 @@ footer {
     padding: 3px; 
     font-size: 13px; 
 }
+    .task-list li {
+    transition: font-size 0.2s ease-in-out; /* Smooth transition when changing font size */
+}
+
 
 button {
     padding: 8px 12px;
@@ -121,8 +125,8 @@ button:hover {
 }
 
 .youtube-search-bar {
-    margin-bottom: 10px;
-    width: 100%;
+    margin-bottom: 1px;
+    width: 50%;
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #9DA8C4;
@@ -181,6 +185,10 @@ button:hover {
     <button id="clearAllButton">Clear All Tasks</button>
     <ul id="taskList" class="task-list"></ul>
 </div>
+    <!-- Task Font Size Controls -->
+<button id="increaseTaskFontSize">Increase Task Font Size</button>
+<button id="decreaseTaskFontSize">Decrease Task Font Size</button>
+
 
 <div class="font-color-picker">
     <label for="fontColor">Font Color: </label>
@@ -243,54 +251,55 @@ decreaseFontSize.addEventListener('click', () => {
     notepad.style.fontSize = fontSize + 'px';
 });
 
-// Task List Persistence
-const taskList = document.getElementById('taskList');
-const taskInput = document.getElementById('taskInput');
-const addTaskButton = document.getElementById('addTaskButton');
-const clearAllButton = document.getElementById('clearAllButton');
+// Initialize task font size
+let taskFontSize = 16; // Initial font size
 
-let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+// Increase Font Size
+const increaseTaskFontSize = document.getElementById('increaseTaskFontSize');
+increaseTaskFontSize.addEventListener('click', () => {
+    taskFontSize += 2; // Increase font size by 2px
+    updateTaskFontSize();
+});
 
-function renderTasks() {
-    taskList.innerHTML = '';
-    tasks.forEach((task, index) => {
-        const li = document.createElement('li');
-        li.classList.add('task');
-        li.innerHTML = `<input type="checkbox" ${task.completed ? 'checked' : ''} data-index="${index}" /> <span style="text-decoration: ${task.completed ? 'line-through' : 'none'}">${task.text}</span> <button class="delete-task">X</button>`;
-        taskList.appendChild(li);
+// Decrease Font Size
+const decreaseTaskFontSize = document.getElementById('decreaseTaskFontSize');
+decreaseTaskFontSize.addEventListener('click', () => {
+    if (taskFontSize > 10) { // Prevent font size from going below 10px
+        taskFontSize -= 2; // Decrease font size by 2px
+        updateTaskFontSize();
+    }
+});
+
+// Function to update font size of task list
+function updateTaskFontSize() {
+    const taskListItems = document.querySelectorAll('#taskList li');
+    taskListItems.forEach(item => {
+        item.style.fontSize = taskFontSize + 'px';
     });
 }
 
+// Task List Functionality
+const addTaskButton = document.getElementById('addTaskButton');
+const taskInput = document.getElementById('taskInput');
+const taskList = document.getElementById('taskList');
+const clearAllButton = document.getElementById('clearAllButton');
+
+// Add Task to the List
 addTaskButton.addEventListener('click', () => {
-    if (taskInput.value.trim()) {
-        tasks.push({ text: taskInput.value.trim(), completed: false });
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-        taskInput.value = '';
-        renderTasks();
+    const taskText = taskInput.value.trim();
+    if (taskText !== '') {
+        const newTask = document.createElement('li');
+        newTask.textContent = taskText;
+        taskList.appendChild(newTask);
+        taskInput.value = ''; // Clear the input after adding task
     }
 });
 
+// Clear All Tasks
 clearAllButton.addEventListener('click', () => {
-    tasks = [];
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-    renderTasks();
+    taskList.innerHTML = ''; // Remove all tasks
 });
 
-taskList.addEventListener('click', (e) => {
-    if (e.target.tagName === 'INPUT') {
-        const index = e.target.dataset.index;
-        tasks[index].completed = e.target.checked;
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-        renderTasks();
-    }
-
-    if (e.target.classList.contains('delete-task')) {
-        const index = e.target.parentElement.querySelector('input').dataset.index;
-        tasks.splice(index, 1);
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-        renderTasks();
-    }
-});
 
 renderTasks();
 
