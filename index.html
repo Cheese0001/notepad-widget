@@ -141,6 +141,41 @@ button:hover {
     cursor: pointer;
 }
 
+/* YouTube Player Styles */
+.youtube-container {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 1000px;
+    background-color: rgba(255, 255, 255, 0.8); /* Container background */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.youtube-search-bar {
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #9DA8C4;
+    font-size: 14px;
+}
+
+.youtube-player {
+    position: relative;
+    padding-top: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.youtube-player iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
 </style>
 </head>
 <body>
@@ -176,6 +211,12 @@ button:hover {
 <div class="font-color-picker">
     <label for="fontColor">Font Color: </label>
     <input type="color" id="fontColor" value="#9DA8C4">
+</div>
+
+<!-- YouTube Player -->
+<div class="youtube-container">
+    <input type="text" id="youtubeSearch" class="youtube-search-bar" placeholder="Search for a YouTube video..." />
+    <div id="youtubePlayer" class="youtube-player"></div>
 </div>
 
 </div>
@@ -228,10 +269,10 @@ decreaseFontSize.addEventListener('click', () => {
     notepad.style.fontSize = fontSize + 'px';
 });
 
-// Task List Persistence
-const taskList = document.getElementById('taskList');
+// Task List
 const taskInput = document.getElementById('taskInput');
 const addTaskButton = document.getElementById('addTaskButton');
+const taskList = document.getElementById('taskList');
 const clearAllButton = document.getElementById('clearAllButton');
 
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
@@ -241,75 +282,65 @@ function renderTasks() {
     tasks.forEach((task, index) => {
         const li = document.createElement('li');
         li.classList.add('task');
-        li.innerHTML = `<input type="checkbox" ${task.completed ? 'checked' : ''} data-index="${index}" /> <span style="text-decoration: ${task.completed ? 'line-through' : 'none'};">${task.text}</span> <button class="deleteBtn" data-index="${index}">X</button>`;
+        li.innerHTML = `
+            <input type="checkbox" ${task.completed ? 'checked' : ''} onclick="toggleTask(${index})" />
+            <span style="text-decoration: ${task.completed ? 'line-through' : 'none'}">${task.text}</span>
+            <button onclick="deleteTask(${index})">X</button>
+        `;
         taskList.appendChild(li);
     });
-    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 addTaskButton.addEventListener('click', () => {
-    const taskText = taskInput.value.trim();
-    if (taskText) {
-        tasks.push({ text: taskText, completed: false });
+    if (taskInput.value.trim()) {
+        tasks.push({ text: taskInput.value.trim(), completed: false });
+        localStorage.setItem('tasks', JSON.stringify(tasks));
         taskInput.value = '';
-        renderTasks();
-    }
-});
-
-
-taskList.addEventListener('click', (e) => {
-    if (e.target.classList.contains('deleteBtn')) {
-        const index = e.target.getAttribute('data-index');
-        tasks.splice(index, 1);
-        renderTasks();
-    } else if (e.target.type === 'checkbox') {
-        const index = e.target.getAttribute('data-index');
-        tasks[index].completed = e.target.checked;
         renderTasks();
     }
 });
 
 clearAllButton.addEventListener('click', () => {
     tasks = [];
+    localStorage.setItem('tasks', JSON.stringify(tasks));
     renderTasks();
 });
 
-renderTasks();
-
-// Font Color Customization Persistence
-const fontColorInput = document.getElementById('fontColor');
-const savedFontColor = localStorage.getItem('fontColor') || '#9DA8C4';
-fontColorInput.value = savedFontColor;
-
-document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
-    el.style.color = savedFontColor;
-});
-
-fontColorInput.addEventListener('input', () => {
-    const fontColor = fontColorInput.value;
-    document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
-        el.style.color = fontColor;
-    });
-    localStorage.setItem('fontColor', fontColor);
-});
-
-// Timezone Display
-function updateTimezone() {
-    const date = new Date();
-    document.getElementById('usPacific').textContent = `US Pacific: ${date.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })}`;
-    document.getElementById('usMountain').textContent = `US Mountain: ${date.toLocaleString('en-US', { timeZone: 'America/Denver' })}`;
-    document.getElementById('usCentral').textContent = `US Central: ${date.toLocaleString('en-US', { timeZone: 'America/Chicago' })}`;
-    document.getElementById('usEastern').textContent = `US Eastern: ${date.toLocaleString('en-US', { timeZone: 'America/New_York' })}`;
-    document.getElementById('phPhilippines').textContent = `PH Philippines: ${date.toLocaleString('en-US', { timeZone: 'Asia/Manila' })}`;
+function toggleTask(index) {
+    tasks[index].completed = !tasks[index].completed;
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    renderTasks();
 }
 
-updateTimezone();
-setInterval(updateTimezone, 60000);
-    
+function deleteTask(index) {
+    tasks.splice(index, 1);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    renderTasks();
+}
+
+renderTasks();
+
+// Font Color Picker
+const fontColorPicker = document.getElementById('fontColor');
+fontColorPicker.addEventListener('input', (e) => {
+    document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
+        el.style.color = e.target.value;
+    });
+});
+
+// YouTube Player Functionality
+const youtubeSearch = document.getElementById('youtubeSearch');
+const youtubePlayer = document.getElementById('youtubePlayer');
+
+function loadYouTubeVideo(query) {
+    const videoId = query.split('v=')[1] || query; // If it's a URL, extract the video ID
+    youtubePlayer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+}
+
+youtubeSearch.addEventListener('input', () => {
+    loadYouTubeVideo(youtubeSearch.value);
+});
 </script>
-<!-- Footer -->
-<footer>
-    Made by Shemida G
-</footer>
+
 </body>
 </html>
