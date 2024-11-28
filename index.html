@@ -321,7 +321,19 @@ youtubeSearch.addEventListener('input', function() {
                 }
             })
             .catch(err => console.error('Error fetching YouTube data:', err));
-    }
+    }// Timezone Display
+function updateTimezone() {
+    const date = new Date();
+    document.getElementById('usPacific').textContent = `US Pacific: ${date.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })}`;
+    document.getElementById('usMountain').textContent = `US Mountain: ${date.toLocaleString('en-US', { timeZone: 'America/Denver' })}`;
+    document.getElementById('usCentral').textContent = `US Central: ${date.toLocaleString('en-US', { timeZone: 'America/Chicago' })}`;
+    document.getElementById('usEastern').textContent = `US Eastern: ${date.toLocaleString('en-US', { timeZone: 'America/New_York' })}`;
+    document.getElementById('phPhilippines').textContent = `PH Philippines: ${date.toLocaleString('en-US', { timeZone: 'Asia/Manila' })}`;
+}
+
+setInterval(updateTimezone, 1000);
+updateTimezone(); // Initialize the timezone immediately
+
 });
 </script>
 </body>
