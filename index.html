@@ -1,406 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notepad & Task Tracker</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Quicksand', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-image: url('images/1.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            transition: background-color 0.3s ease;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notepad & Task Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+body {
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('images/1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-color 0.3s ease;
+}
+    /* Footer Styles */
+footer {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    color: #9DA8C4; /* You can adjust the color here */
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 10; /* Ensure it stays on top */
+}
+.timezone-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
 
-        footer {
-            position: fixed;
-            bottom: 10px;
-            width: 100%;
+.timezone {
+    padding: 8px;
+    border-radius: 8px;
+    margin-right: 10px;
+}
+
+/* Change the font-family of the notepad to Quicksand */
+.notepad-container textarea {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 16px; /* Default font size */
+}
+.container {
+    width: 80%;
+    max-width: 1000px;
+    margin: auto;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent container for light mode */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, color 0.3s, opacity 0.3s ease;
+}
+
+/* Light Mode */
+.light-theme .container {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333333; /* Light font color */
+}
+
+.light-theme .notepad-container,
+.light-theme .task-container {
+    color: #333333; /* Light theme font color */
+}
+
+/* Dark Mode */
+.dark-theme .container {
+    background-color: rgba(51, 51, 51, 0.8);
+    color: #f0f0f0; /* Light font color for dark theme */
+}
+
+.dark-theme .notepad-container,
+.dark-theme .task-container {
+    color: #f0f0f0; /* Light font color for dark theme */
+}
+
+/* Global Font Color */
+body, .notepad-container, .task-container {
+    transition: color 0.3s ease;
+}
+
+.notepad-container, .task-container {
+    min-width: 200px;
+    min-height: 150px;
+    margin-bottom: 15px;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    resize: both;
+    overflow: auto;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.task-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2px;
+    padding: 3px; /* Reduced padding for closer line spacing */
+    font-size: 13px; /* Font size set to 13px */
+}
+
+.task input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+button {
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    background-color: #9DA8C4;
+    color: white;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #93B9CF;
+}
+
+.font-color-picker {
+    margin-top: 5px;
+}
+
+.font-color-picker input[type="color"] {
+    width: 20px;
+    height: 20px;
+    border: none;
+    cursor: pointer;
+} }
+
+        .wrapper {
+            width: 400px;
             text-align: center;
-            color: #9DA8C4;
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 10;
         }
 
-        .timezone-container {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-        }
-
-        .timezone {
-            padding: 8px;
-            border-radius: 8px;
-            margin-right: 10px;
-        }
-
-        .notepad-container textarea {
-            font-family: 'Quicksand', sans-serif;
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
             font-size: 16px;
-        }
-
-        .container {
-            width: 80%;
-            max-width: 1000px;
-            margin: auto;
-            padding: 15px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s, color 0.3s, opacity 0.3s ease;
-        }
-
-        .light-theme .container {
-            background-color: rgba(255, 255, 255, 0.8);
-            color: #333333;
-        }
-
-        .light-theme .notepad-container,
-        .light-theme .task-container {
-            color: #333333;
-        }
-
-        .dark-theme .container {
-            background-color: rgba(51, 51, 51, 0.8);
-            color: #f0f0f0;
-        }
-
-        .dark-theme .notepad-container,
-        .dark-theme .task-container {
-            color: #f0f0f0;
-        }
-
-        .notepad-container, .task-container {
-            min-width: 200px;
-            min-height: 150px;
-            margin-bottom: 15px;
-            padding: 8px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            resize: both;
-            overflow: auto;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .task-list {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .task {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 2px;
-            padding: 3px;
-            font-size: 13px;
-        }
-
-        .task input[type="checkbox"] {
-            margin-right: 8px;
-        }
-
-        button {
-            padding: 8px 12px;
-            border: none;
-            cursor: pointer;
-            background-color: #9DA8C4;
-            color: white;
-            font-size: 14px;
+            border: 1px solid #ccc;
             border-radius: 5px;
         }
 
-        button:hover {
-            background-color: #93B9CF;
-        }
-
-        .font-color-picker {
-            margin-top: 5px;
-        }
-
-        .font-color-picker input[type="color"] {
-            width: 20px;
-            height: 20px;
-            border: none;
-            cursor: pointer;
-        }
-
-        /* YouTube Player */
-        .youtube-player {
+        .container {
             position: relative;
-            padding-top: 56.25%;
-            height: 0;
+            width: 100%;
+            height: 225px; /* default size for 16:9 aspect ratio */
+            background-color: #000;
             overflow: hidden;
-            max-width: 100%;
             resize: both;
+            border: 2px solid #333;
+            border-radius: 8px;
         }
 
-        .youtube-player iframe {
+        .resize-handle {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 70%;
+            bottom: 5px;
+            right: 5px;
+            width: 10px;
+            height: 10px;
+            background-color: #333;
+            cursor: se-resize;
+        }
+
+        iframe {
+            width: 100%;
             height: 100%;
+            border: none;
         }
 
-        /* Controls for Notepad and Task List Size */
-        .notepad-controls, .task-controls {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        #increase-notepad-size, #decrease-notepad-size,
-        #increase-task-size, #decrease-task-size {
-            font-size: 18px;
-            margin: 0 5px;
-        }
-
-        .task-controls {
-            justify-content: flex-start;
-        }
-
-        #clear-tasks {
-            margin-right: 10px;
-        }
-    </style>
+</style>
 </head>
 <body>
-    <div class="container">
-        <!-- Timezone Display -->
-        <div class="timezone-container" id="timezoneContainer">
-            <div class="timezone" id="usPacific">US Pacific: Loading...</div>
-            <div class="timezone" id="usMountain">US Mountain: Loading...</div>
-            <div class="timezone" id="usCentral">US Central: Loading...</div>
-            <div class="timezone" id="usEastern">US Eastern: Loading...</div>
-            <div class="timezone" id="phPhilippines">PH Philippines: Loading...</div>
-        </div>
+<div class="container">
+<!-- Timezone Display -->
+<div class="timezone-container" id="timezoneContainer">
+    <div class="timezone" id="usPacific">US Pacific: Loading...</div>
+    <div class="timezone" id="usMountain">US Mountain: Loading...</div>
+    <div class="timezone" id="usCentral">US Central: Loading...</div>
+    <div class="timezone" id="usEastern">US Eastern: Loading...</div>
+    <div class="timezone" id="phPhilippines">PH Philippines: Loading...</div>
+</div>
 
-        <!-- Theme Toggle and Font Size Controls -->
-        <button id="themeToggle">Switch to Dark Mode</button>
+<!-- Theme Toggle and Font Size Controls -->
+<button id="themeToggle">Switch to Dark Mode</button>
+<button id="increaseFontSize">+</button>
+<button id="decreaseFontSize">-</button>
 
-        <!-- Notepad Container -->
-        <div class="notepad-container" id="notepadContainer">
-            <textarea id="notepad" placeholder="Write your notes here..."></textarea>
-        </div>
-        <div class="notepad-controls">
-            <button id="increase-notepad-size">+</button>
-            <button id="decrease-notepad-size">-</button>
-        </div>
+<!-- Notepad Container -->
+<div class="notepad-container" id="notepadContainer">
+    <textarea id="notepad" placeholder="Write your notes here..."></textarea>
+</div>
 
-        <!-- Task List -->
-        <div class="task-container">
-            <input type="text" id="taskInput" placeholder="Add a task" />
-            <button id="addTaskButton">Add Task</button>
-            <button id="clear-tasks">Clear All</button>
-            <ul id="taskList" class="task-list"></ul>
-        </div>
-        <div class="task-controls">
-            <button id="increase-task-size">+</button>
-            <button id="decrease-task-size">-</button>
-        </div>
+<!-- Task List -->
+<div class="task-container">
+    <input type="text" id="taskInput" placeholder="Add a task" />
+    <button id="addTaskButton">Add Task</button>
+    <button id="clearAllButton">Clear All Tasks</button>
+    <ul id="taskList" class="task-list"></ul>
+</div>
 
-        <!-- YouTube Player -->
-        <div class="youtube-container">
-            <input type="text" id="youtubeSearch" class="youtube-search-bar" placeholder="Search for a YouTube video..." />
-            <div id="youtubePlayer" class="youtube-player"></div>
-        </div>
-    </div>
+<!-- Font Color Customization -->
+<div class="font-color-picker">
+    <label for="fontColor">Font Color: </label>
+    <input type="color" id="fontColor" value="#9DA8C4">
+</div>
+    <div class="wrapper">
+        <!-- Search Bar -->
+        <input type="text" id="search-input" class="search-bar" placeholder="Search YouTube..." oninput="searchVideo()">
 
-    <footer>
-        Made by Shemida G
-    </footer>
+        <!-- Resizable YouTube Player -->
+        <div class="container">
+            <iframe id="youtube-player" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" allowfullscreen></iframe>
+            <div class="resize-handle"></div>
+       </div>
+</div>
 
-    <script>
-        // Theme Toggle Functionality
-        const themeToggle = document.getElementById('themeToggle');
-        let isDarkMode = localStorage.getItem('theme') === 'dark';
-        document.body.classList.toggle('dark-theme', isDarkMode);
-        document.querySelector('.container').classList.toggle('dark-theme', isDarkMode);
-        document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
-            el.classList.toggle('dark-theme', isDarkMode);
-        });
+<script>
+// Theme Toggle Functionality
+const themeToggle = document.getElementById('themeToggle');
+let isDarkMode = localStorage.getItem('theme') === 'dark';
+document.body.classList.toggle('dark-theme', isDarkMode);
+document.querySelector('.container').classList.toggle('dark-theme', isDarkMode);
+document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
+    el.classList.toggle('dark-theme', isDarkMode);
+});
 
-        themeToggle.addEventListener('click', () => {
-            isDarkMode = !isDarkMode;
-            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-            document.body.classList.toggle('dark-theme', isDarkMode);
-            document.querySelector('.container').classList.toggle('dark-theme', isDarkMode);
-            document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
-                el.classList.toggle('dark-theme', isDarkMode);
-            });
-            themeToggle.textContent = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
-        });
+themeToggle.addEventListener('click', () => {
+    isDarkMode = !isDarkMode;
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    document.body.classList.toggle('dark-theme', isDarkMode);
+    document.querySelector('.container').classList.toggle('dark-theme', isDarkMode);
+    document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
+        el.classList.toggle('dark-theme', isDarkMode);
+    });
+    themeToggle.textContent = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+});
 
-        // Notepad Font Size Controls
-        let fontSize = parseInt(localStorage.getItem('fontSize')) || 16;
-        const notepad = document.getElementById('notepad');
-        notepad.style.fontSize = fontSize + 'px';
+// Notepad Persistence
+const notepad = document.getElementById('notepad');
+notepad.value = localStorage.getItem('notepadText') || '';
 
-        document.getElementById('increase-notepad-size').addEventListener('click', () => {
-            fontSize += 2;
-            notepad.style.fontSize = fontSize + 'px';
-            localStorage.setItem('fontSize', fontSize);
-        });
+notepad.addEventListener('input', () => {
+    localStorage.setItem('notepadText', notepad.value);
+});
 
-        document.getElementById('decrease-notepad-size').addEventListener('click', () => {
-            if (fontSize > 10) {
-                fontSize -= 2;
-                notepad.style.fontSize = fontSize + 'px';
-                localStorage.setItem('fontSize', fontSize);
-            }
-        });
+// Font Size Controls (Persistence)
+let fontSize = parseInt(localStorage.getItem('fontSize')) || 16;
+notepad.style.fontSize = fontSize + 'px';
 
-        // Task Font Size Controls
-        let taskFontSize = 16;
+const increaseFontSize = document.getElementById('increaseFontSize');
+const decreaseFontSize = document.getElementById('decreaseFontSize');
 
-        document.getElementById('increase-task-size').addEventListener('click', () => {
-            taskFontSize += 2;
-            document.querySelectorAll('.task').forEach((task) => {
-                task.style.fontSize = taskFontSize + 'px';
-            });
-        });
+increaseFontSize.addEventListener('click', () => {
+    fontSize += 2;
+    localStorage.setItem('fontSize', fontSize);
+    notepad.style.fontSize = fontSize + 'px';
+});
 
-        document.getElementById('decrease-task-size').addEventListener('click', () => {
-            if (taskFontSize > 12) {
-                taskFontSize -= 2;
-                document.querySelectorAll('.task').forEach((task) => {
-                    task.style.fontSize = taskFontSize + 'px';
-                });
-            }
-        });
+decreaseFontSize.addEventListener('click', () => {
+    fontSize -= 2;
+    localStorage.setItem('fontSize', fontSize);
+    notepad.style.fontSize = fontSize + 'px';
+});
 
-        // Task Management
-        const taskInput = document.getElementById('taskInput');
-        const taskList = document.getElementById('taskList');
-        const addTaskButton = document.getElementById('addTaskButton');
-        const clearTasksButton = document.getElementById('clear-tasks');
+// Task List Persistence
+const taskList = document.getElementById('taskList');
+const taskInput = document.getElementById('taskInput');
+const addTaskButton = document.getElementById('addTaskButton');
+const clearAllButton = document.getElementById('clearAllButton');
 
-        addTaskButton.addEventListener('click', () => {
-            if (taskInput.value.trim() !== '') {
-                const taskItem = document.createElement('li');
-                taskItem.classList.add('task');
-                taskItem.innerHTML = `
-                    <input type="checkbox" class="task-checkbox" />
-                    <span class="task-text">${taskInput.value}</span>
-                    <button class="task-delete">X</button>
-                `;
-                taskList.appendChild(taskItem);
-                taskInput.value = '';
-                saveTasks();
-            }
-        });
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-        taskList.addEventListener('change', (e) => {
-            if (e.target.classList.contains('task-checkbox')) {
-                const taskText = e.target.nextElementSibling;
-                taskText.style.textDecoration = e.target.checked ? 'line-through' : 'none';
-                saveTasks();
-            }
-        });
-
-        taskList.addEventListener('click', (e) => {
-            if (e.target.classList.contains('task-delete')) {
-                e.target.parentElement.remove();
-                saveTasks();
-            }
-        });
-
-        clearTasksButton.addEventListener('click', () => {
-            taskList.innerHTML = '';
-            saveTasks();
-        });
-
-        function saveTasks() {
-            const tasks = [];
-            document.querySelectorAll('.task').forEach((task) => {
-                tasks.push({
-                    text: task.querySelector('.task-text').textContent,
-                    completed: task.querySelector('.task-checkbox').checked
-                });
-            });
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-        }
-
-        function loadTasks() {
-            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-            tasks.forEach((taskData) => {
-                const taskItem = document.createElement('li');
-                taskItem.classList.add('task');
-                taskItem.innerHTML = `
-                    <input type="checkbox" class="task-checkbox" ${taskData.completed ? 'checked' : ''} />
-                    <span class="task-text" style="text-decoration: ${taskData.completed ? 'line-through' : 'none'}">${taskData.text}</span>
-                    <button class="task-delete">X</button>
-                `;
-                taskList.appendChild(taskItem);
-            });
-        }
-
-        loadTasks();
-
-        // Timezone Display
-        function updateTime() {
-            const now = new Date();
-            const usPacific = now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
-            const usMountain = now.toLocaleString('en-US', { timeZone: 'America/Denver' });
-            const usCentral = now.toLocaleString('en-US', { timeZone: 'America/Chicago' });
-            const usEastern = now.toLocaleString('en-US', { timeZone: 'America/New_York' });
-            const phPhilippines = now.toLocaleString('en-US', { timeZone: 'Asia/Manila' });
-
-            document.getElementById('usPacific').textContent = `US Pacific: ${usPacific}`;
-            document.getElementById('usMountain').textContent = `US Mountain: ${usMountain}`;
-            document.getElementById('usCentral').textContent = `US Central: ${usCentral}`;
-            document.getElementById('usEastern').textContent = `US Eastern: ${usEastern}`;
-            document.getElementById('phPhilippines').textContent = `PH Philippines: ${phPhilippines}`;
-        }
-
-        setInterval(updateTime, 60000);
-        updateTime();
-
-        // Function to fetch a YouTube video based on the query
-function fetchYouTubeVideo(query) {
-    const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&key=AIzaSyCX12cF27F_XvdDLMQwhiOfv8cLyKguxrw`;
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            if (data.items && data.items.length > 0) {
-                const video = data.items[0]; // Get the first video
-                const videoId = video.id.videoId;
-                const videoTitle = video.snippet.title;
-
-                // Create the YouTube player iframe
-                const iframe = document.createElement('iframe');
-                iframe.src = `https://www.youtube.com/embed/${videoId}`;
-                iframe.width = '560';
-                iframe.height = '315';
-                iframe.frameBorder = '0';
-                iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
-                iframe.allowFullscreen = true;
-
-                const youtubeContainer = document.getElementById('youtubePlayer');
-                youtubeContainer.innerHTML = ''; // Clear any existing content
-                youtubeContainer.appendChild(iframe);
-            } else {
-                console.log('No videos found');
-                const youtubeContainer = document.getElementById('youtubePlayer');
-                youtubeContainer.innerHTML = 'No video found';
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching YouTube data:', error);
-        });
+function renderTasks() {
+    taskList.innerHTML = '';
+    tasks.forEach((task, index) => {
+        const li = document.createElement('li');
+        li.classList.add('task');
+        li.innerHTML = `<input type="checkbox" ${task.completed ? 'checked' : ''} data-index="${index}" /> <span style="text-decoration: ${task.completed ? 'line-through' : 'none'};">${task.text}</span> <button class="deleteBtn" data-index="${index}">X</button>`;
+        taskList.appendChild(li);
+    });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
+addTaskButton.addEventListener('click', () => {
+    const taskText = taskInput.value.trim();
+    if (taskText) {
+        tasks.push({ text: taskText, completed: false });
+        taskInput.value = '';
+        renderTasks();
+    }
+});
+
+
+taskList.addEventListener('click', (e) => {
+    if (e.target.classList.contains('deleteBtn')) {
+        const index = e.target.getAttribute('data-index');
+        tasks.splice(index, 1);
+        renderTasks();
+    } else if (e.target.type === 'checkbox') {
+        const index = e.target.getAttribute('data-index');
+        tasks[index].completed = e.target.checked;
+        renderTasks();
+    }
+});
+
+clearAllButton.addEventListener('click', () => {
+    tasks = [];
+    renderTasks();
+});
+
+renderTasks();
+
+// Font Color Customization Persistence
+const fontColorInput = document.getElementById('fontColor');
+const savedFontColor = localStorage.getItem('fontColor') || '#9DA8C4';
+fontColorInput.value = savedFontColor;
+
+document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
+    el.style.color = savedFontColor;
+});
+
+fontColorInput.addEventListener('input', () => {
+    const fontColor = fontColorInput.value;
+    document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
+        el.style.color = fontColor;
+    });
+    localStorage.setItem('fontColor', fontColor);
+});
+
+// Timezone Display
+function updateTimezone() {
+    const date = new Date();
+    document.getElementById('usPacific').textContent = `US Pacific: ${date.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })}`;
+    document.getElementById('usMountain').textContent = `US Mountain: ${date.toLocaleString('en-US', { timeZone: 'America/Denver' })}`;
+    document.getElementById('usCentral').textContent = `US Central: ${date.toLocaleString('en-US', { timeZone: 'America/Chicago' })}`;
+    document.getElementById('usEastern').textContent = `US Eastern: ${date.toLocaleString('en-US', { timeZone: 'America/New_York' })}`;
+    document.getElementById('phPhilippines').textContent = `PH Philippines: ${date.toLocaleString('en-US', { timeZone: 'Asia/Manila' })}`;
+}
+
+updateTimezone();
+setInterval(updateTimezone, 60000);
+    const resizableContainer = document.querySelector('.container');
+        const resizeHandle = document.querySelector('.resize-handle');
+        const youtubePlayer = document.getElementById('youtube-player');
+        const searchInput = document.getElementById('search-input');
+
+        let isResizing = false;
+
+        // Event listeners for resizing functionality
+        resizeHandle.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', () => {
+                isResizing = false;
+                document.removeEventListener('mousemove', handleMouseMove);
+            });
+        });
+
+        function handleMouseMove(e) {
+            if (isResizing) {
+                const width = e.clientX - resizableContainer.getBoundingClientRect().left;
+                const height = e.clientY - resizableContainer.getBoundingClientRect().top;
+                resizableContainer.style.width = `${Math.max(200, width)}px`;
+                resizableContainer.style.height = `${Math.max(150, height)}px`;
+            }
+        }
+
+        // YouTube API Key (you need to replace this with your own API key)
+        const API_KEY = 'AIzaSyCX12cF27F_XvdDLMQwhiOfv8cLyKguxrw';
+
+        // Function to search and update the YouTube player with the selected video
+        function searchVideo() {
+            const query = searchInput.value.trim();
+            if (query.length > 0) {
+                fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&key=${API_KEY}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.items && data.items.length > 0) {
+                            const videoId = data.items[0].id.videoId;
+                            updateVideo(videoId);
+                        }
+                    })
+                    .catch(error => console.error('Error fetching YouTube data:', error));
+            }
+        }
+
+        // Function to update the iframe with the new video ID
+        function updateVideo(videoId) {
+            youtubePlayer.src = `https://www.youtube.com/embed/${videoId}`;
+        }
     </script>
+</script>
+<!-- Footer -->
+<footer>
+    Made by Shemida G
+</footer>
 </body>
 </html>
