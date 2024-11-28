@@ -149,7 +149,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
+            width: 70%;
             height: 100%;
         }
 
@@ -369,7 +369,7 @@
 
         // Function to fetch a YouTube video based on the query
 function fetchYouTubeVideo(query) {
-    const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&key=AIzaSyAqHhloj22y6shAsMiLGi9cBAtyfOZkKCk`;
+    const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&key=AIzaSyCX12cF27F_XvdDLMQwhiOfv8cLyKguxrw`;
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
