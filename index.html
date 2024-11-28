@@ -44,13 +44,6 @@
             margin-right: 10px;
         }
 
-        .notepad-container textarea {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 16px;
-            width: 100%;
-            height: 200px;
-        }
-
         .container {
             width: 80%;
             max-width: 1000px;
@@ -137,6 +130,16 @@
             cursor: pointer;
         }
 
+        .youtube-container {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 1000px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
         .youtube-search-bar {
             margin-bottom: 10px;
             width: 50%;
@@ -151,7 +154,9 @@
             padding-top: 56.25%;
             height: 0;
             overflow: hidden;
-            width: 100%;
+            max-width: 100%;
+            resize: both;
+            border: 2px solid #9DA8C4;
         }
 
         .youtube-player iframe {
@@ -165,6 +170,14 @@
         .task-list li {
             transition: font-size 0.2s ease-in-out;
         }
+
+        /* Button placement for task list font size controls */
+        .font-size-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -181,15 +194,22 @@
         <!-- Theme Toggle and Font Size Controls -->
         <button id="themeToggle">Switch to Dark Mode</button>
 
-        
-       
+        <!-- Notepad Font Size Controls -->
+        <div>
+            <button id="increaseFontSize">Increase Notepad Font Size</button>
+            <button id="decreaseFontSize">Decrease Notepad Font Size</button>
+        </div>
+
+        <!-- Task Font Size Controls -->
+        <div class="font-size-controls">
+            <button id="increaseTaskFontSize">Increase Task Font Size</button>
+            <button id="decreaseTaskFontSize">Decrease Task Font Size</button>
+        </div>
+
         <!-- Notepad Container -->
         <div class="notepad-container" id="notepadContainer">
             <textarea id="notepad" placeholder="Write your notes here..."></textarea>
         </div>
-<!-- Notepad Font Size Controls -->
-        <button id="increaseFontSize">+</button>
-        <button id="decreaseFontSize">-</button>
 
         <!-- Task List -->
         <div class="task-container">
@@ -198,9 +218,6 @@
             <button id="clearAllButton">Clear All Tasks</button>
             <ul id="taskList" class="task-list"></ul>
         </div>
-         <!-- Task Font Size Controls -->
-        <button id="increaseTaskFontSize">+</button>
-        <button id="decreaseTaskFontSize">-</button>
 
         <!-- Font Color Customization -->
         <div class="font-color-picker">
@@ -209,8 +226,10 @@
         </div>
 
         <!-- YouTube Player -->
-        <input type="text" id="youtubeSearch" class="youtube-search-bar" placeholder="Search for a YouTube video..." />
-        <div id="youtubePlayer" class="youtube-player"></div>
+        <div class="youtube-container">
+            <input type="text" id="youtubeSearch" class="youtube-search-bar" placeholder="Search for a YouTube video..." />
+            <div id="youtubePlayer" class="youtube-player"></div>
+        </div>
     </div>
 
     <footer>
@@ -223,143 +242,147 @@
         let isDarkMode = localStorage.getItem('theme') === 'dark';
         document.body.classList.toggle('dark-theme', isDarkMode);
         document.querySelector('.container').classList.toggle('dark-theme', isDarkMode);
-        themeToggle.textContent = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
+            el.classList.toggle('dark-theme', isDarkMode);
+        });
 
         themeToggle.addEventListener('click', () => {
             isDarkMode = !isDarkMode;
             localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
             document.body.classList.toggle('dark-theme', isDarkMode);
             document.querySelector('.container').classList.toggle('dark-theme', isDarkMode);
-            themeToggle.textContent = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+            document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
+                el.classList.toggle('dark-theme', isDarkMode);
+            });
+            themeToggle.innerText = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
         });
 
-        // Notepad Font Size Controls
-        let fontSize = parseInt(localStorage.getItem('fontSize')) || 16;
-        const notepad = document.getElementById('notepad');
-        notepad.style.fontSize = fontSize + 'px';
+        // Font Size Control for Notepad and Task List
+        let notepadFontSize = localStorage.getItem('notepadFontSize') || 16;
+        let taskFontSize = localStorage.getItem('taskFontSize') || 14;
 
         document.getElementById('increaseFontSize').addEventListener('click', () => {
-            fontSize += 2;
-            notepad.style.fontSize = fontSize + 'px';
-            localStorage.setItem('fontSize', fontSize);
+            notepadFontSize = Math.min(30, notepadFontSize + 2);
+            document.getElementById('notepad').style.fontSize = `${notepadFontSize}px`;
+            localStorage.setItem('notepadFontSize', notepadFontSize);
         });
 
         document.getElementById('decreaseFontSize').addEventListener('click', () => {
-            if (fontSize > 10) {
-                fontSize -= 2;
-                notepad.style.fontSize = fontSize + 'px';
-                localStorage.setItem('fontSize', fontSize);
-            }
+            notepadFontSize = Math.max(8, notepadFontSize - 2);
+            document.getElementById('notepad').style.fontSize = `${notepadFontSize}px`;
+            localStorage.setItem('notepadFontSize', notepadFontSize);
         });
 
-        // Task List Font Size Controls
-        let taskFontSize = parseInt(localStorage.getItem('taskFontSize')) || 14;
-        const taskList = document.getElementById('taskList');
-
         document.getElementById('increaseTaskFontSize').addEventListener('click', () => {
-            taskFontSize += 2;
-            taskList.style.fontSize = taskFontSize + 'px';
+            taskFontSize = Math.min(30, taskFontSize + 2);
+            document.querySelectorAll('.task').forEach(task => {
+                task.style.fontSize = `${taskFontSize}px`;
+            });
             localStorage.setItem('taskFontSize', taskFontSize);
         });
 
         document.getElementById('decreaseTaskFontSize').addEventListener('click', () => {
-            if (taskFontSize > 10) {
-                taskFontSize -= 2;
-                taskList.style.fontSize = taskFontSize + 'px';
-                localStorage.setItem('taskFontSize', taskFontSize);
-            }
+            taskFontSize = Math.max(8, taskFontSize - 2);
+            document.querySelectorAll('.task').forEach(task => {
+                task.style.fontSize = `${taskFontSize}px`;
+            });
+            localStorage.setItem('taskFontSize', taskFontSize);
         });
 
-        // Save and Load Tasks
-        const taskInput = document.getElementById('taskInput');
-        const taskListElement = document.getElementById('taskList');
-        const clearAllButton = document.getElementById('clearAllButton');
-        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        // Font Color Picker
+        const fontColorPicker = document.getElementById('fontColor');
+        fontColorPicker.addEventListener('input', () => {
+            const color = fontColorPicker.value;
+            document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
+                el.style.color = color;
+            });
+            localStorage.setItem('fontColor', color);
+        });
 
-        function renderTasks() {
-            taskListElement.innerHTML = '';
-            tasks.forEach((task, index) => {
-                const li = document.createElement('li');
-                li.classList.add('task');
-                li.innerHTML = `
-                    <input type="checkbox" ${task.completed ? 'checked' : ''} />
-                    <span class="task-text" style="text-decoration: ${task.completed ? 'line-through' : 'none'}">${task.text}</span>
-                    <button class="delete-task-button">X</button>
-                `;
-                taskListElement.appendChild(li);
-
-                // Mark task as completed
-                li.querySelector('input[type="checkbox"]').addEventListener('click', () => {
-                    task.completed = !task.completed;
-                    renderTasks();
-                    localStorage.setItem('tasks', JSON.stringify(tasks));
-                });
-
-                // Delete task
-                li.querySelector('.delete-task-button').addEventListener('click', () => {
-                    tasks.splice(index, 1);
-                    renderTasks();
-                    localStorage.setItem('tasks', JSON.stringify(tasks));
-                });
+        // Local Storage Data Retrieval
+        const savedFontColor = localStorage.getItem('fontColor');
+        if (savedFontColor) {
+            document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
+                el.style.color = savedFontColor;
             });
         }
 
-        // Add new task
+        // Tasks Management
+        const taskList = document.getElementById('taskList');
+        const taskInput = document.getElementById('taskInput');
+
         document.getElementById('addTaskButton').addEventListener('click', () => {
-            if (taskInput.value.trim() !== '') {
-                tasks.push({ text: taskInput.value.trim(), completed: false });
-                taskInput.value = '';
-                renderTasks();
-                localStorage.setItem('tasks', JSON.stringify(tasks));
-            }
-        });
+            if (taskInput.value.trim() === '') return;
 
-        // Clear all tasks
-        clearAllButton.addEventListener('click', () => {
-            tasks = [];
-            renderTasks();
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-        });
+            const taskItem = document.createElement('li');
+            taskItem.classList.add('task');
+            taskItem.innerHTML = `
+                <input type="checkbox" class="taskCheckbox">
+                <span>${taskInput.value}</span>
+                <button class="deleteTaskButton">❌</button>
+            `;
 
-        // YouTube Search Functionality
-        const youtubeSearch = document.getElementById('youtubeSearch');
-        const youtubePlayer = document.getElementById('youtubePlayer');
+            taskList.appendChild(taskItem);
 
-        youtubeSearch.addEventListener('input', async (e) => {
-            const query = e.target.value;
-            if (query.length > 2) {
-                const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=AIzaSyCX12cF27F_XvdDLMQwhiOfv8cLyKguxrw`);
-                const data = await response.json();
-                if (data.items.length > 0) {
-                    const videoId = data.items[0].id.videoId;
-                    youtubePlayer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            taskInput.value = '';
+
+            // Task Cross-out
+            taskItem.querySelector('.taskCheckbox').addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    taskItem.querySelector('span').style.textDecoration = 'line-through';
                 } else {
-                    youtubePlayer.innerHTML = '';
+                    taskItem.querySelector('span').style.textDecoration = 'none';
                 }
-            }
+            });
+
+            // Delete Task
+            taskItem.querySelector('.deleteTaskButton').addEventListener('click', () => {
+                taskItem.remove();
+            });
+
+            localStorage.setItem('tasks', taskList.innerHTML);
         });
 
-        // Timezone functionality
-        function updateTimeZones() {
-            const timeZoneOffsets = {
-                'usPacific': -7,
-                'usMountain': -6,
-                'usCentral': -5,
-                'usEastern': -4,
-                'phPhilippines': 8,
-            };
+        document.getElementById('clearAllButton').addEventListener('click', () => {
+            taskList.innerHTML = '';
+            localStorage.setItem('tasks', '');
+        });
 
-            for (const [zone, offset] of Object.entries(timeZoneOffsets)) {
-                const now = new Date();
-                const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-                const localTime = new Date(utc + (3600000 * offset));
-                const formattedTime = localTime.toLocaleTimeString();
-                document.getElementById(zone).textContent = `${zone.replace(/[A-Z]/g, match => ` ${match}`).toUpperCase()}: ${formattedTime}`;
-            }
+        // YouTube Player Embedding
+        document.getElementById('youtubeSearch').addEventListener('input', () => {
+            const query = document.getElementById('youtubeSearch').value;
+            if (query.trim() === '') return;
+
+            fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=AIzaSyCX12cF27F_XvdDLMQwhiOfv8cLyKguxrw`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.items.length > 0) {
+                        const videoId = data.items[0].id.videoId;
+                        document.getElementById('youtubePlayer').innerHTML = `
+                            <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0"></iframe>
+                        `;
+                    }
+                })
+                .catch(err => {
+                    console.log('Error fetching YouTube data:', err);
+                });
+        });
+
+        // Update Timezone every minute
+        setInterval(() => {
+            updateTimezone();
+        }, 60000);
+
+        function updateTimezone() {
+            const date = new Date();
+            document.getElementById('usPacific').innerText = `US Pacific: ${date.toLocaleString("en-US", {timeZone: "America/Los_Angeles"})}`;
+            document.getElementById('usMountain').innerText = `US Mountain: ${date.toLocaleString("en-US", {timeZone: "America/Denver"})}`;
+            document.getElementById('usCentral').innerText = `US Central: ${date.toLocaleString("en-US", {timeZone: "America/Chicago"})}`;
+            document.getElementById('usEastern').innerText = `US Eastern: ${date.toLocaleString("en-US", {timeZone: "America/New_York"})}`;
+            document.getElementById('phPhilippines').innerText = `PH Philippines: ${date.toLocaleString("en-US", {timeZone: "Asia/Manila"})}`;
         }
 
-        setInterval(updateTimeZones, 60000);
-        updateTimeZones(); // Initial call to update timezones
+        updateTimezone();  // Initial call to set the time immediately
     </script>
 </body>
 </html>
