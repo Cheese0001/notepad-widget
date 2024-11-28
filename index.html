@@ -367,39 +367,42 @@
         setInterval(updateTime, 60000);
         updateTime();
 
-           // Function to fetch a YouTube video based on the query
-        function fetchYouTubeVideo(query) {
-            const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&key=${API_KEY}`;
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.items && data.items.length > 0) {
-                        const video = data.items[0]; // Get the first video
-                        const videoId = video.id.videoId;
-                        const videoTitle = video.snippet.title;
-    });
-                        // Create the YouTube player iframe
-                        const iframe = document.createElement('iframe');
-                        iframe.src = `https://www.youtube.com/embed/${videoId}`;
-                        iframe.width = '560';
-                        iframe.height = '315';
-                        iframe.frameBorder = '0';
-                        iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
-                        iframe.allowFullscreen = true;
-                        youtubeContainer.innerHTML = ''; // Clear any existing content
-                        youtubeContainer.appendChild(iframe);
-                    } else {
-                        console.log('No videos found');
-                        youtubeContainer.innerHTML = 'No video found';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching YouTube data:', error);
-                });
-        }
+        // Function to fetch a YouTube video based on the query
+function fetchYouTubeVideo(query) {
+    const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&key=YOUR_API_KEY_HERE`;
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (data.items && data.items.length > 0) {
+                const video = data.items[0]; // Get the first video
+                const videoId = video.id.videoId;
+                const videoTitle = video.snippet.title;
 
-        // Example: Search YouTube for "muffing song"
-        fetchYouTubeVideo('muffing song');
+                // Create the YouTube player iframe
+                const iframe = document.createElement('iframe');
+                iframe.src = `https://www.youtube.com/embed/${videoId}`;
+                iframe.width = '560';
+                iframe.height = '315';
+                iframe.frameBorder = '0';
+                iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+                iframe.allowFullscreen = true;
+
+                const youtubeContainer = document.getElementById('youtubePlayer');
+                youtubeContainer.innerHTML = ''; // Clear any existing content
+                youtubeContainer.appendChild(iframe);
+            } else {
+                console.log('No videos found');
+                const youtubeContainer = document.getElementById('youtubePlayer');
+                youtubeContainer.innerHTML = 'No video found';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching YouTube data:', error);
+        });
+}
+
+// Example: Search YouTube for "muffin song"
+fetchYouTubeVideo('muffin song');
     </script>
 </body>
 </html>
