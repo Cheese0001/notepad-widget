@@ -321,7 +321,7 @@ function updateTimezone() {
     document.getElementById('phPhilippines').textContent = `PH Philippines: ${date.toLocaleString('en-US', { timeZone: 'Asia/Manila' })}`;
 }
 
-setInterval(updateTimezone, 1000);
+setInterval(updateTimezone, 6000);
 updateTimezone(); // Initialize the timezone immediately
 
 });
