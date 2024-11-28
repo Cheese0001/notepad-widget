@@ -1,93 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Notepad & Task Tracker</title>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-    /* All existing CSS styles from your code remain the same */
-    .youtube-container {
-        margin-top: 20px;
-        width: 100%;
-        max-width: 1000px;
-        background-color: rgba(255, 255, 255, 0.8); /* Container background */
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notepad, Task Tracker & YouTube Player</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
 
-    .youtube-search-bar {
-        margin-bottom: 10px;
-        width: 100%;
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #9DA8C4;
-        font-size: 14px;
-    }
+        .container {
+            width: 45%;
+            margin: 15px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s ease;
+        }
 
-    .youtube-player {
-        position: relative;
-        padding-top: 56.25%; /* 16:9 aspect ratio */
-        height: 0;
-        overflow: hidden;
-        max-width: 100%;
-    }
+        .timezone-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
 
-    .youtube-player iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-</style>
+        .timezone {
+            padding: 8px;
+            border-radius: 8px;
+            margin-right: 10px;
+        }
+
+        /* YouTube Player Styles */
+        .youtube-container {
+            position: relative;
+            width: 100%;
+            height: 225px;
+            background-color: #000;
+            overflow: hidden;
+            resize: both;
+            border: 2px solid #333;
+            border-radius: 8px;
+        }
+
+        .resize-handle {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 10px;
+            height: 10px;
+            background-color: #333;
+            cursor: se-resize;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Light/Dark Mode */
+        .light-theme .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+        }
+
+        .dark-theme .container {
+            background-color: rgba(51, 51, 51, 0.8);
+            color: #f0f0f0;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            background-color: #9DA8C4;
+            color: white;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #93B9CF;
+        }
+
+        .task-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .task {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2px;
+            padding: 3px;
+            font-size: 13px;
+        }
+
+        .task input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <!-- Existing elements remain the same -->
+    <div class="container">
+        <!-- Notepad & Task Tracker Section -->
+        <div class="timezone-container" id="timezoneContainer">
+            <div class="timezone" id="usPacific">US Pacific: Loading...</div>
+            <div class="timezone" id="usMountain">US Mountain: Loading...</div>
+            <div class="timezone" id="usCentral">US Central: Loading...</div>
+            <div class="timezone" id="usEastern">US Eastern: Loading...</div>
+            <div class="timezone" id="phPhilippines">PH Philippines: Loading...</div>
+        </div>
 
-    <!-- YouTube Player -->
-    <div class="youtube-container">
-        <input type="text" id="youtubeSearch" class="youtube-search-bar" placeholder="Search for a YouTube video..." />
-        <div id="youtubePlayer" class="youtube-player"></div>
+        <button id="themeToggle">Switch to Dark Mode</button>
+        <button id="increaseFontSize">+</button>
+        <button id="decreaseFontSize">-</button>
+
+        <div class="notepad-container" id="notepadContainer">
+            <textarea id="notepad" placeholder="Write your notes here..."></textarea>
+        </div>
+
+        <div class="task-container">
+            <input type="text" id="taskInput" placeholder="Add a task" />
+            <button id="addTaskButton">Add Task</button>
+            <button id="clearAllButton">Clear All Tasks</button>
+            <ul id="taskList" class="task-list"></ul>
+        </div>
     </div>
-</div>
 
-<script>
-// Existing code for Notepad, Task List, and Theme toggling remains the same
+    <div class="container">
+        <!-- YouTube Search and Player Section -->
+        <input type="text" id="search-input" class="search-bar" placeholder="Search YouTube..." oninput="searchVideo()">
 
-// YouTube API Integration
-const youtubeSearch = document.getElementById('youtubeSearch');
-const youtubePlayer = document.getElementById('youtubePlayer');
+        <div class="youtube-container">
+            <iframe id="youtube-player" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" allowfullscreen></iframe>
+            <div class="resize-handle"></div>
+        </div>
+    </div>
 
-// Replace with your YouTube API key
-const apiKey = 'AIzaSyCX12cF27F_XvdDLMQwhiOfv8cLyKguxrw';
-
-function loadYouTubeVideo(query) {
-    if (query.trim() === '') return;
-
-    const youtubeSearchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=${apiKey}`;
-
-    fetch(youtubeSearchUrl)
-        .then(response => response.json())
-        .then(data => {
-            if (data.items && data.items.length > 0) {
-                const videoId = data.items[0].id.videoId;
-                youtubePlayer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-            } else {
-                youtubePlayer.innerHTML = '<p>No results found. Please try again.</p>';
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching YouTube data:', error);
-            youtubePlayer.innerHTML = '<p>There was an error loading the video. Please try again.</p>';
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        let isDarkMode = localStorage.getItem('theme') === 'dark';
+        document.body.classList.toggle('dark-theme', isDarkMode);
+        document.querySelectorAll('.container').forEach((el) => {
+            el.classList.toggle('dark-theme', isDarkMode);
         });
-}
 
-youtubeSearch.addEventListener('input', () => {
-    loadYouTubeVideo(youtubeSearch.value);
-});
-</script>
+        themeToggle.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+            document.body.classList.toggle('dark-theme', isDarkMode);
+            document.querySelectorAll('.container').forEach((el) => {
+                el.classList.toggle('dark-theme', isDarkMode);
+            });
+            themeToggle.textContent = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        });
+
+        // Notepad Persistence
+        const notepad = document.getElementById('notepad');
+        notepad.value = localStorage.getItem('notepadText') || '';
+
+        notepad.addEventListener('input', () => {
+            localStorage.setItem('notepadText', notepad.value);
+        });
+
+        // Font Size Controls
+        let fontSize = parseInt(localStorage.getItem('fontSize')) || 16;
+        notepad.style.fontSize = fontSize + 'px';
+
+        const increaseFontSize = document.getElementById('increaseFontSize');
+        const decreaseFontSize = document.getElementById('decreaseFontSize');
+
+        increaseFontSize.addEventListener('click', () => {
+            fontSize += 2;
+            localStorage.setItem('fontSize', fontSize);
+            notepad.style.fontSize = fontSize + 'px';
+        });
+
+        decreaseFontSize.addEventListener('click', () => {
+            fontSize -= 2;
+            localStorage.setItem('fontSize', fontSize);
+            notepad.style.fontSize = fontSize + 'px';
+        });
+
+        // Task List Persistence
+        const taskList = document.getElementById('taskList');
+        const taskInput = document.getElementById('taskInput');
+        const addTaskButton = document.getElementById('addTaskButton');
+        const clearAllButton = document.getElementById('clearAllButton');
+
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        function renderTasks() {
+            taskList.innerHTML = '';
+            tasks.forEach((task, index) => {
+                const li = document.createElement('li');
+                li.classList.add('task');
+                li.innerHTML = `<input type="checkbox" ${task.completed ? 'checked' : ''} data-index="${index}" /> <span style="text-decoration: ${task.completed ? 'line-through' : 'none'};">${task.text}</span> <button class="deleteBtn" data-index="${index}">X</button>`;
+                taskList.appendChild(li);
+            });
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        addTaskButton.addEventListener('click', () => {
+            const taskText = taskInput.value.trim();
+            if (taskText) {
+                tasks.push({ text: taskText, completed: false });
+                taskInput.value = '';
+                renderTasks();
+            }
+        });
+
+        taskList.addEventListener('click', (e) => {
+            if (e.target.classList.contains('deleteBtn')) {
+                const index = e.target.getAttribute('data-index');
+                tasks.splice(index, 1);
+                renderTasks();
+            } else if (e.target.type === 'checkbox') {
+                const index = e.target.getAttribute('data-index');
+                tasks[index].completed = e.target.checked;
+                renderTasks();
+            }
+        });
+
+        clearAllButton.addEventListener('click', () => {
+            tasks = [];
+            renderTasks();
+        });
+
+        renderTasks();
+
+        // YouTube Search Functionality
+        function searchVideo() {
+            const query = document.getElementById('search-input').value;
+            const iframe = document.getElementById('youtube-player');
+            if (query) {
+                iframe.src = `https://www.youtube.com/embed/${query}?autoplay=1`;
+            }
+        }
+    </script>
 </body>
 </html>
