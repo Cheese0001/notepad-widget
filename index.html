@@ -14,7 +14,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: url('images/1.jpg');
+            background-image: url('image/1.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -135,32 +135,12 @@
             cursor: pointer;
         }
 
-        .youtube-container {
-            margin-top: 20px;
-            width: 100%;
-            max-width: 1000px;
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .youtube-search-bar {
-            margin-bottom: 10px;
-            width: 50%;
-            padding: 8px;
-            border-radius: 5px;
-            border: 1px solid #9DA8C4;
-            font-size: 14px;
-        }
-
         .youtube-player {
             position: relative;
             padding-top: 56.25%;
             height: 0;
             overflow: hidden;
             max-width: 100%;
-            resize: both;
         }
 
         .youtube-player iframe {
@@ -175,15 +155,9 @@
             transition: font-size 0.2s ease-in-out;
         }
 
-        .resize-buttons {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .resize-buttons button {
-            width: 40px;
-            height: 40px;
-            font-size: 18px;
+        .increase-font-size-button, .decrease-font-size-button {
+            margin-top: 10px;
+            margin-bottom: 15px;
         }
     </style>
 </head>
@@ -198,22 +172,18 @@
             <div class="timezone" id="phPhilippines">PH Philippines: Loading...</div>
         </div>
 
-        <!-- Theme Toggle and Font Size Controls -->
+        <!-- Theme Toggle -->
         <button id="themeToggle">Switch to Dark Mode</button>
-        <div class="resize-buttons">
-            <button id="increaseFontSize">+</button>
-            <button id="decreaseFontSize">-</button>
-        </div>
-
-        <!-- Task Font Size Controls -->
-        <div class="resize-buttons">
-            <button id="increaseTaskFontSize">+</button>
-            <button id="decreaseTaskFontSize">-</button>
-        </div>
 
         <!-- Notepad Container -->
         <div class="notepad-container" id="notepadContainer">
             <textarea id="notepad" placeholder="Write your notes here..."></textarea>
+        </div>
+
+        <!-- Notepad Font Size Controls (Below Notepad) -->
+        <div>
+            <button id="increaseFontSize">+ Increase Font Size</button>
+            <button id="decreaseFontSize">- Decrease Font Size</button>
         </div>
 
         <!-- Task List -->
@@ -221,20 +191,14 @@
             <input type="text" id="taskInput" placeholder="Add a task" />
             <button id="addTaskButton">Add Task</button>
             <button id="clearAllButton">Clear All Tasks</button>
+            <button id="increaseTaskFontSize">+ Increase Task Font Size</button>
+            <button id="decreaseTaskFontSize">- Decrease Task Font Size</button>
             <ul id="taskList" class="task-list"></ul>
         </div>
 
-        <!-- Font Color Customization -->
-        <div class="font-color-picker">
-            <label for="fontColor">Font Color: </label>
-            <input type="color" id="fontColor" value="#9DA8C4">
-        </div>
-
-        <!-- YouTube Player -->
-        <div class="youtube-container">
-            <input type="text" id="youtubeSearch" class="youtube-search-bar" placeholder="Search for a YouTube video..." />
-            <div id="youtubePlayer" class="youtube-player"></div>
-        </div>
+        <!-- YouTube Search & Player -->
+        <input type="text" id="youtubeSearch" class="youtube-search-bar" placeholder="Search for a YouTube video..." />
+        <div id="youtubePlayer" class="youtube-player"></div>
     </div>
 
     <footer>
@@ -242,152 +206,116 @@
     </footer>
 
     <script>
-        // Theme Toggle Functionality
+        // LocalStorage for theme
         const themeToggle = document.getElementById('themeToggle');
         let isDarkMode = localStorage.getItem('theme') === 'dark';
         document.body.classList.toggle('dark-theme', isDarkMode);
         document.querySelector('.container').classList.toggle('dark-theme', isDarkMode);
-        document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
-            el.classList.toggle('dark-theme', isDarkMode);
-        });
-
         themeToggle.addEventListener('click', () => {
             isDarkMode = !isDarkMode;
             localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
             document.body.classList.toggle('dark-theme', isDarkMode);
             document.querySelector('.container').classList.toggle('dark-theme', isDarkMode);
-            document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
-                el.classList.toggle('dark-theme', isDarkMode);
-            });
             themeToggle.textContent = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
         });
 
-        // Font Size Controls for Notepad
-        let notepadFontSize = parseInt(localStorage.getItem('notepadFontSize')) || 16;
-        document.getElementById('notepad').style.fontSize = `${notepadFontSize}px`;
+        // Notepad Font Size Controls
+        let fontSize = parseInt(localStorage.getItem('fontSize')) || 16;
+        const notepad = document.getElementById('notepad');
+        notepad.style.fontSize = fontSize + 'px';
 
-        document.getElementById('increaseFontSize').addEventListener('click', () => {
-            notepadFontSize += 2;
-            document.getElementById('notepad').style.fontSize = `${notepadFontSize}px`;
-            localStorage.setItem('notepadFontSize', notepadFontSize);
+        const increaseFontSize = document.getElementById('increaseFontSize');
+        const decreaseFontSize = document.getElementById('decreaseFontSize');
+
+        increaseFontSize.addEventListener('click', () => {
+            fontSize += 2;
+            notepad.style.fontSize = fontSize + 'px';
+            localStorage.setItem('fontSize', fontSize);
         });
 
-        document.getElementById('decreaseFontSize').addEventListener('click', () => {
-            notepadFontSize -= 2;
-            document.getElementById('notepad').style.fontSize = `${notepadFontSize}px`;
-            localStorage.setItem('notepadFontSize', notepadFontSize);
-        });
-
-        // Font Size Controls for Tasks
-        let taskFontSize = parseInt(localStorage.getItem('taskFontSize')) || 14;
-        document.querySelectorAll('.task').forEach((task) => {
-            task.style.fontSize = `${taskFontSize}px`;
-        });
-
-        document.getElementById('increaseTaskFontSize').addEventListener('click', () => {
-            taskFontSize += 2;
-            document.querySelectorAll('.task').forEach((task) => {
-                task.style.fontSize = `${taskFontSize}px`;
-            });
-            localStorage.setItem('taskFontSize', taskFontSize);
-        });
-
-        document.getElementById('decreaseTaskFontSize').addEventListener('click', () => {
-            taskFontSize -= 2;
-            document.querySelectorAll('.task').forEach((task) => {
-                task.style.fontSize = `${taskFontSize}px`;
-            });
-            localStorage.setItem('taskFontSize', taskFontSize);
-        });
-
-        // Timezone Functionality (Updated every minute)
-        function updateTimeZones() {
-            const options = { timeZoneName: 'short' };
-            const time = new Date();
-            const usPacificTime = time.toLocaleString('en-US', { timeZone: 'America/Los_Angeles', ...options });
-            const usMountainTime = time.toLocaleString('en-US', { timeZone: 'America/Denver', ...options });
-            const usCentralTime = time.toLocaleString('en-US', { timeZone: 'America/Chicago', ...options });
-            const usEasternTime = time.toLocaleString('en-US', { timeZone: 'America/New_York', ...options });
-            const philippinesTime = time.toLocaleString('en-US', { timeZone: 'Asia/Manila', ...options });
-
-            document.getElementById('usPacific').textContent = 'US Pacific: ' + usPacificTime;
-            document.getElementById('usMountain').textContent = 'US Mountain: ' + usMountainTime;
-            document.getElementById('usCentral').textContent = 'US Central: ' + usCentralTime;
-            document.getElementById('usEastern').textContent = 'US Eastern: ' + usEasternTime;
-            document.getElementById('phPhilippines').textContent = 'PH Philippines: ' + philippinesTime;
-        }
-        
-        updateTimeZones();
-        setInterval(updateTimeZones, 60000);
-
-        // YouTube Search Functionality
-        document.getElementById('youtubeSearch').addEventListener('input', function () {
-            const query = this.value;
-            if (query.length >= 3) {
-                fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=AIzaSyCX12cF27F_XvdDLMQwhiOfv8cLyKguxrw`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const videoId = data.items[0].id.videoId;
-                        document.getElementById('youtubePlayer').innerHTML = `
-                            <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
-                        `;
-                    });
+        decreaseFontSize.addEventListener('click', () => {
+            if (fontSize > 10) {
+                fontSize -= 2;
+                notepad.style.fontSize = fontSize + 'px';
+                localStorage.setItem('fontSize', fontSize);
             }
         });
 
-        // Task Handling
+        // Task Font Size Controls
+        let taskFontSize = 16;
+        const increaseTaskFontSize = document.getElementById('increaseTaskFontSize');
+        const decreaseTaskFontSize = document.getElementById('decreaseTaskFontSize');
+
+        increaseTaskFontSize.addEventListener('click', () => {
+            taskFontSize += 2;
+            updateTaskFontSize();
+        });
+
+        decreaseTaskFontSize.addEventListener('click', () => {
+            if (taskFontSize > 10) {
+                taskFontSize -= 2;
+                updateTaskFontSize();
+            }
+        });
+
+        function updateTaskFontSize() {
+            const tasks = document.querySelectorAll('.task');
+            tasks.forEach(task => {
+                task.style.fontSize = taskFontSize + 'px';
+            });
+        }
+
+        // Add Task Functionality
         const taskInput = document.getElementById('taskInput');
         const taskList = document.getElementById('taskList');
         const addTaskButton = document.getElementById('addTaskButton');
         const clearAllButton = document.getElementById('clearAllButton');
-        
-        function loadTasks() {
-            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-            taskList.innerHTML = '';
-            tasks.forEach((task, index) => {
+
+        addTaskButton.addEventListener('click', () => {
+            const taskText = taskInput.value.trim();
+            if (taskText) {
                 const li = document.createElement('li');
                 li.classList.add('task');
                 li.innerHTML = `
-                    <input type="checkbox" ${task.completed ? 'checked' : ''} onclick="toggleTask(${index})">
-                    ${task.text}
-                    <button onclick="deleteTask(${index})">X</button>
+                    <input type="checkbox" />
+                    <label>${taskText}</label>
                 `;
                 taskList.appendChild(li);
-            });
-        }
-
-        function toggleTask(index) {
-            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-            tasks[index].completed = !tasks[index].completed;
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-            loadTasks();
-        }
-
-        function deleteTask(index) {
-            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-            tasks.splice(index, 1);
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-            loadTasks();
-        }
-
-        function clearAllTasks() {
-            localStorage.removeItem('tasks');
-            loadTasks();
-        }
-
-        addTaskButton.addEventListener('click', () => {
-            if (taskInput.value.trim()) {
-                const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-                tasks.push({ text: taskInput.value.trim(), completed: false });
-                localStorage.setItem('tasks', JSON.stringify(tasks));
                 taskInput.value = '';
-                loadTasks();
+
+                // Add Event Listener for Task Crossing
+                const checkbox = li.querySelector('input[type="checkbox"]');
+                checkbox.addEventListener('change', () => {
+                    if (checkbox.checked) {
+                        li.style.textDecoration = 'line-through';
+                        li.style.color = '#9DA8C4';
+                    } else {
+                        li.style.textDecoration = 'none';
+                        li.style.color = '';
+                    }
+                });
             }
         });
 
-        clearAllButton.addEventListener('click', clearAllTasks);
+        clearAllButton.addEventListener('click', () => {
+            taskList.innerHTML = '';
+        });
 
-        loadTasks();
+        // YouTube Player Embed Functionality
+        const youtubeSearch = document.getElementById('youtubeSearch');
+        const youtubePlayer = document.getElementById('youtubePlayer');
+
+        youtubeSearch.addEventListener('input', () => {
+            const query = youtubeSearch.value;
+            if (query.length > 3) {
+                fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&key=AIzaSyCX12cF27F_XvdDLMQwhiOfv8cLyKguxrw`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const videoId = data.items[0].id.videoId;
+                        youtubePlayer.innerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                    });
+            }
+        });
     </script>
 </body>
 </html>
