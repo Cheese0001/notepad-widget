@@ -355,7 +355,7 @@
         youtubeSearch.addEventListener('input', async (e) => {
             const query = e.target.value;
             if (query.trim() !== '') {
-                const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=AIzaSyCX12cF27F_XvdDLMQwhiOfv8cLyKguxrw`);
+                const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=AIzaSyAqHhloj22y6shAsMiLGi9cBAtyfOZkKCk`);
                 const data = await res.json();
                 const videoId = data.items[0].id.videoId;
                 youtubePlayer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
