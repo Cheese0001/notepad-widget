@@ -20,7 +20,23 @@ body {
     background-repeat: no-repeat;
     transition: background-color 0.3s ease;
 }
+.timezone-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
 
+.timezone {
+    padding: 8px;
+    border-radius: 8px;
+    margin-right: 10px;
+}
+
+/* Change the font-family of the notepad to Quicksand */
+.notepad-container textarea {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 16px; /* Default font size */
+}
 .container {
     width: 80%;
     max-width: 1000px;
@@ -114,27 +130,19 @@ button:hover {
     cursor: pointer;
 }
 
-.timezone-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
-
-.timezone {
-    padding: 8px;
-    border-radius: 8px;
-    margin-right: 10px;
-}
-
-/* Change the font-family of the notepad to Quicksand */
-.notepad-container textarea {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 16px; /* Default font size */
-}
 </style>
 </head>
 <body>
 <div class="container">
+<!-- Timezone Display -->
+<div class="timezone-container" id="timezoneContainer">
+    <div class="timezone" id="usPacific">US Pacific: Loading...</div>
+    <div class="timezone" id="usMountain">US Mountain: Loading...</div>
+    <div class="timezone" id="usCentral">US Central: Loading...</div>
+    <div class="timezone" id="usEastern">US Eastern: Loading...</div>
+    <div class="timezone" id="phPhilippines">PH Philippines: Loading...</div>
+</div>
+
 <!-- Theme Toggle and Font Size Controls -->
 <button id="themeToggle">Switch to Dark Mode</button>
 <button id="increaseFontSize">+</button>
@@ -159,14 +167,6 @@ button:hover {
     <input type="color" id="fontColor" value="#9DA8C4">
 </div>
 
-<!-- Timezone Display -->
-<div class="timezone-container" id="timezoneContainer">
-    <div class="timezone" id="usPacific">US Pacific: Loading...</div>
-    <div class="timezone" id="usMountain">US Mountain: Loading...</div>
-    <div class="timezone" id="usCentral">US Central: Loading...</div>
-    <div class="timezone" id="usEastern">US Eastern: Loading...</div>
-    <div class="timezone" id="phPhilippines">PH Philippines: Loading...</div>
-</div>
 </div>
 
 <script>
@@ -245,6 +245,7 @@ addTaskButton.addEventListener('click', () => {
     }
 });
 
+
 taskList.addEventListener('click', (e) => {
     if (e.target.classList.contains('deleteBtn')) {
         const index = e.target.getAttribute('data-index');
@@ -292,7 +293,7 @@ function updateTimezone() {
 }
 
 updateTimezone();
-setInterval(updateTimezone, 1000);
+setInterval(updateTimezone, 60000);
 </script>
 </body>
 </html>
