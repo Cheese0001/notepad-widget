@@ -147,7 +147,7 @@
 
         .youtube-search-bar {
             margin-bottom: 10px;
-            width: 100%;
+            width: 50%;
             padding: 8px;
             border-radius: 5px;
             border: 1px solid #9DA8C4;
@@ -160,6 +160,7 @@
             height: 0;
             overflow: hidden;
             max-width: 100%;
+            resize: both;
         }
 
         .youtube-player iframe {
@@ -172,6 +173,17 @@
 
         .task-list li {
             transition: font-size 0.2s ease-in-out;
+        }
+
+        .resize-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .resize-buttons button {
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -188,12 +200,16 @@
 
         <!-- Theme Toggle and Font Size Controls -->
         <button id="themeToggle">Switch to Dark Mode</button>
-        <button id="increaseFontSize">Increase Notepad Font Size</button>
-        <button id="decreaseFontSize">Decrease Notepad Font Size</button>
+        <div class="resize-buttons">
+            <button id="increaseFontSize">+</button>
+            <button id="decreaseFontSize">-</button>
+        </div>
 
         <!-- Task Font Size Controls -->
-        <button id="increaseTaskFontSize">Increase Task Font Size</button>
-        <button id="decreaseTaskFontSize">Decrease Task Font Size</button>
+        <div class="resize-buttons">
+            <button id="increaseTaskFontSize">+</button>
+            <button id="decreaseTaskFontSize">-</button>
+        </div>
 
         <!-- Notepad Container -->
         <div class="notepad-container" id="notepadContainer">
@@ -246,114 +262,132 @@
             themeToggle.textContent = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
         });
 
-        // Notepad Font Size Controls
-        let fontSize = parseInt(localStorage.getItem('fontSize')) || 16;
-        const notepad = document.getElementById('notepad');
-        notepad.style.fontSize = fontSize + 'px';
+        // Font Size Controls for Notepad
+        let notepadFontSize = parseInt(localStorage.getItem('notepadFontSize')) || 16;
+        document.getElementById('notepad').style.fontSize = `${notepadFontSize}px`;
 
-        const increaseFontSize = document.getElementById('increaseFontSize');
-        const decreaseFontSize = document.getElementById('decreaseFontSize');
-
-        increaseFontSize.addEventListener('click', () => {
-            fontSize += 2;
-            notepad.style.fontSize = fontSize + 'px';
-            localStorage.setItem('fontSize', fontSize);
+        document.getElementById('increaseFontSize').addEventListener('click', () => {
+            notepadFontSize += 2;
+            document.getElementById('notepad').style.fontSize = `${notepadFontSize}px`;
+            localStorage.setItem('notepadFontSize', notepadFontSize);
         });
 
-        decreaseFontSize.addEventListener('click', () => {
-            if (fontSize > 10) {
-                fontSize -= 2;
-                notepad.style.fontSize = fontSize + 'px';
-                localStorage.setItem('fontSize', fontSize);
-            }
+        document.getElementById('decreaseFontSize').addEventListener('click', () => {
+            notepadFontSize -= 2;
+            document.getElementById('notepad').style.fontSize = `${notepadFontSize}px`;
+            localStorage.setItem('notepadFontSize', notepadFontSize);
         });
 
-        // Task Font Size Controls
-        let taskFontSize = 16;
-        const increaseTaskFontSize = document.getElementById('increaseTaskFontSize');
-        const decreaseTaskFontSize = document.getElementById('decreaseTaskFontSize');
+        // Font Size Controls for Tasks
+        let taskFontSize = parseInt(localStorage.getItem('taskFontSize')) || 14;
+        document.querySelectorAll('.task').forEach((task) => {
+            task.style.fontSize = `${taskFontSize}px`;
+        });
 
-        increaseTaskFontSize.addEventListener('click', () => {
+        document.getElementById('increaseTaskFontSize').addEventListener('click', () => {
             taskFontSize += 2;
-            updateTaskFontSize();
-        });
-
-        decreaseTaskFontSize.addEventListener('click', () => {
-            if (taskFontSize > 10) {
-                taskFontSize -= 2;
-                updateTaskFontSize();
-            }
-        });
-
-        function updateTaskFontSize() {
-            const taskListItems = document.querySelectorAll('#taskList li');
-            taskListItems.forEach(item => {
-                item.style.fontSize = taskFontSize + 'px';
+            document.querySelectorAll('.task').forEach((task) => {
+                task.style.fontSize = `${taskFontSize}px`;
             });
+            localStorage.setItem('taskFontSize', taskFontSize);
+        });
+
+        document.getElementById('decreaseTaskFontSize').addEventListener('click', () => {
+            taskFontSize -= 2;
+            document.querySelectorAll('.task').forEach((task) => {
+                task.style.fontSize = `${taskFontSize}px`;
+            });
+            localStorage.setItem('taskFontSize', taskFontSize);
+        });
+
+        // Timezone Functionality (Updated every minute)
+        function updateTimeZones() {
+            const options = { timeZoneName: 'short' };
+            const time = new Date();
+            const usPacificTime = time.toLocaleString('en-US', { timeZone: 'America/Los_Angeles', ...options });
+            const usMountainTime = time.toLocaleString('en-US', { timeZone: 'America/Denver', ...options });
+            const usCentralTime = time.toLocaleString('en-US', { timeZone: 'America/Chicago', ...options });
+            const usEasternTime = time.toLocaleString('en-US', { timeZone: 'America/New_York', ...options });
+            const philippinesTime = time.toLocaleString('en-US', { timeZone: 'Asia/Manila', ...options });
+
+            document.getElementById('usPacific').textContent = 'US Pacific: ' + usPacificTime;
+            document.getElementById('usMountain').textContent = 'US Mountain: ' + usMountainTime;
+            document.getElementById('usCentral').textContent = 'US Central: ' + usCentralTime;
+            document.getElementById('usEastern').textContent = 'US Eastern: ' + usEasternTime;
+            document.getElementById('phPhilippines').textContent = 'PH Philippines: ' + philippinesTime;
         }
-
-        // Task List Functionality
-        const addTaskButton = document.getElementById('addTaskButton');
-        const taskInput = document.getElementById('taskInput');
-        const taskList = document.getElementById('taskList');
-        const clearAllButton = document.getElementById('clearAllButton');
-
-        addTaskButton.addEventListener('click', () => {
-            const taskText = taskInput.value.trim();
-            if (taskText !== '') {
-                const newTask = document.createElement('li');
-                newTask.textContent = taskText;
-                taskList.appendChild(newTask);
-                taskInput.value = ''; // Clear the input after adding task
-            }
-        });
-
-        clearAllButton.addEventListener('click', () => {
-            taskList.innerHTML = ''; // Remove all tasks
-        });
+        
+        updateTimeZones();
+        setInterval(updateTimeZones, 60000);
 
         // YouTube Search Functionality
-        const youtubeSearch = document.getElementById('youtubeSearch');
-        const youtubePlayer = document.getElementById('youtubePlayer');
-        const API_KEY = 'YOUR_API_KEY_HERE';
-
-        youtubeSearch.addEventListener('input', function () {
-            const query = youtubeSearch.value.trim();
-            if (query.length > 0) {
-                searchYouTube(query);
-            } else {
-                youtubePlayer.innerHTML = '';
+        document.getElementById('youtubeSearch').addEventListener('input', function () {
+            const query = this.value;
+            if (query.length >= 3) {
+                fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=AIzaSyCX12cF27F_XvdDLMQwhiOfv8cLyKguxrw`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const videoId = data.items[0].id.videoId;
+                        document.getElementById('youtubePlayer').innerHTML = `
+                            <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+                        `;
+                    });
             }
         });
 
-        async function searchYouTube(query) {
-            const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=${API_KEY}`);
-            const data = await response.json();
-            const videoId = data.items[0].id.videoId;
-
-            youtubePlayer.innerHTML = `
-                <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            `;
-        }
-
-        // Timezone Update
-        async function updateTimezones() {
-            const timezones = [
-                { id: 'usPacific', offset: -8, label: 'US Pacific' },
-                { id: 'usMountain', offset: -7, label: 'US Mountain' },
-                { id: 'usCentral', offset: -6, label: 'US Central' },
-                { id: 'usEastern', offset: -5, label: 'US Eastern' },
-                { id: 'phPhilippines', offset: 8, label: 'PH Philippines' }
-            ];
-
-            timezones.forEach(async (tz) => {
-                const currentTime = new Date(new Date().getTime() + tz.offset * 60 * 60 * 1000);
-                const formattedTime = currentTime.toLocaleTimeString();
-                document.getElementById(tz.id).textContent = `${tz.label}: ${formattedTime}`;
+        // Task Handling
+        const taskInput = document.getElementById('taskInput');
+        const taskList = document.getElementById('taskList');
+        const addTaskButton = document.getElementById('addTaskButton');
+        const clearAllButton = document.getElementById('clearAllButton');
+        
+        function loadTasks() {
+            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            taskList.innerHTML = '';
+            tasks.forEach((task, index) => {
+                const li = document.createElement('li');
+                li.classList.add('task');
+                li.innerHTML = `
+                    <input type="checkbox" ${task.completed ? 'checked' : ''} onclick="toggleTask(${index})">
+                    ${task.text}
+                    <button onclick="deleteTask(${index})">X</button>
+                `;
+                taskList.appendChild(li);
             });
         }
 
-        setInterval(updateTimezones, 60000); // Update every second
+        function toggleTask(index) {
+            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks[index].completed = !tasks[index].completed;
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            loadTasks();
+        }
+
+        function deleteTask(index) {
+            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks.splice(index, 1);
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            loadTasks();
+        }
+
+        function clearAllTasks() {
+            localStorage.removeItem('tasks');
+            loadTasks();
+        }
+
+        addTaskButton.addEventListener('click', () => {
+            if (taskInput.value.trim()) {
+                const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+                tasks.push({ text: taskInput.value.trim(), completed: false });
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+                taskInput.value = '';
+                loadTasks();
+            }
+        });
+
+        clearAllButton.addEventListener('click', clearAllTasks);
+
+        loadTasks();
     </script>
 </body>
 </html>
