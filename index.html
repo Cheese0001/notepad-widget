@@ -271,6 +271,7 @@ decreaseFontSize.addEventListener('click', () => {
     localStorage.setItem('fontSize', fontSize);
     notepad.style.fontSize = fontSize + 'px';
 });
+    
 
 // Task List Persistence
 const taskList = document.getElementById('taskList');
@@ -361,6 +362,10 @@ function loadYouTubeVideo(query) {
             console.error('Error fetching YouTube data:', error);
             youtubePlayer.innerHTML = '<p>There was an error loading the video. Please try again.</p>';
         });
+    youtubeSearch.addEventListener('input', () => {
+    loadYouTubeVideo(youtubeSearch.value);
+});
+
 
 // Timezone Display
 function updateTimezone() {
