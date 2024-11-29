@@ -86,7 +86,7 @@ body, .notepad-container, .task-container {
     transition: color 0.3s ease;
 }
 
-.notepad-container, .task-container {
+.notepad-container {
     min-width: 200px;
     min-height: 150px;
     margin-bottom: 15px;
@@ -97,7 +97,27 @@ body, .notepad-container, .task-container {
     overflow: auto;
     transition: background-color 0.3s, color 0.3s;
 }
-
+    .task-container {
+     min-width: 200px;
+    min-height: 150px;
+    margin-bottom: 15px;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    resize: both;
+    overflow: auto;
+    transition: background-color 0.3s, color 0.3s;
+}
+ .youtube-container {
+     min-width: 200px;
+    min-height: 150px;
+    margin-bottom: 15px;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    resize: both;
+    overflow: auto;
+    transition: background-color 0.3s, color 0.3s;
 .task-list {
     list-style-type: none;
     padding: 0;
@@ -210,6 +230,8 @@ button:hover {
     <input type="text" id="taskInput" placeholder="Add a task" />
     <button id="addTaskButton">Add Task</button>
     <button id="clearAllButton">Clear All Tasks</button>
+    <button id="increaseFontSize">+</button>
+    <button id="decreaseFontSize">-</button>
     <ul id="taskList" class="task-list"></ul>
 </div>
 
@@ -223,7 +245,7 @@ button:hover {
         <input type="text" id="search-input" class="search-bar" placeholder="Search YouTube..." oninput="searchVideo()">
 
         <!-- Resizable YouTube Player -->
-        <div class="container">
+        <div class="youtube-container">
             <iframe id="youtube-player" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" allowfullscreen></iframe>
             <div class="resize-handle"></div>
        </div>
@@ -354,6 +376,7 @@ function updateTimezone() {
 
 updateTimezone();
 setInterval(updateTimezone, 60000);
+    
     const resizableContainer = document.querySelector('.container');
         const resizeHandle = document.querySelector('.resize-handle');
         const youtubePlayer = document.getElementById('youtube-player');
