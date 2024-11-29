@@ -96,6 +96,7 @@ body, .notepad-container, .task-container {
     resize: both;
     overflow: auto;
     transition: background-color 0.3s, color 0.3s;
+    
 }
     .task-container {
      min-width: 200px;
@@ -118,14 +119,15 @@ body, .notepad-container, .task-container {
     resize: both;
     overflow: auto;
     transition: background-color 0.3s, color 0.3s;
+     
 .task-list {
-    list-style-type: none;
+    list-style-type: decimal;
     padding: 0;
 }
 
 .task {
     display: flex;
-    align-items: center;
+    align-items: left;
     justify-content: space-between;
     margin-bottom: 2px;
     padding: 3px; /* Reduced padding for closer line spacing */
