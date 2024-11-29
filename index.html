@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" href="images/Icon web.png
+" type="image/x-icon">
+ <link rel="icon" href="path_to_your_icon/favicon.png" type="image/png">
+       
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Notepad & Task Tracker</title>
@@ -13,11 +17,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-image: url('images/1.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    height: 130vh; /* Ensures the body takes up full height */
+    background-image: url('images/1.jpg'); /* Your background image */
+    background-size: cover; /* Ensures the background image covers the full width and height */
+    background-position: center; /* Keeps the image centered */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
     transition: background-color 0.3s ease;
 }
     /* Footer Styles */
@@ -35,6 +39,7 @@ footer {
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
+    font-size: 20px;
 }
 
 .timezone {
@@ -53,7 +58,7 @@ footer {
     max-width: 1000px;
     margin: auto;
     padding: 15px;
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent container for light mode */
+    background-color: rgba(255, 255, 255, 0.74); /* Semi-transparent container for light mode */
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s, color 0.3s, opacity 0.3s ease;
@@ -61,7 +66,7 @@ footer {
 
 /* Light Mode */
 .light-theme .container {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(255, 255, 255, 0.8);
     color: #333333; /* Light font color */
 }
 
@@ -82,11 +87,22 @@ footer {
 }
 
 /* Global Font Color */
-body, .notepad-container, .task-container {
+body, .task-container {
     transition: color 0.3s ease;
 }
+.notepad-container, {
+    min-width: 200px;
+    min-height: 150px;
+    margin-bottom: 15px;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    resize: both;
+    overflow: auto;
+    
+}
 
-.notepad-container {
+.task-container {
     min-width: 200px;
     min-height: 150px;
     margin-bottom: 15px;
@@ -96,42 +112,20 @@ body, .notepad-container, .task-container {
     resize: both;
     overflow: auto;
     transition: background-color 0.3s, color 0.3s;
-    
 }
-    .task-container {
-     min-width: 200px;
-    min-height: 150px;
-    margin-bottom: 15px;
-    padding: 8px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    resize: both;
-    overflow: auto;
-    transition: background-color 0.3s, color 0.3s;
-}
- .youtube-container {
-     min-width: 200px;
-    min-height: 150px;
-    margin-bottom: 15px;
-    padding: 8px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    resize: both;
-    overflow: auto;
-    transition: background-color 0.3s, color 0.3s;
-     
+
 .task-list {
-    list-style-type: decimal;
+    list-style-type: none;
     padding: 0;
 }
 
 .task {
     display: flex;
-    align-items: left;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: left;
     margin-bottom: 2px;
-    padding: 3px; /* Reduced padding for closer line spacing */
-    font-size: 13px; /* Font size set to 13px */
+    padding: 0px; /* Reduced padding for closer line spacing */
+    font-size: 18px; /* Font size set to 13px */
 }
 
 .task input[type="checkbox"] {
@@ -139,13 +133,14 @@ body, .notepad-container, .task-container {
 }
 
 button {
-    padding: 8px 12px;
+    padding: px px;
     border: none;
     cursor: pointer;
-    background-color: #9DA8C4;
-    color: white;
-    font-size: 14px;
-    border-radius: 5px;
+    background-color: #f0cfe5;
+    color: rgb(132, 98, 139);
+    font-size: 13px;
+    border-radius: 4px;
+
 }
 
 button:hover {
@@ -159,73 +154,84 @@ button:hover {
 .font-color-picker input[type="color"] {
     width: 20px;
     height: 20px;
-    border: none;
-    cursor: pointer;
-} }
+       cursor: pointer;
+}
+  /* Styling for the search input */
+  #search-container {
+      margin: 20px;
+    }
 
-        .wrapper {
-            width: 400px;
-            text-align: center;
-        }
+    #search-field {
+      padding: 10px;
+      width: 300px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+    }
 
-        .search-bar {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+    #search-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #af4ca7;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
 
-        .container {
-            position: relative;
-            width: 50%;
-            height: 400px; /* default size for 16:9 aspect ratio */
-            background-color: #000;
-            overflow: hidden;
-            resize: both;
-            border: 2px solid #333;
-            border-radius: 8px;
-        }
+    /* Styling for the player container */
+    #player-container {
+      margin: 5 auto;
+      background-color: #000;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      overflow: hidden;
+      resize: both;
+      width: 640px;
+      height: 390px;
+      min-width: 320px;
+      min-height: 220px;
+    }
 
-        .resize-handle {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            width: 10px;
-            height: 10px;
-            background-color: #333;
-            cursor: se-resize;
-        }
+    /* Button container for resizing */
+    #controls {
+      margin-top: 20px;
+    }
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
+    #resize-button {
+      padding: 1px 10px;
+      font-size: 10px;
+      cursor: pointer;
+      background-color: #ff00d49a;
+      color: rgb(255, 255, 255);
+      border: none;
+      border-radius: 4px;
+    }
 </style>
 </head>
 <body>
 <div class="container">
 <!-- Timezone Display -->
 <div class="timezone-container" id="timezoneContainer">
-    <div class="timezone" id="usPacific">US Pacific: Loading...</div>
-    <div class="timezone" id="usMountain">US Mountain: Loading...</div>
-    <div class="timezone" id="usCentral">US Central: Loading...</div>
-    <div class="timezone" id="usEastern">US Eastern: Loading...</div>
-    <div class="timezone" id="phPhilippines">PH Philippines: Loading...</div>
+    <div class="timezone" id="usPacific">US PST : Loading...</div>
+    <div class="timezone" id="usMountain">US MT: Loading...</div>
+    <div class="timezone" id="usCentral">US CT: Loading...</div>
+    <div class="timezone" id="usEastern">US ET: Loading...</div>
+    <div class="timezone" id="phPhilippines">PH: Loading...</div>
 </div>
 
 <!-- Theme Toggle and Font Size Controls -->
-<button id="themeToggle">Switch to Dark Mode</button>
+
 <button id="increaseFontSize">+</button>
 <button id="decreaseFontSize">-</button>
+
 
 <!-- Notepad Container -->
 <div class="notepad-container" id="notepadContainer">
     <textarea id="notepad" placeholder="Write your notes here..."></textarea>
 </div>
+
 
 <!-- Task List -->
 <div class="task-container">
@@ -233,27 +239,122 @@ button:hover {
     <button id="addTaskButton">Add Task</button>
     <button id="clearAllButton">Clear All Tasks</button>
     <button id="increaseFontSize">+</button>
-    <button id="decreaseFontSize">-</button>
+<button id="decreaseFontSize">-</button>
     <ul id="taskList" class="task-list"></ul>
 </div>
 
-<!-- Font Color Customization -->
+<button id="themeToggle">Switch to Dark Mode</button> <!-- Font Color Customization -->
 <div class="font-color-picker">
     <label for="fontColor">Font Color: </label>
     <input type="color" id="fontColor" value="#9DA8C4">
 </div>
-    <div class="wrapper">
-        <!-- Search Bar -->
-        <input type="text" id="search-input" class="search-bar" placeholder="Search YouTube..." oninput="searchVideo()">
+ <!-- Search Container -->
+ <div id="search-container">
+    <input type="text" id="search-field" placeholder="Enter video ID or URL...">
+    <button id="search-button" onclick="loadVideo()">Load Video</button>
+  </div>
 
-        <!-- Resizable YouTube Player -->
-        <div class="youtube-container">
-            <iframe id="youtube-player" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" allowfullscreen></iframe>
-            <div class="resize-handle"></div>
-       </div>
+  <!-- YouTube Player Container -->
+  <div id="player-container">
+    <div id="player"></div>
+  </div>
+
+  <div id="controls">
+    <button id="resize-button" onclick="toggleResize()">Toggle Resize</button>
+  </div>
+
+  <!-- Load YouTube Iframe API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
 </div>
 
 <script>
+
+let player;
+    let isResizingEnabled = true;
+
+    // Initialize the YouTube player
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '390',
+        width: '640',
+        videoId: 'M7lc1UVf-VE', // Default video ID
+        playerVars: {
+          'autoplay': 1,
+          'controls': 1,
+          'rel': 0,
+          'showinfo': 0
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange,
+          'onError': onPlayerError // Added error handling
+        }
+      });
+    }
+
+    // This function is called when the player is ready
+    function onPlayerReady(event) {
+      event.target.playVideo(); // Start playing the video once it's ready
+    }
+
+    // This function is triggered when the player's state changes (e.g., play, pause)
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.PLAYING) {
+        console.log('The video is playing');
+      }
+      if (event.data == YT.PlayerState.PAUSED) {
+        console.log('The video is paused');
+      }
+    }
+
+    // This function is triggered when there's an error with the player
+    function onPlayerError(event) {
+      console.error('Error occurred:', event.data);
+    }
+
+    // Function to load video by ID or URL entered by the user
+    function loadVideo() {
+   const query = document.getElementById('search-field').value;
+   if (!query) {
+       alert('Please enter a video ID or URL!');
+       return;
+   }
+
+   const videoId = extractVideoId(query);
+   console.log('Extracted video ID:', videoId); // Debugging
+
+   if (videoId && videoId.length === 11) {
+       player.loadVideoById(videoId);  // Load the video by ID
+   } else {
+       alert('Invalid video ID or URL!');
+
+      }
+    }
+
+    // Extract video ID from YouTube URL or use it as is if it's already a video ID
+    function extractVideoId(url) {
+      // Check if URL is in the format of a YouTube URL
+      const regex = /(?:https?:\/\/(?:www\.)?youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|(?:.*[?&])?v=)([a-zA-Z0-9_-]{11}))/;
+      const match = url.match(regex);
+      if (match) {
+        return match[1]; // Return the extracted video ID
+      }
+      // If it's not a URL, assume it's just the video ID
+      return url.trim(); // Clean up the input in case it's a raw ID
+    }
+
+    // Toggle the resizability of the player
+    function toggleResize() {
+      const playerContainer = document.getElementById('player-container');
+      isResizingEnabled = !isResizingEnabled;
+      if (isResizingEnabled) {
+        playerContainer.style.resize = 'both';
+        playerContainer.style.overflow = 'auto';
+      } else {
+        playerContainer.style.resize = 'none';
+        playerContainer.style.overflow = 'hidden';
+      }
+    }
 // Theme Toggle Functionality
 const themeToggle = document.getElementById('themeToggle');
 let isDarkMode = localStorage.getItem('theme') === 'dark';
@@ -356,11 +457,11 @@ fontColorInput.value = savedFontColor;
 
 document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
     el.style.color = savedFontColor;
-});
+}); 
 
 fontColorInput.addEventListener('input', () => {
     const fontColor = fontColorInput.value;
-    document.querySelectorAll('.notepad-container, .task-container').forEach((el) => {
+    document.querySelectorAll('.notepad-container, .task-container, .notepad-container textarea').forEach((el) => {
         el.style.color = fontColor;
     });
     localStorage.setItem('fontColor', fontColor);
@@ -368,67 +469,35 @@ fontColorInput.addEventListener('input', () => {
 
 // Timezone Display
 function updateTimezone() {
-    const date = new Date();
-    document.getElementById('usPacific').textContent = `US Pacific: ${date.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })}`;
-    document.getElementById('usMountain').textContent = `US Mountain: ${date.toLocaleString('en-US', { timeZone: 'America/Denver' })}`;
-    document.getElementById('usCentral').textContent = `US Central: ${date.toLocaleString('en-US', { timeZone: 'America/Chicago' })}`;
-    document.getElementById('usEastern').textContent = `US Eastern: ${date.toLocaleString('en-US', { timeZone: 'America/New_York' })}`;
-    document.getElementById('phPhilippines').textContent = `PH Philippines: ${date.toLocaleString('en-US', { timeZone: 'Asia/Manila' })}`;
+// Create a new Date object
+const date = new Date();
+
+// Function to format date and time for a specific timezone
+function formatDateTime(timezone) {
+    return date.toLocaleString('en-US', {
+        timeZone: timezone,
+        month: '2-digit',
+        day: '2-digit',
+        year: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true  // Use false for 24-hour format
+    });
+}
+
+// Update elements for different timezones
+document.getElementById('usPacific').textContent = `PT : ${formatDateTime('America/Los_Angeles')}`;
+document.getElementById('usMountain').textContent = `MT : ${formatDateTime('America/Denver')}`;
+document.getElementById('usCentral').textContent = `CT : ${formatDateTime('America/Chicago')}`;
+document.getElementById('usEastern').textContent = `ET : ${formatDateTime('America/New_york')}`;
+document.getElementById('phPhilippines').textContent = `PH : ${formatDateTime('Asia/Manila')}`;
+
 }
 
 updateTimezone();
 setInterval(updateTimezone, 60000);
     
-    const resizableContainer = document.querySelector('.container');
-        const resizeHandle = document.querySelector('.resize-handle');
-        const youtubePlayer = document.getElementById('youtube-player');
-        const searchInput = document.getElementById('search-input');
-
-        let isResizing = false;
-
-        // Event listeners for resizing functionality
-        resizeHandle.addEventListener('mousedown', (e) => {
-            isResizing = true;
-            document.addEventListener('mousemove', handleMouseMove);
-            document.addEventListener('mouseup', () => {
-                isResizing = false;
-                document.removeEventListener('mousemove', handleMouseMove);
-            });
-        });
-
-        function handleMouseMove(e) {
-            if (isResizing) {
-                const width = e.clientX - resizableContainer.getBoundingClientRect().left;
-                const height = e.clientY - resizableContainer.getBoundingClientRect().top;
-                resizableContainer.style.width = `${Math.max(200, width)}px`;
-                resizableContainer.style.height = `${Math.max(150, height)}px`;
-            }
-        }
-
-        // YouTube API Key (you need to replace this with your own API key)
-        const API_KEY = 'AIzaSyCX12cF27F_XvdDLMQwhiOfv8cLyKguxrw';
-
-        // Function to search and update the YouTube player with the selected video
-        function searchVideo() {
-            const query = searchInput.value.trim();
-            if (query.length > 0) {
-                fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&key=${API_KEY}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.items && data.items.length > 0) {
-                            const videoId = data.items[0].id.videoId;
-                            updateVideo(videoId);
-                        }
-                    })
-                    .catch(error => console.error('Error fetching YouTube data:', error));
-            }
-        }
-
-        // Function to update the iframe with the new video ID
-        function updateVideo(videoId) {
-            youtubePlayer.src = `https://www.youtube.com/embed/${videoId}`;
-        }
-    </script>
 </script>
 <!-- Footer -->
 <footer>
